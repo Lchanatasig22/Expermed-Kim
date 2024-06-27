@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var httpContext = ViewContext.HttpContext;
+    var perfilId = httpContext.Session.GetInt32("PerfilUsuarioP");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expermed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="~/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.2/main.css" integrity="sha512-8gnPDY1kH3++BT5+eOaHtYU4uSzmUJoY6cZ0TOxgEOiFkEMGg4c+oiZbzJrD7F7xWz3S8Y8Ayy3dM6E4+clw2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-cOQ++wRZ3nApzTLp8AefIfPv5vEY3oy5j5TKM5z9tJ7/RXQWmG65JBeYwZQNR3rSyedJeyN2bl1Hek/nx38Bhw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-pOu15p9G2c7v6C9IFXj5oI3k+MTCvYcKs2k+znA5CNmyP/h8H0Gr6pFl+Qhj50U1G3+4jldO1jI2NlCJu4e2uA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-2kz2ONq3CbsJUo7kmqXRWx0EZ3Htt6l5ePAGu7qC/h7rH0kjYHPe7GSlz8+7kUUBTa2KcNO3yAkbP2Q0MD+67g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.2/main.js" integrity="sha512-4JjGQvNXZ8L19i0dFgHth3m+5/PN3RoF4FgAaT90owJk0AXugVRuIP7e3JxRYca/zR1c/kKN93xTxf/ZR5sM/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <img src="~/images/image-removebg-preview.png" style="width:20px; height:30px" alt="Icono de cuadrícula">
+                </button>
+                <div class="sidebar-logo">
+                    <a href="#">EXPERMED</a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                @if (perfilId == 1) // Perfil de Administrador
+                {
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link">
+                            <i class="fa fa-home"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Paciente" asp-action="ListarPacientes">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Pacientes</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Cita" asp-action="ListarCitas">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span> Citas</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Consulta" asp-action="Guardar">
+                            <i class="fa fa-stethoscope"></i>
+                            <span>Consulta</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Usuario" asp-action="ListarUsuario">
+                            <i class="fa fa-user-md"></i>
+                            <span>Usuario</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Cita" asp-action="ObtenerHorasDisponibles">
+                            <i class="fa fa-user-md"></i>
+                            <span>Usuario</span>
+                        </a>
+                    </li>
+                }
+                @if (perfilId == 2) // Perfil de Administrador
+                {
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link">
+                            <i class="fa fa-home"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Paciente" asp-action="ListarPacientes">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Pacientes</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Cita" asp-action="ListarCItas">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span> Citas</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Consulta" asp-action="Guardar">
+                            <i class="fa fa-stethoscope"></i>
+                            <span>Consulta</span>
+                        </a>
+                    </li>
+
+                }
+            </ul>
+            <div class="sidebar-footer">
+                <a asp-action="Login" asp-controller="Access" class="sidebar-link">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        <div>
+        </div>
+        <div class="main p-3">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="~/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            let idleTime = 0;
+
+            // Incrementa el contador de inactividad cada minuto
+            const idleInterval = setInterval(timerIncrement, 60000); // 1 minuto
+
+            // Resetea el contador de inactividad al detectar actividad del usuario
+            $(this).mousemove(resetTimer);
+            $(this).keypress(resetTimer);
+            $(this).click(resetTimer);
+            $(this).scroll(resetTimer);
+
+            function timerIncrement() {
+                idleTime++;
+                // Aquí puedes definir qué hacer después de un cierto período de inactividad
+                if (idleTime > 10) { // 10 minutos de inactividad
+                    alert("Estás inactivo desde hace 10 minutos.");
+                    // Realiza alguna acción, como redirigir o cerrar sesión
+                    
+                    
+                }
+            }
+
+            function resetTimer() {
+                idleTime = 0;
+            }
+        });
+    </script>
+</body>
+</html>

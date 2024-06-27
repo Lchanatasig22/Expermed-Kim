@@ -1,0 +1,283 @@
+﻿@model Paciente
+@{
+    ViewData["Title"] = "CrearPaciente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3>Registrar datos del paciente</h3>
+
+<div id="messageContainer"></div>
+<form asp-action="CrearPaciente" asp-controller="Paciente" method="post">
+    <div class="hr-text">
+        <hr>
+        <span><i class="fas fa-user"></i> Datos Personales</span>
+        <hr>
+    </div>
+    <div class="form-group row g-3">
+
+
+        <div class="form-group col-sm-3" hidden>
+            <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
+            <input type="text" asp-for="UsuariocreacionPacientes" class="form-control" id="usuariocreacion" value="@ViewBag.UsuarioNombre" readonly />
+        </div>
+
+        <div class="form-group col-sm-3" hidden>
+            <label for="fechaCreacionInput" class="form-label">Fecha de Creación</label>
+            <input type="text" asp-for="FechacreacionPacientes" class="form-control" id="fechaCreacionInput" readonly />
+        </div>
+
+
+
+        <div class="form-group col-sm-3">
+            <label for="primerApellidoInput" class="form-label">Primer apellido *</label>
+            <input type="text" asp-for="PrimerapellidoPacientes" class="form-control" id="primerApellidoInput" placeholder="Ej:Ortega" required>
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="segundoApellidoInput" class="form-label">Segundo apellido</label>
+            <input type="text" asp-for="SegundoapellidoPacientes" class="form-control" id="segundoApellidoInput" placeholder="Ej:Díaz">
+        </div>
+
+
+        <div class="form-group col-sm-3">
+            <label for="primerNombreInput" class="form-label">Primer nombre *</label>
+            <input type="text" asp-for="PrimernombrePacientes" class="form-control" id="primerNombreInput" placeholder="Ej:Juan" required>
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="segundoNombreInput" class="form-label">Segundo nombre</label>
+            <input type="text" asp-for="SegundonombrePacientes" class="form-control" id="segundoNombreInput" placeholder="Ej:Manuel">
+        </div>
+
+
+        <div class="form-group col-sm-3">
+            <label for="tipoDocumentoSelect" class="form-label">Tipo documento *</label>
+            <select class="form-select" asp-for="TipodocumentoPacientesC" id="tipoDocumentoSelect" required>
+                <option value="">Seleccione...</option>
+                @if (ViewBag.TiposDocumentos != null)
+                {
+                    @foreach (var tipoDocumento in ViewBag.TiposDocumentos)
+                    {
+                        <option value="@tipoDocumento.Value">@tipoDocumento.Text</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="numeroDocumentoInput" class="form-label">Número de documento *</label>
+            <input type="text" asp-for="CiPacientes" class="form-control" id="numeroDocumentoInput" placeholder="Ej:1819912335" required>
+            @*                 <span asp-validation-for="CiPacientes" class="text-danger"></span> <!--//Validacion de campo obligatorio -->
+            *@
+        </div>
+
+
+
+
+        <div class="form-group col-sm-3">
+            <label for="tipoSangreSelect" class="form-label">Tipo de sangre</label>
+            <select class="form-select" asp-for="TiposangrePacientesC" id="tipoSangreSelect" required>
+                <option value="">Seleccione...</option>
+                @if (ViewBag.TiposSangre != null)
+                {
+                    @foreach (var tipoSangre in ViewBag.TiposSangre)
+                    {
+                        <option value="@tipoSangre.Value">@tipoSangre.Text</option>
+                    }
+                
+                    }
+              
+            </select>
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label for="donanteSelect" class="form-label">Es donante</label>
+            <select class="form-select" asp-for="DonantePacientes" id="donanteSelect" required>
+                <option value="">Seleccione...</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+
+        <div class="form-group col-sm-3">
+            <label for="fechaNacimientoInput" class="form-label">Fecha nacimiento</label>
+            <input asp-for="FechanacimientoPacientes" class="form-control" asp-format="{0:yyyy-MM-dd}" />
+        </div>
+
+        <div class="form-group col-sm-2">
+            <label for="edadInput" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="edadInput" asp-for="Edad" placeholder="Ej:23">
+        </div>
+
+
+        <div class="form-group col-sm-2">
+            <label for="sexoSelect" class="form-label">Sexo</label>
+            <select class="form-select" asp-for="SexoPacientesC" id="sexoSelect">
+                <option value="">Seleccione...</option>
+                @if (ViewBag.TiposGenero != null)
+                {
+
+                    @foreach (var tipoGenero in ViewBag.TiposGenero)
+                    {
+                        <option value="@tipoGenero.Value">@tipoGenero.Text</option>
+                    }
+                }
+              
+            </select>
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="estadoCivilSelect" class="form-label">Estado civil</label>
+            <select class="form-select" asp-for="EstadocivilPacientesC" id="estadoCivilSelect">
+                
+                <option value="">Seleccione...</option>
+                @if (ViewBag.TiposEstadoCivil != null)
+                {
+                    @foreach (var tipoEstadoCivil in ViewBag.TiposEstadoCivil)
+                    {
+                        <option value="@tipoEstadoCivil.Value">@tipoEstadoCivil.Text</option>
+                    }
+                }
+               
+            </select>
+            
+        </div>
+
+        <style>
+            .hr-text {
+                display: flex;
+                align-items: center;
+                text-align: center;
+            }
+
+                .hr-text hr {
+                    margin: 0;
+                    flex: 1;
+                }
+
+                .hr-text span {
+                    padding: 0 10px;
+                    font-size: 18px;
+                }
+        </style>
+        <div class="form-group col-sm-3">
+            <label for="formacionProfesionalSelect" class="form-label">Formación profesional</label>
+            <select class="form-select" asp-for="FormacionprofesionalPacientesC" id="formacionProfesionalSelect" required>
+                <option value="">Seleccione...</option>
+                @if (ViewBag.TiposFormacion != null)
+                {
+                    @foreach (var tiposFormacion in ViewBag.TiposFormacion)
+                    {
+                        <option value="@tiposFormacion.Value">@tiposFormacion.Text</option>
+                    }
+                }
+            
+            </select>
+        </div>
+    </div>
+    <div class="hr-text">
+        <hr>
+        <span><i class="fas fa-address-book"></i> Datos de Contacto</span>
+        <hr>
+    </div>
+
+
+    <div class="form-group row g-3">
+        <div class="form-group col-sm-3">
+            <label for="nacionalidadSelect" class="form-label">Nacionalidad</label>
+            <select asp-for="NacionalidadPacientesL" class="form-control">
+                @if (ViewBag.TiposNacionalidad != null)
+                {
+                    @foreach (var tiposNacionalidad in ViewBag.TiposNacionalidad)
+                    {
+                        <option value="@tiposNacionalidad.Value">@tiposNacionalidad.Text</option>
+                    }
+
+                }
+            </select>
+        </div>
+
+
+
+        <div class="form-group col-sm-3">
+            <label for="provinciaSelect" class="form-label">Provincia / Cantón / Parroquia</label>
+            <select class="form-select" asp-for="ProvinciaPacientesL" id="provinciaSelect" required>
+                @if (ViewBag.TiposProvincia != null)
+                {
+                    @foreach (var tiposProvincia in ViewBag.TiposProvincia)
+                    {
+                        <option value="@tiposProvincia.Value">@tiposProvincia.Text</option>
+                    }                }
+       
+            </select>
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label for="direccionInput" class="form-label">Dirección</label>
+            <input type="text" class="form-control" asp-for="DireccionPacientes" id="direccionInput" placeholder="Ej:Calle A">
+        </div>
+
+
+        <div class="form-group col-sm-3">
+            <label for="telefonoInput" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefonoInput" asp-for="TelefonofijoPacientes" placeholder="Máximo 20 caracteres" maxlength="20">
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="celularInput" class="form-label">Teléfono celular</label>
+            <input type="text" class="form-control" asp-for="TelefonocelularPacientes" id="celularInput" placeholder="Ej:9888888888">
+        </div>
+
+
+        <div class="form-group col-sm-3">
+            <label for="emailInput" class="form-label">Email *</label>
+            <input type="email" class="form-control" id="emailInput" asp-for="EmailPacientes" placeholder="Ej:juanmanuel@gmail.com" required>
+        </div>
+
+
+        <div class="form-group col-sm-3">
+            <label for="ocupacionInput" class="form-label">Ocupación</label>
+            <input type="text" class="form-control" id="ocupacionInput" asp-for="OcupacionPacientes" placeholder="Máximo 300 caracteres">
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="empresaInput" class="form-label">Empresa</label>
+            <input type="text" class="form-control" id="empresaInput" asp-for="EmpresaPacientes" placeholder="Máximo 300 caracteres">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label for="seguroSaludInput" class="form-label">Seguro de salud</label>
+            <select class="form-select" asp-for="SegurosaludPacientesC" id="seguroSelect" required>
+                @if (ViewBag.TiposSeguro != null)
+                {
+                    @foreach (var tiposSeguro in ViewBag.TiposSeguro)
+                    {
+                        <option value="@tiposSeguro.Value">@tiposSeguro.Text</option>
+                    }
+                }
+              
+            </select>
+        </div>
+
+
+
+
+    </div>
+
+
+
+    <br />
+    <div class="container">
+        <div class="form-row g-3">
+
+            <a asp-action="ListarPacientes" asp-controller="Paciente" class="btn btn-warning"><i class="fa fa-undo"></i> Volver a la lista</a>
+
+
+            <a asp-action="Guardar" asp-controller="Cita" class="btn btn-outline-primary"><i class="fas fa-calendar-plus me-1"></i>Generar cita</a>
+
+
+
+
+
+            <button type="submit" class="btn btn-success"><i class="fas fa-save me-1"></i>Guardar</button>
+
+        </div>
+    </div>
+
+</form>

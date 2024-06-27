@@ -1,0 +1,227 @@
+﻿@model Cita
+@{
+    ViewData["Title"] = "Crear Cita";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Crear Cita</h2>
+
+<form asp-action="CrearCita" class="row g-3" method="post">
+    <div class="col-md-6">
+        <label asp-for="FechadelacitaCitas" class="form-label">Fecha de la Cita</label>
+        <input asp-for="FechadelacitaCitas" id="fechaCita" class="form-control" type="date" required />
+        <span asp-validation-for="FechadelacitaCitas" class="text-danger" id="fechaError"></span>
+    </div>
+
+    <div class="col-md-6" hidden>
+        <label asp-for="HoradelacitaCitas" class="form-label">Hora de la Cita</label>
+        <button type="button" class="btn btn-secondary" id="openFormBtn">Seleccionar Hora</button>
+        <input type="hidden" asp-for="HoradelacitaCitas" id="horaCita" />
+        <span asp-validation-for="HoradelacitaCitas" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="MedicoCitasU" class="form-label">Médico</label>
+        <select asp-for="MedicoCitasU" id="medicoId" class="form-control" required>
+            <option value="">Seleccione un médico</option>
+            @if (ViewBag.TiposMedico != null)
+            {
+                foreach (var medico in ViewBag.TiposMedico)
+                {
+                    <option value="@medico.Value">@medico.Text</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="MedicoCitasU" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="PacienteCitasP" />
+
+    <input type="hidden" asp-for="Estado" />
+
+    <input type="hidden" asp-for="UsuariocreacionCitas" value="@ViewBag.UsuarioNombre" />
+    
+
+    <div class="col-12">
+        <button type="button" onclick="consultarCita()" class="btn btn-secondary">Consultar Cita</button>
+        <button type="submit" id="crearCitaBtn" class="btn btn-primary" disabled>Crear Cita</button>
+    </div>
+</form>
+
+<!-- Formulario de Horas Disponibles -->
+<div id="formHorasDisponibles" style="display: none;">
+    <h2>Horas Disponibles</h2>
+    <button type="button" class="btn btn-danger" onclick="cerrarFormularioHoras()">Cerrar</button>
+    <div id="hoursContainer" class="hours-grid"></div>
+</div>
+
+<!-- Estilos y Scripts -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<style>
+
+
+    /* Estilos para el formulario de horas disponibles */
+    #formHorasDisponibles {
+        margin-top: 30px; /* Separación superior para distinguirlo del formulario principal */
+        padding: 20px; /* Espacio interior */
+        background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    }
+
+        #formHorasDisponibles h2 {
+            font-size: 24px; /* Tamaño de fuente */
+            font-weight: bold; /* Peso de fuente */
+            margin-bottom: 20px; /* Separación inferior */
+            text-align: center; /* Centrar el texto */
+        }
+
+    /* Estilos para la cuadrícula de horas */
+    .hours-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    /* Estilos para las tarjetas de horas */
+    .hour-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 150px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.3s, background-color 0.3s;
+    }
+
+        .hour-card:hover {
+            transform: scale(1.05);
+            background-color: #e0e0e0;
+        }
+
+        .hour-card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Inicializar Select2 en el select de médicos
+        $('#medicoId').select2({
+            placeholder: 'Seleccione un médico',
+            allowClear: true
+        });
+
+        // Configurar la fecha mínima para el campo de fecha
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById("fechaCita").setAttribute('min', today);
+
+        // Agregar eventos de cambio a los campos necesarios
+        document.getElementById('fechaCita').addEventListener('change', validarFecha);
+        document.getElementById('fechaCita').addEventListener('change', validarCampos);
+        document.getElementById('medicoId').addEventListener('change', validarCampos);
+        document.getElementById('horaCita').addEventListener('change', validarCampos);
+    });
+
+    function validarFecha() {
+        const fechaCita = document.getElementById('fechaCita').value;
+        const today = new Date().toISOString().split('T')[0];
+        const fechaError = document.getElementById('fechaError');
+
+        if (fechaCita <= today) {
+            fechaError.textContent = "La fecha de la cita debe ser posterior al día actual.";
+            document.getElementById('crearCitaBtn').setAttribute('disabled', true);
+        } else {
+            fechaError.textContent = "";
+        }
+    }
+
+    function consultarCita() {
+        var fechaCita = document.getElementById('fechaCita').value;
+        var medicoId = document.getElementById('medicoId').value;
+
+        if (fechaCita && medicoId) {
+            // Realizar la llamada AJAX al controlador CitaController
+            $.ajax({
+                url: '/Cita/ObtenerHorasDisponibles',
+                type: 'POST',
+                data: {
+                    fechaCita: fechaCita,
+                    medicoId: medicoId
+                },
+                success: function (response) {
+                    displayAvailableHours(response);
+                    document.getElementById('formHorasDisponibles').style.display = 'block';
+                },
+                error: function (error) {
+                    console.error('Error al obtener las horas disponibles:', error);
+                }
+            });
+        } else {
+            alert('Por favor, seleccione una fecha y un médico.');
+        }
+    }
+
+    function displayAvailableHours(hours) {
+        const container = document.getElementById('hoursContainer');
+        container.innerHTML = ''; // Limpiar contenido previo
+
+        if (hours && hours.length > 0) {
+            hours.forEach(hour => {
+                const card = document.createElement('div');
+                card.className = 'hour-card';
+
+                const img = document.createElement('img');
+                img.src = '/images/free-doctor-icon-313-thumb.png'; // Ajusta esto según la imagen que quieras mostrar
+
+                const time = document.createElement('div');
+                time.textContent = hour;
+
+                card.appendChild(img);
+                card.appendChild(time);
+                container.appendChild(card);
+
+                // Puedes agregar un evento click para seleccionar la hora
+                card.addEventListener('click', function () {
+                    if (confirm(`¿Estás seguro de que deseas seleccionar la hora: ${hour}?`)) {
+                        document.getElementById('horaCita').value = hour; // Asigna el valor seleccionado al input hidden
+                        document.getElementById('formHorasDisponibles').style.display = 'none';
+                        validarCampos(); // Verificar campos después de seleccionar la hora
+                    }
+                });
+            });
+        } else {
+            container.innerHTML = '<p>No hay horas disponibles</p>';
+        }
+    }
+
+    function validarCampos() {
+        const fecha = document.getElementById('fechaCita').value;
+        const medico = document.getElementById('medicoId').value;
+        const hora = document.getElementById('horaCita').value;
+
+        const crearCitaBtn = document.getElementById('crearCitaBtn');
+        const fechaError = document.getElementById('fechaError').textContent;
+
+        if (fecha && medico && hora && !fechaError) {
+            crearCitaBtn.removeAttribute('disabled');
+        } else {
+            crearCitaBtn.setAttribute('disabled', true);
+        }
+    }
+
+    function cerrarFormularioHoras() {
+        document.getElementById('formHorasDisponibles').style.display = 'none';
+    }
+</script>

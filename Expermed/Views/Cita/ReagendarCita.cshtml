@@ -1,0 +1,107 @@
+﻿@model Cita
+@{
+    ViewData["Title"] = "Crear Cita";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Crear Cita</h2>
+
+<form asp-action="ReagendarCita" class="row g-3" method="post">
+    <input asp-for="IdCitas" type="hidden" class="form-control" /> <!--//referencia id /oculto con hidden -->
+
+    <div class="col-md-6">
+        <label asp-for="FechadelacitaCitas" class="form-label">Fecha de la Cita</label>
+        <input asp-for="FechadelacitaCitas" id="fechaCita" class="form-control" type="date" required />
+        <span asp-validation-for="FechadelacitaCitas" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="HoradelacitaCitas" class="form-label">Hora de la Cita</label>
+        <select asp-for="HoradelacitaCitas" id="horaCita" class="form-control">
+            <!-- Opciones de horas disponibles se añadirán dinámicamente aquí -->
+        </select>
+        <span asp-validation-for="HoradelacitaCitas" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="MedicoCitasU" class="form-label">Médico</label>
+        <select asp-for="MedicoCitasU" id="medicoId" class="form-control">
+            <option value="">Seleccione un médico</option>
+            @if (ViewBag.TiposMedico != null)
+            {
+                foreach (var medico in ViewBag.TiposMedico)
+                {
+                    <option value="@medico.Value">@medico.Text</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="MedicoCitasU" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="PacienteCitasP" />
+
+    <input type="hidden" asp-for="UsuariocreacionCitas" value="@ViewBag.UsuarioNombre" />
+
+    <div class="col-12">
+        <button type="button" onclick="consultarCita()" class="btn btn-secondary">Consultar Cita</button>
+        <button type="submit" class="btn btn-primary">Crear Cita</button>
+    </div>
+</form>
+
+<style>
+    .form-label {
+        font-weight: bold;
+    }
+</style>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function consultarCita() {
+        var fechaCita = document.getElementById('fechaCita').value;
+        var medicoId = document.getElementById('medicoId').value;
+
+        if (fechaCita && medicoId) {
+            // Realizar la llamada AJAX al controlador CitaController
+            $.ajax({
+                url: '/Cita/ObtenerHorasDisponibles',
+                type: 'POST',
+                data: {
+                    fechaCita: fechaCita,
+                    medicoId: medicoId
+                },
+                success: function (response) {
+                    var selectHoras = document.getElementById('horaCita');
+                    // Limpiar opciones existentes
+                    selectHoras.innerHTML = '';
+
+                    if (response && response.length > 0) {
+                        // Agregar las nuevas opciones de horas disponibles
+                        response.forEach(function (hora) {
+                            var date = new Date('1970-01-01T' + hora);
+                            var formattedHora = date.toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                            console.log("Formatted Hora: " + formattedHora + ", Original Hora: " + hora); // Debugging Line
+                            var option = document.createElement('option');
+                            option.text = formattedHora;
+                            option.value = hora; // Asegurarte que el value sea el correcto
+                            selectHoras.appendChild(option);
+                        });
+                    } else {
+                        var option = document.createElement('option');
+                        option.text = 'No hay horas disponibles';
+                        option.value = '';
+                        selectHoras.appendChild(option);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error al obtener las horas disponibles:', error);
+                }
+            });
+        } else {
+            alert('Por favor, seleccione una fecha y un médico.');
+        }
+    }
+</script>

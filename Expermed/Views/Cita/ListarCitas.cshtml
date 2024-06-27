@@ -1,0 +1,149 @@
+﻿@model List<Cita>
+@{
+    ViewData["Title"] = "ListarCitas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Lista de Citas</h3>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-3">
+            <label for="opcion">Buscar por</label>
+            <select class="form-control" id="opcion" onchange="onSearchChanged()">
+                <option value="-2">Listar todo</option>
+                <option value="1">Nombre(s) Paciente</option>
+                <option value="2">Fecha de la Cita</option>
+                <option value="3">Médico</option>
+                <option value="4">Especialidad</option>
+            </select>
+        </div>
+        <div class="col-md-5 d-none" id="buscarFields">
+            <label>&nbsp;</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Ingresar criterio de búsqueda" id="buscarCriterio" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" onclick="onSearch()">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="table-primary">
+                <th>Acciones</th>
+                <th>Fecha de la Cita</th>
+                <th>Nombre Paciente</th>
+                <th>Médico</th>
+                <th>Especialidad</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cita in Model)
+            {
+                <tr id="cita-@cita.IdCitas">
+                    <td>
+                        <a asp-action="EditarCita" asp-route-id="@cita.IdCitas" class="btn btn-outline-primary">
+                            <i class="fa-regular fa-pen-to-square"></i> Revisar
+                        </a>
+
+                    </td>
+                    <td>@cita.FechadelacitaCitas?.ToString("dd/MM/yyyy") - @cita.HoradelacitaCitas</td>
+                    <td>@cita.PacienteCitasPNavigation.PrimernombrePacientes @cita.PacienteCitasPNavigation.PrimerapellidoPacientes</td>
+                    <td>@cita.MedicoCitasUNavigation.NombresUsuario @cita.MedicoCitasUNavigation.ApellidosUsuario</td>
+                    <td>@cita.MedicoCitasUNavigation.DescripcionUsuario</td>
+                    <td>@cita.Estado</td>
+
+                    <td>
+                        <form asp-action="ActualizarEstadoCita" asp-route-id="@cita.IdCitas" method="post" style="display:inline;">
+                            <input type="hidden" name="estado" value="Finalizada" />
+                            <button type="submit" class="btn btn-outline-success" onclick="return confirm('¿Estás seguro de que deseas marcar esta cita como finalizada?');">
+                                <i class="fa-solid fa-check"></i> Finalizar
+                            </button>
+                        </form>
+                    </td> <!-- Campo para la propiedad EstadoCitas cuando cree la tabla-->
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="noResults" class="no-results d-none">
+        No se encontraron resultados.
+    </div>
+</div>
+
+<a asp-action="ListarPacientes" asp-controller="Paciente" class="btn btn-outline-primary">
+    <i class="fa fa-plus"></i> Añadir nueva cita
+</a>
+
+<script>
+    function onSearchChanged() {
+        var selectElement = document.getElementById('opcion');
+        var searchFields = document.getElementById('buscarFields');
+        var tableRows = document.getElementsByTagName('tr'); // Obtén todas las filas de la tabla
+
+        if (selectElement.value === '-2') {
+            searchFields.classList.add('d-none');
+            // Restablece la visibilidad de todas las filas
+            for (var i = 0; i < tableRows.length; i++) {
+                var currentRow = tableRows[i];
+                if (currentRow.id.startsWith('cita-')) { // Asegúrate de que sea una fila de datos (tiene un id que empieza con 'cita-')
+                    currentRow.style.display = ''; // Muestra todas las filas
+                }
+            }
+            document.getElementById('noResults').classList.add('d-none'); // Oculta el mensaje de "no resultados"
+        } else {
+            searchFields.classList.remove('d-none');
+        }
+    }
+
+    function onSearch() {
+        var criterio = document.getElementById('buscarCriterio').value.toLowerCase(); // Obtén el criterio de búsqueda
+        var optionValue = document.getElementById('opcion').value; // Obtén el valor de la opción seleccionada
+
+        var tableRows = document.getElementsByTagName('tr'); // Obtén todas las filas de la tabla
+        var found = false; // Variable para rastrear si se encontró algún resultado
+
+        for (var i = 1; i < tableRows.length; i++) { // Comenzar desde 1 para saltar el encabezado
+            var currentRow = tableRows[i];
+
+            if (currentRow.id.startsWith('cita-')) { // Asegúrate de que sea una fila de datos (tiene un id que empieza con 'cita-')
+                var cellValue = ''; // Valor de la celda que coincide con el criterio de búsqueda
+                switch (optionValue) {
+                    case '1': // Nombre(s) Paciente
+                        cellValue = currentRow.getElementsByTagName('td')[2].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    case '2': // Fecha de la Cita
+                        cellValue = currentRow.getElementsByTagName('td')[1].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    case '3': // Médico
+                        cellValue = currentRow.getElementsByTagName('td')[3].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    case '4': // Especialidad
+                        cellValue = currentRow.getElementsByTagName('td')[4].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    default:
+                        break;
+                }
+
+                // Comprueba si el criterio de búsqueda coincide con el valor de la celda
+                if (cellValue.includes(criterio)) {
+                    currentRow.style.display = ''; // Muestra la fila si coincide
+                    found = true; // Se encontró al menos una coincidencia
+                } else {
+                    currentRow.style.display = 'none'; // Oculta la fila si no coincide
+                }
+            }
+        }
+
+        if (!found) {
+            document.getElementById('noResults').classList.remove('d-none'); // Muestra el mensaje de "no resultados"
+        } else {
+            document.getElementById('noResults').classList.add('d-none'); // Oculta el mensaje de "no resultados"
+        }
+    }
+</script>

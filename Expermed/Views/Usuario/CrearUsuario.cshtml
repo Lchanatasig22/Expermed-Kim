@@ -1,0 +1,122 @@
+﻿@model Usuario
+@{
+    ViewData["Title"] = "CrearUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* <summary>
+    <!--Trae los perfiles desde la base de manera dinamica-->
+    
+</summary> *@
+
+
+<form asp-action="CrearUsuario" asp-controller="Usuario" method="post">
+    <div class="form-group row g-3">
+        <div class="form-group col-sm-3">
+            <label class="form-label">Rol Usuario</label>
+            <select asp-for="PerfilUsuarioP" class="form-control">
+                
+                <option value="">Seleccione un perfil</option>
+                @foreach (var perfil in ViewBag.Perfiles)
+                {
+                    <option value="@perfil.IdPerfil">@perfil.descripcion_perfil</option>
+                }
+            </select>
+        </div>
+
+
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Descripcion perfil</label>
+            <input asp-for="DescripcionUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Numero de documento</label>
+            <input asp-for="CiUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Apellidos</label>
+            <input asp-for="ApellidosUsuario" type="text" class="form-control">
+        </div>
+
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Nombres</label>
+            <input asp-for="NombresUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Telefono</label>
+            <input asp-for="TelefonoUsuario" type="text" class="form-control">
+        </div>
+        <div class="form-group col-sm-3">
+            <label class="form-label">Email</label>
+            <input asp-for="EmailUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Establecimiento</label>
+            <input asp-for="EstablecimientoUsuario" type="text" class="form-control">
+
+        </div>
+
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Dirección</label>
+            <input asp-for="DirecccionestableUsuario" type="text" class="form-control">
+
+        </div>
+        <div class="form-group col-sm-3">
+            <label class="form-label">Ciudad</label>
+            <input asp-for="CiudadUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Provincia</label>
+            <input asp-for="ProvinciaUsuario" type="text" class="form-control">
+
+        </div>
+
+        <div class="form-group col-sm-3" hidden>
+            <label for="fechaCreacionInput" class="form-label">Fecha de Creación</label>
+            <input type="text" asp-for="FechacreacionUsuario" class="form-control" id="fechaCreacionInput" />
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Login</label>
+            <input asp-for="LoginUsuario" type="text" class="form-control">
+
+        </div>
+        <div class="form-group col-sm-3">
+            <label class="form-label">Clave</label>
+            <input asp-for="ClaveUsuario" type="text" class="form-control">
+
+        </div>
+        <div class="form-group col-sm-3" hidden>
+            <label class="form-label">Activo</label>
+            <input asp-for="ActivoUsuario" type="text" value="1" class="form-control" readonly>
+        </div>
+        <div class="form-group col-sm-3">
+            <label class="form-label">Codigo</label>
+            <input asp-for="CodigoUsuario" type="text" class="form-control">
+        </div>
+
+
+
+    </div>
+
+    <div class="form-group">
+        <div class="btn-group">
+
+            <button type="submit" class="btn btn-primary">Grabar</button>
+            <a asp-action="Listar" asp-controller="Usuario" class="btn btn-warning">Volver a la lista</a>
+
+        </div>
+    </div>
+
+
+</form>
+
+

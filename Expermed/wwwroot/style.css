@@ -1,0 +1,348 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    font-size: 12px;
+}
+
+    a.btn.btn-outline-primary {
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    a.btn.btn-outline-warning {
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    a.btn.btn-warning {
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+.btn-success {
+    text-decoration: none;
+    font-size: 12px;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 30px;
+    color: black;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+th {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+td {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+opcion {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+p {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+form-label {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+button.btn.btn-primary.nextBtn.btn-lg.ms-3 {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+button.btn.btn-primary.previousBtn.btn-lg {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.form-control {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.form-select {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.ui.list .item {
+    color: inherit !important; /* Hereda el color del texto */
+    text-decoration: none !important; /* Quita el subrayado */
+}
+
+
+.wrapper {
+    display: flex;
+}
+
+/* Sidebar styles */
+#sidebar {
+    width: 70px;
+    min-width: 70px;
+    z-index: 1000;
+    transition: all 0.25s ease-in-out;
+    background: rgb(32, 198, 186);
+    background: linear-gradient(90deg, rgba(32, 198, 186, 1) 0%, rgba(18, 158, 186, 1) 50%, rgba(0, 153, 222, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Fixed position to stay in place */
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    height: 100vh;
+}
+
+/* Main content styles */
+.main {
+    min-height: 100vh;
+    width: calc(100% - 70px); /* Subtract sidebar width */
+    overflow: hidden;
+    position: relative; /* Ensure proper positioning of absolute content */
+    transition: all 0.35s ease-in-out;
+    background-image: url('images/doctor-with-stethoscope-hands-hospital-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 70px; /* Match sidebar width */
+}
+
+    .main::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
+    }
+
+    /* Additional styles for the content within .main */
+    .main .container-fluid {
+        position: relative; /* Ensure proper positioning of the content */
+        z-index: 1; /* Ensure content is above the background overlay */
+        padding: 20px; /* Optional padding for the content */
+        color: #000; /* White text color for better readability */
+    }
+
+
+
+
+#sidebar.expand {
+    width: 200px;
+    min-width: 26px;
+}
+
+.toggle-btn {
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1.5rem;
+}
+
+    .toggle-btn i {
+        font-size: 1.5rem;
+        color: #FFF;
+    }
+
+.sidebar-logo {
+    margin: auto 0;
+}
+
+    .sidebar-logo a {
+        color: #FFF;
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none;
+}
+
+.sidebar-nav {
+    padding: 2rem 0;
+    flex: 1 1 auto;
+}
+
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    margin-top: 25px;
+    color: #FFF;
+    display: block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-link i {
+    font-size: 1.1rem;
+    margin-right: .75rem;
+}
+
+a.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, .075);
+    border-left: 3px solid #ffffff;
+}
+
+.sidebar-item {
+    position: relative;
+}
+
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+    position: absolute;
+    top: 0;
+    left: 70px;
+    background-color: #0e2238;
+    padding: 0;
+    min-width: 15rem;
+    display: none;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
+    display: block;
+    max-height: 15em;
+    width: 100%;
+    opacity: 1;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
+}
+
+.container-fluid {
+    backdrop-filter: blur(10px); /* Aplica un ligero desenfoque para suavizar el fondo */
+    background-color: rgba(165, 165, 165, 0.42); /* Fondo semi-transparente */
+    border-radius: 10px; /* Bordes redondeados para un aspecto más suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.67); /* Sombra ligera para levantar el contenedor */
+    padding: 30px; /* Espacio interior aumentado para mejor legibilidad */
+    margin-top: 100px; /* Espacio superior */
+    width: auto; /* Permitir que el contenedor se ajuste al contenido */
+    max-width: 90%; /* Limitar el ancho máximo relativo al tamaño de la ventana */
+    margin-left: auto; /* Centra horizontalmente */
+    margin-right: auto; /* Centra horizontalmente */
+    overflow: auto; /* Asegura que el contenido desborde correctamente */
+}
+
+
+
+/* Estilos para el formulario de horas disponibles */
+#formHorasDisponibles {
+    margin-top: 30px; /* Separación superior para distinguirlo del formulario principal */
+    padding: 20px; /* Espacio interior */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+    #formHorasDisponibles h2 {
+        font-size: 24px; /* Tamaño de fuente */
+        font-weight: bold; /* Peso de fuente */
+        margin-bottom: 20px; /* Separación inferior */
+        text-align: center; /* Centrar el texto */
+    }
+
+/* Estilos para la cuadrícula de horas */
+.hours-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Estilos para las tarjetas de horas */
+.hour-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+    .hour-card:hover {
+        transform: scale(1.05);
+        background-color: #e0e0e0;
+    }
+
+    .hour-card img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+
+
+
+
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 20px; /* Reducción del espacio interior en dispositivos más pequeños */
+    }
+}
+
+/* Login*/
+
+
+@media screen and (max-width: 600px) {
+    .form-03-main {
+        width: 100%;
+    }
+}

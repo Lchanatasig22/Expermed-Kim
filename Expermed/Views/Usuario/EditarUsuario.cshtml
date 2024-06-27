@@ -1,0 +1,122 @@
+﻿@model Usuario
+@{
+    ViewData["Title"] = "EditarUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form asp-action="EditarUsuario" asp-controller="Usuario" method="post">
+    <div class="form-group row g-3">
+        <input asp-for="IdUsuario" type="hidden" class="form-control" /> <!--//referencia id /oculto con hidden -->
+        <div class="form-group col-sm-3">
+            <label class="form-label">CI</label>
+            <input asp-for="CiUsuario" type="text" class="form-control">
+            <span asp-validation-for="CiUsuario" class="text-danger"></span> <!--//Validacion de campo obligatorio -->
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Nombres</label>
+            <input asp-for="NombresUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Apellidos</label>
+            <input asp-for="ApellidosUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Telefono</label>
+            <input asp-for="TelefonoUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Email</label>
+            <input asp-for="EmailUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Establecimiento</label>
+            <input asp-for="EstablecimientoUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Dirección</label>
+            <input asp-for="DirecccionestableUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Ciudad</label>
+            <input asp-for="CiudadUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Provincia</label>
+            <input asp-for="ProvinciaUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Fecha creación</label>
+            <input asp-for="FechacreacionUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Fecha modificación</label>
+            <input asp-for="FechamodificacionUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Login</label>
+            <input asp-for="LoginUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Clave</label>
+            <input asp-for="ClaveUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Activo</label>
+            <select asp-for="ActivoUsuario" class="form-select">
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+   
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Perfil</label>
+            <input asp-for="PerfilUsuarioP" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Descripcion perfil</label>
+            <input asp-for="DescripcionUsuario" type="text" class="form-control">
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label class="form-label">Codigo</label>
+            <input asp-for="CodigoUsuario" type="text" class="form-control">
+        </div>
+
+
+    </div>
+    <br />
+    <button type="submit" class="btn btn-outline-primary">
+        <i class="fas fa-save"></i> Guardar
+    </button>
+
+    <a asp-action="Listar" asp-controller="Usuario" class="btn btn-warning">
+
+
+        <i class="fa-solid fa-arrow-rotate-left"></i>Regresar a la lista
+    </a>
+
+
+</form>
+<!--Maneja el mensaje de erro -->
+<script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+</script>
