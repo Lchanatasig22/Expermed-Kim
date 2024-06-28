@@ -1,15 +1,14 @@
-﻿namespace Expermed.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Expermed.Models
 {
     public partial class Paciente
     {
         public Paciente()
         {
-            Cita = new HashSet<Cita>();
+            Cita = new HashSet<Citum>();
             Consulta = new HashSet<Consultum>();
-            FechacreacionPacientes = DateTime.Now;
-            FechamodificacionPacientes = DateTime.Now;
-            ActivoPacientes = 1;
-
         }
 
         public int IdPacientes { get; set; }
@@ -48,7 +47,7 @@
         public virtual Catalogo? SexoPacientesCNavigation { get; set; }
         public virtual Catalogo? TipodocumentoPacientesCNavigation { get; set; }
         public virtual Catalogo? TiposangrePacientesCNavigation { get; set; }
-        public virtual ICollection<Cita> Cita { get; set; }
+        public virtual ICollection<Citum> Cita { get; set; }
         public virtual ICollection<Consultum> Consulta { get; set; }
     }
 }

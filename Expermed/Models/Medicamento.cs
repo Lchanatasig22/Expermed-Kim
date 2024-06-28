@@ -1,4 +1,7 @@
-﻿namespace Expermed.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Expermed.Models
 {
     public partial class Medicamento
     {

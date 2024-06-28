@@ -1,7 +1,16 @@
-﻿namespace Expermed.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Expermed.Models
 {
     public partial class Consultum
     {
+        public Consultum()
+        {
+            Cita = new HashSet<Citum>();
+            Diagnosticos = new HashSet<Diagnostico>();
+        }
+
         public int IdConsulta { get; set; }
         public DateTime? FechacreacionConsulta { get; set; }
         public string? UsuariocreacionConsulta { get; set; }
@@ -38,5 +47,7 @@
         public virtual CDocumento? DocumentoConsultaDNavigation { get; set; }
         public virtual CMedicamento? MedicamentoConsultaMNavigation { get; set; }
         public virtual Paciente? PacienteConsultaPNavigation { get; set; }
+        public virtual ICollection<Citum> Cita { get; set; }
+        public virtual ICollection<Diagnostico> Diagnosticos { get; set; }
     }
 }

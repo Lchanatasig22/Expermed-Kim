@@ -1,10 +1,13 @@
-﻿namespace Expermed.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Expermed.Models
 {
     public partial class Usuario
     {
         public Usuario()
         {
-            Cita = new HashSet<Cita>();
+            Cita = new HashSet<Citum>();
         }
 
         public int IdUsuario { get; set; }
@@ -27,6 +30,6 @@
         public string? CodigoUsuario { get; set; }
 
         public virtual Perfil? PerfilUsuarioPNavigation { get; set; }
-        public virtual ICollection<Cita> Cita { get; set; }
+        public virtual ICollection<Citum> Cita { get; set; }
     }
 }

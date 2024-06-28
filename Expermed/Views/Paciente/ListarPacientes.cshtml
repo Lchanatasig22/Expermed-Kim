@@ -46,6 +46,8 @@
                 <th>Nombre</th>
                 <th>Número de documento</th>
                 <th>Email</th>
+                <th>Fecha nacimiento</th>
+                <th>Edad</th>
                 <th>Nacionalidad</th>
                 <th>Estado</th>
 
@@ -64,6 +66,8 @@
                     <td>@paciente.PrimernombrePacientes @paciente.PrimerapellidoPacientes</td>
                     <td>@paciente.CiPacientes</td>
                     <td>@paciente.EmailPacientes</td>
+                    <td>@paciente.FechanacimientoPacientes?.ToString("dd/MM/yyyy")</td>
+                    <td>@paciente.Edad</td>
                     <td>@paciente.NacionalidadPacientesLNavigation.GentilicioLocalidad</td>
                     <td>
                         <form asp-action="CambiarEstadoUsuario" method="post">

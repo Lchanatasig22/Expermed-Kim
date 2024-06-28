@@ -202,7 +202,7 @@ namespace Expermed.Controllers
 
             try
             {
-                var result = await _pacienteService.UpdatePacienteAsync(paciente); // Reemplaza _yourService por tu servicio que realiza la actualización
+                var result = await _pacienteService.UpdatePacienteAsync(paciente); // Reemplaza  por tu servicio que realiza la actualización
 
                 if (result > 0)
                 {

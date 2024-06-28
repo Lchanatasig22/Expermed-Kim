@@ -61,11 +61,12 @@ namespace Expermed.Servicios
         /// Método para obtener todos los perfiles
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Cita>> GetAllCitasAsync()
+        public async Task<List<Citum>> GetAllCitasAsync()
         {
-            return await _context.Citas
+            return await _context.Cita
                 .Include(c => c.MedicoCitasUNavigation)
                 .Include(c => c.PacienteCitasPNavigation)
+                .Include(c => c.ConsultaCitasCNavigation)
                 .ToListAsync();
         }
 
@@ -100,11 +101,11 @@ namespace Expermed.Servicios
         }
 
 
-        public async Task<IEnumerable<Cita>> ObtenerCitasPorPacienteAsync(int pacienteId)
+        public async Task<IEnumerable<Citum>> ObtenerCitasPorPacienteAsync(int pacienteId)
         {
             var pacienteIdParam = new SqlParameter("@PacienteCitasP", SqlDbType.Int) { Value = pacienteId };
 
-            return await _context.Citas
+            return await _context.Cita
                 .FromSqlRaw("EXEC sp_GetCitaByPaciente @PacienteCitasP", pacienteIdParam)
                 .ToListAsync();
         }
@@ -169,9 +170,9 @@ namespace Expermed.Servicios
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Cita> GetCitaByIdAsync(int id)
+        public async Task<Citum> GetCitaByIdAsync(int id)
         {
-            return await _context.Citas.FirstOrDefaultAsync(u => u.IdCitas == id);
+            return await _context.Cita.FirstOrDefaultAsync(u => u.IdCitas == id);
         }
         /// <summary>
         /// Actualizacion de las citas

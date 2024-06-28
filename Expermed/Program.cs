@@ -23,6 +23,7 @@ builder.Services.AddScoped<PerfilesService>(); // Registra el servicio de perfil
 builder.Services.AddScoped<PacienteService>(); // Registra el servicio de pacientes.
 builder.Services.AddScoped<CatalogService>(); // Registra el servicio de catálogo.
 builder.Services.AddScoped<CitasService>(); // Registra el servicio de citas.
+builder.Services.AddScoped<ConsultaService>(); // Registra el servicio de consultas.
 
 //Registra IHttpContextAccessor para acceder al contexto HTTP.
 builder.Services.AddHttpContextAccessor();

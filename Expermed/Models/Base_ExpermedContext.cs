@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Expermed.Models
 {
     public partial class Base_ExpermedContext : DbContext
     {
-        public string UsuarioAutenticado { get; set; }
-
         public Base_ExpermedContext()
         {
         }
@@ -19,8 +20,7 @@ namespace Expermed.Models
         public virtual DbSet<CDocumento> CDocumentos { get; set; } = null!;
         public virtual DbSet<CMedicamento> CMedicamentos { get; set; } = null!;
         public virtual DbSet<Catalogo> Catalogos { get; set; } = null!;
-        public virtual DbSet<Cita> Citas { get; set; } = null!;
-        public virtual DbSet<Cita> Citas1 { get; set; } = null!;
+        public virtual DbSet<Citum> Cita { get; set; } = null!;
         public virtual DbSet<Consultum> Consulta { get; set; } = null!;
         public virtual DbSet<Diagnostico> Diagnosticos { get; set; } = null!;
         public virtual DbSet<Establecimiento> Establecimientos { get; set; } = null!;
@@ -34,13 +34,15 @@ namespace Expermed.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //                optionsBuilder.UseSqlServer("server=localhost; database=Base_Expermed; integrated security=true; TrustServerCertificate=Yes");
-            }
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("Server=localhost;Database=Base_Expermed;User Id=sa;Password=1717;");
+           }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<CDetalle>(entity =>
             {
                 entity.HasKey(e => e.IdDetalle)
@@ -181,24 +183,27 @@ namespace Expermed.Models
                     .HasColumnName("usuariomodificacion_catalogo");
             });
 
-            modelBuilder.Entity<Cita>(entity =>
+            modelBuilder.Entity<Citum>(entity =>
             {
                 entity.HasKey(e => e.IdCitas)
-                    .HasName("PK__Citas__B0CEEC7CE145D4E8");
+                    .HasName("PK__Citas1__B0CEEC7C16BFF012");
 
                 entity.Property(e => e.IdCitas).HasColumnName("id_citas");
+
+                entity.Property(e => e.ConsultaCitasC).HasColumnName("consulta_citas_c");
+
+                entity.Property(e => e.Estado)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('En Curso')");
 
                 entity.Property(e => e.FechacreacionCitas)
                     .HasColumnType("datetime")
                     .HasColumnName("fechacreacion_citas");
 
                 entity.Property(e => e.FechadelacitaCitas)
-                    .HasColumnType("datetime")
+                    .HasColumnType("date")
                     .HasColumnName("fechadelacita_citas");
-                entity.Property(e => e.Estado)
-                  .HasMaxLength(500)
-                    .IsUnicode(false)
-                    .HasColumnName("estado");
+
                 entity.Property(e => e.HoradelacitaCitas).HasColumnName("horadelacita_citas");
 
                 entity.Property(e => e.MedicoCitasU).HasColumnName("medico_citas_u");
@@ -210,15 +215,20 @@ namespace Expermed.Models
                     .IsUnicode(false)
                     .HasColumnName("usuariocreacion_citas");
 
+                entity.HasOne(d => d.ConsultaCitasCNavigation)
+                    .WithMany(p => p.Cita)
+                    .HasForeignKey(d => d.ConsultaCitasC)
+                    .HasConstraintName("FK__Cita__consulta_c__0F624AF8");
+
                 entity.HasOne(d => d.MedicoCitasUNavigation)
                     .WithMany(p => p.Cita)
                     .HasForeignKey(d => d.MedicoCitasU)
-                    .HasConstraintName("FK__Citas__medico_ci__5629CD9C");
+                    .HasConstraintName("FK__Citas__medico_ci__7F2BE32F");
 
                 entity.HasOne(d => d.PacienteCitasPNavigation)
                     .WithMany(p => p.Cita)
                     .HasForeignKey(d => d.PacienteCitasP)
-                    .HasConstraintName("FK__Citas__paciente___571DF1D5");
+                    .HasConstraintName("FK__Citas__paciente___00200768");
             });
 
             modelBuilder.Entity<Consultum>(entity =>
@@ -361,7 +371,7 @@ namespace Expermed.Models
             modelBuilder.Entity<Diagnostico>(entity =>
             {
                 entity.HasKey(e => e.IdDiagnostico)
-                    .HasName("PK__Diagnost__1384B745743818AC");
+                    .HasName("PK__Diagnost__1384B745D744B684");
 
                 entity.ToTable("Diagnostico");
 
@@ -378,6 +388,8 @@ namespace Expermed.Models
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("codigo_diagnostico");
+
+                entity.Property(e => e.ConsultaDiagnosticoC).HasColumnName("consulta_diagnostico_c");
 
                 entity.Property(e => e.DescripcionDiagnostico)
                     .IsUnicode(false)
@@ -400,6 +412,11 @@ namespace Expermed.Models
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("usuariomodificacion_diagnostico");
+
+                entity.HasOne(d => d.ConsultaDiagnosticoCNavigation)
+                    .WithMany(p => p.Diagnosticos)
+                    .HasForeignKey(d => d.ConsultaDiagnosticoC)
+                    .HasConstraintName("FK__Diagnosti__consu__04E4BC85");
             });
 
             modelBuilder.Entity<Establecimiento>(entity =>

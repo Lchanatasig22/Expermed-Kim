@@ -1,4 +1,4 @@
-﻿@model List<Cita>
+﻿@model List<Citum>
 @{
     ViewData["Title"] = "ListarCitas";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -38,7 +38,7 @@
                 <th>Acciones</th>
                 <th>Fecha de la Cita</th>
                 <th>Nombre Paciente</th>
-                <th>Médico</th>
+                <th>Médico</th> <!--Cambiar a motivo-->
                 <th>Especialidad</th>
                 <th>Estado</th>
             </tr>
@@ -55,7 +55,8 @@
                     </td>
                     <td>@cita.FechadelacitaCitas?.ToString("dd/MM/yyyy") - @cita.HoradelacitaCitas</td>
                     <td>@cita.PacienteCitasPNavigation.PrimernombrePacientes @cita.PacienteCitasPNavigation.PrimerapellidoPacientes</td>
-                    <td>@cita.MedicoCitasUNavigation.NombresUsuario @cita.MedicoCitasUNavigation.ApellidosUsuario</td>
+                    <td>@(cita.ConsultaCitasCNavigation?.MotivoConsulta ?? "No disponible")</td>
+
                     <td>@cita.MedicoCitasUNavigation.DescripcionUsuario</td>
                     <td>@cita.Estado</td>
 

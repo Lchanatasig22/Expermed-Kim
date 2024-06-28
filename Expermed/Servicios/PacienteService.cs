@@ -6,13 +6,17 @@ namespace Expermed.Servicios
     public class PacienteService
     {
         private readonly Base_ExpermedContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         /// <summary>
         /// Siempre que se cree un servicio se tiene que instanciar el DbContext
         /// </summary>
         /// <param name="context"></param>
-        public PacienteService(Base_ExpermedContext context)
+        public PacienteService(Base_ExpermedContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
+
         }
 
         /// <summary>
@@ -21,13 +25,23 @@ namespace Expermed.Servicios
         /// <returns></returns>
         public async Task<List<Paciente>> GetAllPacientesAsync()
         {
+            // Obtener el nombre de usuario de la sesión
+            var loginUsuario = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
+
+            if (string.IsNullOrEmpty(loginUsuario))
+            {
+                throw new Exception("El nombre de usuario no está disponible en la sesión.");
+            }
+
+            // Filtrar los pacientes por el usuario de creación
             var pacientes = await _context.Pacientes
+                .Where(p => p.UsuariocreacionPacientes == loginUsuario)
                 .Include(p => p.NacionalidadPacientesLNavigation)
                 .ToListAsync();
 
             return pacientes;
         }
-
+        
 
         /// <summary>
         /// Servicio de creacion de los pacientes, y haciendo la validacion de los campos nulos para evitarnos errores

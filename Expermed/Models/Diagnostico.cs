@@ -1,4 +1,7 @@
-﻿namespace Expermed.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Expermed.Models
 {
     public partial class Diagnostico
     {
@@ -11,5 +14,8 @@
         public string? CategoriaDiagnostico { get; set; }
         public string? DescripcionDiagnostico { get; set; }
         public string? CodigoDiagnostico { get; set; }
+        public int? ConsultaDiagnosticoC { get; set; }
+
+        public virtual Consultum? ConsultaDiagnosticoCNavigation { get; set; }
     }
 }
