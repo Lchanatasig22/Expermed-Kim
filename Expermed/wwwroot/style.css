@@ -15,7 +15,7 @@ a {
 }
 
     a:hover {
-        color: #FFCC00; /* Dorado */
+        color: #1dbcbb; /* Color de la paleta */
     }
 
 .btn-success, .btn.btn-outline-primary, .btn.btn-outline-warning, .btn.btn-warning {
@@ -35,7 +35,7 @@ li {
 h1 {
     font-weight: 400;
     font-size: 30px;
-    color: #000; /* Blanco */
+    color: #077dc1; /* Color de la paleta */
 }
 
 h2, h3, th, td, .opcion, .form-label, .form-control, .form-select, .btn.btn-primary.nextBtn.btn-lg.ms-3, .btn.btn-primary.previousBtn.btn-lg {
@@ -71,7 +71,7 @@ p {
     min-width: 70px;
     z-index: 1000;
     transition: all 0.25s ease-in-out;
-    background: linear-gradient(90deg, #001f3f 0%, #002f5f 50%, #3f93e7 100%);
+    background: linear-gradient(90deg, #077dc1 0%, #129cbe 50%, #1dbcbb 100%);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -191,7 +191,7 @@ a.sidebar-link {
 
 a.sidebar-link:hover {
     background-color: rgba(255, 255, 255, .075);
-    border-left: 3px solid #FFCC00; /* Dorado */
+    border-left: 3px solid #1dbcbb; /* Color de la paleta */
 }
 
 .sidebar-item {
@@ -300,104 +300,6 @@ a.sidebar-link:hover {
         padding: 20px;
     }
 }
-
-/* Switch Styles */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
-}
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
-
-input:checked + .slider {
-    background-color: #2b3990;
-}
-
-    input:checked + .slider:before {
-        transform: translateX(26px);
-    }
-
-/* Dark Mode Styles */
-body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-    body.dark-mode .form-02-main {
-        background: url('/images/doctor-with-stethoscope-hands-hospital-background-dark.jpg') no-repeat center center fixed;
-    }
-
-    body.dark-mode .form-03-main {
-        background: rgba(33, 33, 33, 0.9);
-        color: #e0e0e0;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-    }
-
-    body.dark-mode .form-group input {
-        background: #2b2b2b;
-        border: 1px solid #444;
-        color: #e0e0e0;
-    }
-
-        body.dark-mode .form-group input::placeholder {
-            color: #bbb; /* Color más claro para el modo oscuro */
-        }
-
-        body.dark-mode .form-group input:focus {
-            border-color: #FFCC00; /* Dorado */
-            box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
-        }
-
-    body.dark-mode .form-group button {
-        background: #444;
-        color: #fff;
-    }
-
-        body.dark-mode .form-group button:hover {
-            background: #333;
-        }
-
-    body.dark-mode .loading-overlay {
-        background: rgba(33, 33, 33, 0.8);
-    }
-
-        body.dark-mode .loading-overlay .spinner i {
-            color: #FFCC00; /* Dorado */
-        }
-
-        body.dark-mode .loading-overlay .spinner p {
-            color: #FFCC00; /* Dorado */
-        }
 
 /* Login */
 @media screen and (max-width: 600px) {
