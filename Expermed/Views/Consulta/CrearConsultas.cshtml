@@ -85,32 +85,35 @@
                 <span><i class="fas fa-user"></i> Datos Personales</span>
                 <hr>
             </div>
-            <div class="row g-3">
-                <div class="input-group col-sm-2">
-                    <input type="text" class="form-control" id="nombrePaciente" placeholder="Buscar paciente por nombre">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" id="btnBuscarPaciente">Buscar</button>
-                    </div>
+            <div class="input-group" style="width: 300px; height:27px">
+                <input type="text" class="form-control" id="nombrePaciente" placeholder="Buscar paciente por nombre">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="btnBuscarPaciente">Buscar</button>
                 </div>
+            </div>
+            <br />
+            <div class="row g-3">
+             
+
                 <div class="col-sm-3">
                     <label for="primerApellido">Primer apellido</label>
-                    <input type="text" class="form-control" id="primerApellido" placeholder="Máximo 200 caracteres">
+                    <input type="text" class="form-control" id="primerApellido" placeholder="Máximo 200 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="segundoApellido">Segundo apellido</label>
-                    <input type="text" class="form-control" id="segundoApellido" placeholder="Máximo 200 caracteres">
+                    <input type="text" class="form-control" id="segundoApellido" placeholder="Máximo 200 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="primerNombre">Primer nombre</label>
-                    <input type="text" class="form-control" id="primerNombre" placeholder="Máximo 200 caracteres">
+                    <input type="text" class="form-control" id="primerNombre" placeholder="Máximo 200 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="segundoNombre">Segundo nombre</label>
-                    <input type="text" class="form-control" id="segundoNombre" placeholder="Máximo 150 caracteres">
+                    <input type="text" class="form-control" id="segundoNombre" placeholder="Máximo 150 caracteres" disabled>
                 </div>
                 <div class="form-group col-sm-3">
                     <label for="tipoDocumentoSelect" class="form-label">Tipo documento *</label>
-                    <select class="form-select" asp-for="PacienteConsultaPNavigation.TipodocumentoPacientesC" id="tipoDocumentoSelect" required>
+                    <select class="form-select" asp-for="PacienteConsultaPNavigation.TipodocumentoPacientesC" id="tipoDocumentoSelect" required disabled>
                         <option value="">Seleccione...</option>
                         @if (ViewBag.TiposDocumentos != null)
                         {
@@ -123,11 +126,11 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="numeroDocumento">Número de documento</label>
-                    <input type="text" class="form-control" id="numeroDocumento" placeholder="Máximo 150 caracteres">
+                    <input type="text" class="form-control" id="numeroDocumento" placeholder="Máximo 150 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
-                    <label for="tipoSangre">Tipo de sangre</label>
-                    <select class="form-select" asp-for="PacienteConsultaPNavigation.TiposangrePacientesC" id="tipoDocumentoSelect" required>
+                    <label for="tipoSangreSelect">Tipo de sangre</label>
+                    <select class="form-select" asp-for="PacienteConsultaPNavigation.TiposangrePacientesC" id="tipoSangre" required disabled>
                         <option value="">Seleccione...</option>
                         @if (ViewBag.TiposSangre != null)
                         {
@@ -140,7 +143,7 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="esdonante">Es donante</label>
-                    <select class="form-select" id="esdonante">
+                    <select class="form-select" id="esdonante" disabled>
                         <option value="">Seleccione</option>
                         <option value="Si">Si+</option>
                         <option value="No">No</option>
@@ -148,15 +151,15 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="fechaNacimiento">Fecha de nacimiento</label>
-                    <input type="date" class="form-control" id="fechaNacimiento">
+                    <input type="date" class="form-control" id="fechaNacimiento" disabled>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                     <label for="edad">Edad</label>
-                    <input type="number" class="form-control" id="edad" placeholder="Máximo 150 caracteres">
+                    <input type="number" class="form-control" id="edad" placeholder="Ej:25" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="sexo">Sexo</label>
-                    <select class="form-select" asp-for="PacienteConsultaPNavigation.SexoPacientesC" id="sexoSelect">
+                    <select class="form-select" asp-for="PacienteConsultaPNavigation.SexoPacientesC" id="sexoSelect" disabled>
                         <option value="">Seleccione...</option>
                         @if (ViewBag.TiposGenero != null)
                         {
@@ -169,7 +172,7 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="estadoCivil">Estado civil</label>
-                    <select class="form-select" asp-for="PacienteConsultaPNavigation.EstadocivilPacientesC" id="estadoCivilSelect">
+                    <select class="form-select" asp-for="PacienteConsultaPNavigation.EstadocivilPacientesC" id="estadoCivilSelect" disabled>
                         <option value="">Seleccione...</option>
                         @if (ViewBag.TiposEstadoCivil != null)
                         {
@@ -182,7 +185,7 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="formacionProfesional">Formación profesional</label>
-                    <select class="form-select" asp-for="PacienteConsultaPNavigation.FormacionprofesionalPacientesC" id="formacionProfesionalSelect" required>
+                    <select class="form-select" asp-for="PacienteConsultaPNavigation.FormacionprofesionalPacientesC" id="formacionProfesionalSelect" required disabled>
                         <option value="">Seleccione...</option>
                         @if (ViewBag.TiposFormacion != null)
                         {
@@ -204,7 +207,9 @@
             <div class="row g-3">
                 <div class="form-group col-sm-3">
                     <label for="nacionalidadSelect" class="form-label">Nacionalidad</label>
-                    <select asp-for="PacienteConsultaPNavigation.NacionalidadPacientesL" class="form-control">
+                    <select asp-for="PacienteConsultaPNavigation.NacionalidadPacientesL" class="form-control" id="nacionalidadSelect" disabled>
+                        <option value="">Seleccione...</option>
+
                         @if (ViewBag.TiposNacionalidad != null)
                         {
                             @foreach (var tiposNacionalidad in ViewBag.TiposNacionalidad)
@@ -217,31 +222,33 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="direccion">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" placeholder="Máximo 150 caracteres">
+                    <input type="text" class="form-control" id="direccion" placeholder="Máximo 150 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="telefono">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" placeholder="Máximo 150 caracteres">
+                    <input type="text" class="form-control" id="telefono" placeholder="Máximo 150 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="telefonoCelular">Teléfono Celular</label>
-                    <input type="text" class="form-control" id="telefonoCelular" placeholder="Máximo 150 caracteres">
+                    <input type="text" class="form-control" id="telefonoCelular" placeholder="Máximo 150 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Máximo 150 caracteres">
+                    <input type="email" class="form-control" id="email" placeholder="Máximo 150 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="ocupacion">Ocupación</label>
-                    <input type="text" class="form-control" id="ocupacion" placeholder="Máximo 150 caracteres">
+                    <input type="text" class="form-control" id="ocupacion" placeholder="Máximo 150 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="empresa">Empresa</label>
-                    <input type="text" class="form-control" id="empresa" placeholder="Máximo 150 caracteres">
+                    <input type="text" class="form-control" id="empresa" placeholder="Máximo 150 caracteres" disabled>
                 </div>
                 <div class="col-sm-3">
                     <label for="seguroSalud">Seguro de salud</label>
-                    <select class="form-select" asp-for="PacienteConsultaPNavigation.SegurosaludPacientesC" id="seguroSelect" required>
+                    <select class="form-select" asp-for="PacienteConsultaPNavigation.SegurosaludPacientesC" id="seguroSelect" required disabled>
+                        <option value="">Seleccione...</option>
+
                         @if (ViewBag.TiposSeguro != null)
                         {
                             @foreach (var tiposSeguro in ViewBag.TiposSeguro)
@@ -253,7 +260,7 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="historiaClinica">Historia Clínica</label>
-                    <input type="text" class="form-control" id="historiaClinica" placeholder="Máximo 150 caracteres">
+                    <input type="text" class="form-control" id="historiaClinica" placeholder="Máximo 150 caracteres" required>
                 </div>
             </div>
 
@@ -278,7 +285,7 @@
                                                 <i class="fas fa-user"></i>
                                                 <div class="content">
                                                     <div class="header">Paciente</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="pacienteNombreStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -289,7 +296,7 @@
                                                 <i class="fas fa-id-card"></i>
                                                 <div class="content">
                                                     <div class="header">Número de documento</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="numeroDocumentoTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -300,7 +307,7 @@
                                                 <i class="fas fa-venus-mars"></i>
                                                 <div class="content">
                                                     <div class="header">Sexo</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="sexoTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -311,7 +318,7 @@
                                                 <i class="fas fa-tint"></i>
                                                 <div class="content">
                                                     <div class="header">Tipo de sangre</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="tipoSangreTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -322,7 +329,7 @@
                                                 <i class="fas fa-calendar-alt"></i>
                                                 <div class="content">
                                                     <div class="header">Fecha de nacimiento</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="fechaNacimientoTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -333,7 +340,7 @@
                                                 <i class="fas fa-calendar"></i>
                                                 <div class="content">
                                                     <div class="header">Edad</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="edadTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -346,7 +353,7 @@
                                                 <i class="fas fa-id-badge"></i>
                                                 <div class="content">
                                                     <div class="header">Estado civil</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="estadoCivilTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -357,7 +364,7 @@
                                                 <i class="fas fa-bookmark"></i>
                                                 <div class="content">
                                                     <div class="header">Formación profesional</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="formacionProfesionalTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -368,7 +375,7 @@
                                                 <i class="fas fa-thumbtack"></i>
                                                 <div class="content">
                                                     <div class="header">Nacionalidad</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="nacionalidadTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -379,7 +386,7 @@
                                                 <i class="fas fa-phone-square"></i>
                                                 <div class="content">
                                                     <div class="header">Teléfono</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="telefonoTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -390,7 +397,7 @@
                                                 <i class="fas fa-mobile-alt"></i>
                                                 <div class="content">
                                                     <div class="header">Teléfono celular</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="telefonoCelularTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -401,7 +408,7 @@
                                                 <i class="fas fa-envelope-square"></i>
                                                 <div class="content">
                                                     <div class="header">Email</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="emailTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -414,11 +421,11 @@
 
                 <div class="col-sm-3">
                     <label for="segundoNombre">Acompañante</label>
-                    <input type="text" class="form-control" id="segundoNombre" placeholder="Nombre(s),Apellido(s) 150 caracteres">
+                    <input type="text" class="form-control" id="acompañante" placeholder="Nombre(s),Apellido(s) 150 caracteres">
                 </div>
                 <div class="col-sm-3">
                     <label for="esdonante"> Parentesco</label>
-                    <select class="form-select" id="tipoSangre">
+                    <select class="form-select" id="tipoParentesco">
                         <option value="">Seleccione</option>
                         <option value="1">Amigo</option>
                         <option value="2"> Pareja</option>
@@ -609,7 +616,7 @@
                                                 <i class="fas fa-user"></i>
                                                 <div class="content">
                                                     <div class="header">Paciente</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="pacienteNombreStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -620,7 +627,7 @@
                                                 <i class="fas fa-id-card"></i>
                                                 <div class="content">
                                                     <div class="header">Número de documento</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="numeroDocumentoTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -631,7 +638,7 @@
                                                 <i class="fas fa-venus-mars"></i>
                                                 <div class="content">
                                                     <div class="header">Sexo</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="sexoTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -642,7 +649,7 @@
                                                 <i class="fas fa-tint"></i>
                                                 <div class="content">
                                                     <div class="header">Tipo de sangre</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="tipoSangreTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -653,7 +660,7 @@
                                                 <i class="fas fa-calendar-alt"></i>
                                                 <div class="content">
                                                     <div class="header">Fecha de nacimiento</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="fechaNacimientoTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -664,7 +671,7 @@
                                                 <i class="fas fa-calendar"></i>
                                                 <div class="content">
                                                     <div class="header">Edad</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="edadTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -677,7 +684,7 @@
                                                 <i class="fas fa-id-badge"></i>
                                                 <div class="content">
                                                     <div class="header">Estado civil</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="estadoCivilTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -688,7 +695,7 @@
                                                 <i class="fas fa-bookmark"></i>
                                                 <div class="content">
                                                     <div class="header">Formación profesional</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="formacionProfesionalTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -699,7 +706,7 @@
                                                 <i class="fas fa-thumbtack"></i>
                                                 <div class="content">
                                                     <div class="header">Nacionalidad</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="nacionalidadTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -710,7 +717,7 @@
                                                 <i class="fas fa-phone-square"></i>
                                                 <div class="content">
                                                     <div class="header">Teléfono</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="telefonoTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -721,7 +728,7 @@
                                                 <i class="fas fa-mobile-alt"></i>
                                                 <div class="content">
                                                     <div class="header">Teléfono celular</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="telefonoCelularTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -732,7 +739,7 @@
                                                 <i class="fas fa-envelope-square"></i>
                                                 <div class="content">
                                                     <div class="header">Email</div>
-                                                    <div class="description">Sin especificar</div>
+                                                    <div class="description" id="emailTablaStep3">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -742,6 +749,7 @@
                         </table>
                     </div>
                 </div>
+
 
 
                 <div class="hr-text">
@@ -1025,119 +1033,143 @@
         <div class="setup-content" id="step-4" style="display: none;">
             <h3> Diagnóstico</h3>
             <div class="row g-3">
-                <div class="container my-4">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
+                <div class="one field">
+                    <div class="field">
+                        <table class="ui very basic collapsing celled table">
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-user me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Paciente</div>
-                                                <div>Julia Fernanda Lema Flores</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-user"></i>
+                                                <div class="content">
+                                                    <div class="header">Paciente</div>
+                                                    <div class="description" id="pacienteNombreStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-id-card me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Cédula de identidad</div>
-                                                <div>1713456780</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-id-card"></i>
+                                                <div class="content">
+                                                    <div class="header">Número de documento</div>
+                                                    <div class="description" id="numeroDocumentoTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-venus-mars me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Sexo</div>
-                                                <div>Otro</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-venus-mars"></i>
+                                                <div class="content">
+                                                    <div class="header">Sexo</div>
+                                                    <div class="description" id="sexoTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-tint me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Tipo de sangre</div>
-                                                <div>O+</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-tint"></i>
+                                                <div class="content">
+                                                    <div class="header">Tipo de sangre</div>
+                                                    <div class="description" id="tipoSangreTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-calendar-alt me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Fecha de nacimiento</div>
-                                                <div>1980-06-15</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <div class="content">
+                                                    <div class="header">Fecha de nacimiento</div>
+                                                    <div class="description" id="fechaNacimientoTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-calendar me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Edad</div>
-                                                <div>43</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-calendar"></i>
+                                                <div class="content">
+                                                    <div class="header">Edad</div>
+                                                    <div class="description" id="edadTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-id-badge me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Estado civil</div>
-                                                <div>Soltero</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-id-badge"></i>
+                                                <div class="content">
+                                                    <div class="header">Estado civil</div>
+                                                    <div class="description" id="estadoCivilTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-bookmark me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Formación profesional</div>
-                                                <div>Tecnico</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-bookmark"></i>
+                                                <div class="content">
+                                                    <div class="header">Formación profesional</div>
+                                                    <div class="description" id="formacionProfesionalTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-thumbtack me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Nacionalidad</div>
-                                                <div>Sin especificar</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-thumbtack"></i>
+                                                <div class="content">
+                                                    <div class="header">Nacionalidad</div>
+                                                    <div class="description" id="nacionalidadTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-phone-square-alt me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Teléfono</div>
-                                                <div>0980684725</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-phone-square"></i>
+                                                <div class="content">
+                                                    <div class="header">Teléfono</div>
+                                                    <div class="description" id="telefonoTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-mobile-alt me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Teléfono celular</div>
-                                                <div>Sin especificar</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-mobile-alt"></i>
+                                                <div class="content">
+                                                    <div class="header">Teléfono celular</div>
+                                                    <div class="description" id="telefonoCelularTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-envelope me-2"></i>
-                                            <div>
-                                                <div class="fw-bold">Email</div>
-                                                <div>hola@salusconsultora.com</div>
-                                            </div>
+                                        <div class="ui list">
+                                            <a class="item">
+                                                <i class="fas fa-envelope-square"></i>
+                                                <div class="content">
+                                                    <div class="header">Email</div>
+                                                    <div class="description" id="emailTablaStep3">Sin especificar</div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -1419,6 +1451,8 @@
                 type: 'GET',
                 data: { nombre: nombre },
                 success: function (data) {
+                    console.log(data); // Depuración: verifica la estructura de 'data'
+
                     // Datos personales
                     $('#primerApellido').val(data.primerApellido);
                     $('#segundoApellido').val(data.segundoApellido);
@@ -1428,14 +1462,14 @@
                     $('#numeroDocumento').val(data.numeroDocumento);
                     $('#tipoSangre').val(data.tipoSangre);
                     $('#esdonante').val(data.esDonante ? 'Si' : 'No');
-                    $('#fechaNacimiento').val(data.fechaNacimiento.split('T')[0]); // Asegúrate de que el formato de fecha coincida
+                    $('#fechaNacimiento').val(data.fechaNacimiento);
                     $('#edad').val(data.edad);
                     $('#sexoSelect').val(data.sexo);
                     $('#estadoCivilSelect').val(data.estadoCivil);
                     $('#formacionProfesionalSelect').val(data.formacionProfesional);
 
                     // Datos de contacto
-                    $('#nacionalidadSelect').val(data.nacionalidad);
+                    $('#nacionalidadSelect').val(data.nacionalidad); // Asegúrate de que 'data.nacionalidad' tiene el valor correcto
                     $('#direccion').val(data.direccion);
                     $('#telefono').val(data.telefono);
                     $('#telefonoCelular').val(data.telefonoCelular);
@@ -1443,13 +1477,46 @@
                     $('#ocupacion').val(data.ocupacion);
                     $('#empresa').val(data.empresa);
                     $('#seguroSelect').val(data.seguroSalud);
-                    // No se actualiza la 'Historia Clínica'
+
+                    console.log($('#nacionalidadSelect').val()); // Verifica el valor asignado
+                    console.log($('#nacionalidadSelect option:selected').text()); // Verifica el texto de la opción seleccionada
+
+                    // Actualiza la tabla con los datos del paciente
+                    var pacienteNombre = data.primerNombre + ' ' + data.primerApellido;
+                    var numeroDocumento = data.numeroDocumento;
+                    var sexo = $('#sexoSelect option:selected').text(); // Muestra el texto del sexo
+                    var tipoSangre = $('#tipoSangre option:selected').text(); // Muestra el texto del tipo de sangre
+                    var fechaNacimiento = data.fechaNacimiento;
+                    var edad = data.edad;
+                    var estadoCivil = $('#estadoCivilSelect option:selected').text(); // Muestra el texto del estado civil
+                    var formacionProfesional = $('#formacionProfesionalSelect option:selected').text(); // Muestra el texto de la formación profesional
+                    var nacionalidad = $('#nacionalidadSelect option:selected').text(); // Muestra el texto de la nacionalidad
+                    var telefono = data.telefono;
+                    var telefonoCelular = data.telefonoCelular;
+                    var email = data.email;
+
+                    $('#pacienteNombre, #pacienteNombreStep2, #pacienteNombreStep3').text(pacienteNombre);
+                    $('#numeroDocumentoTabla, #numeroDocumentoTablaStep2, #numeroDocumentoTablaStep3').text(numeroDocumento);
+                    $('#sexoTabla, #sexoTablaStep2, #sexoTablaStep3').text(sexo);
+                    $('#tipoSangreTabla, #tipoSangreTablaStep2, #tipoSangreTablaStep3').text(tipoSangre);
+                    $('#fechaNacimientoTabla, #fechaNacimientoTablaStep2, #fechaNacimientoTablaStep3').text(fechaNacimiento);
+                    $('#edadTabla, #edadTablaStep2, #edadTablaStep3').text(edad);
+                    $('#estadoCivilTabla, #estadoCivilTablaStep2, #estadoCivilTablaStep3').text(estadoCivil);
+                    $('#formacionProfesionalTabla, #formacionProfesionalTablaStep2, #formacionProfesionalTablaStep3').text(formacionProfesional);
+                    $('#nacionalidadTabla, #nacionalidadTablaStep2, #nacionalidadTablaStep3').text(nacionalidad);
+                    $('#telefonoTabla, #telefonoTablaStep2, #telefonoTablaStep3').text(telefono);
+                    $('#telefonoCelularTabla, #telefonoCelularTablaStep2, #telefonoCelularTablaStep3').text(telefonoCelular);
+                    $('#emailTabla, #emailTablaStep2, #emailTablaStep3').text(email);
                 },
                 error: function () {
                     alert('Paciente no encontrado');
                 }
             });
         });
+
+
+
+
         // Activar el primer paso al cargar la página
         $('div.stepwizard-step button[data-step="1"]').trigger('click');
 

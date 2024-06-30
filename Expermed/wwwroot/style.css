@@ -1,6 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
+*,
 ::after,
 ::before {
     box-sizing: border-box;
@@ -11,27 +11,22 @@
 a {
     text-decoration: none;
     font-size: 12px;
+    transition: color 0.3s ease;
 }
 
-    a.btn.btn-outline-primary {
-        text-decoration: none;
-        font-size: 12px;
+    a:hover {
+        color: #FFCC00; /* Dorado */
     }
 
-    a.btn.btn-outline-warning {
-        text-decoration: none;
-        font-size: 12px;
-    }
-
-    a.btn.btn-warning {
-        text-decoration: none;
-        font-size: 12px;
-    }
-
-.btn-success {
+.btn-success, .btn.btn-outline-primary, .btn.btn-outline-warning, .btn.btn-warning {
     text-decoration: none;
     font-size: 12px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+    .btn-success:hover, .btn.btn-outline-primary:hover, .btn.btn-outline-warning:hover, .btn.btn-warning:hover {
+        transform: scale(1.05);
+    }
 
 li {
     list-style: none;
@@ -40,38 +35,21 @@ li {
 h1 {
     font-weight: 400;
     font-size: 30px;
-    color: black;
+    color: #000; /* Blanco */
 }
 
-h2 {
+h2, h3, th, td, .opcion, .form-label, .form-control, .form-select, .btn.btn-primary.nextBtn.btn-lg.ms-3, .btn.btn-primary.previousBtn.btn-lg {
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 12px;
 }
 
 h3 {
     font-weight: 600;
-    font-size: 1rem;
-}
-
-th {
-    font-weight: 400;
-    font-size: 12px;
-}
-
-td {
-    font-weight: 400;
-    font-size: 14px;
-}
-
-opcion {
-    font-weight: 400;
-    font-size: 12px;
 }
 
 body {
     font-family: "Roboto", sans-serif;
     font-weight: 300;
-    font-style: italic;
 }
 
 p {
@@ -79,70 +57,41 @@ p {
     font-size: 16px;
 }
 
-form-label {
-    font-weight: 400;
-    font-size: 12px;
-}
-
-button.btn.btn-primary.nextBtn.btn-lg.ms-3 {
-    font-weight: 400;
-    font-size: 12px;
-}
-
-button.btn.btn-primary.previousBtn.btn-lg {
-    font-weight: 400;
-    font-size: 12px;
-}
-
-.form-control {
-    font-weight: 400;
-    font-size: 12px;
-}
-
-.form-select {
-    font-weight: 400;
-    font-size: 12px;
-}
-
 .ui.list .item {
-    color: inherit !important; /* Hereda el color del texto */
-    text-decoration: none !important; /* Quita el subrayado */
+    color: inherit !important;
+    text-decoration: none !important;
 }
-
 
 .wrapper {
     display: flex;
 }
 
-/* Sidebar styles */
 #sidebar {
     width: 70px;
     min-width: 70px;
     z-index: 1000;
     transition: all 0.25s ease-in-out;
-    background: rgb(32, 198, 186);
-    background: linear-gradient(90deg, rgba(32, 198, 186, 1) 0%, rgba(18, 158, 186, 1) 50%, rgba(0, 153, 222, 1) 100%);
+    background: linear-gradient(90deg, #001f3f 0%, #002f5f 50%, #3f93e7 100%);
     display: flex;
     flex-direction: column;
-    position: fixed; /* Fixed position to stay in place */
+    position: fixed;
     top: 0;
     left: 0;
     padding-top: 20px;
     height: 100vh;
 }
 
-/* Main content styles */
 .main {
     min-height: 100vh;
-    width: calc(100% - 70px); /* Subtract sidebar width */
+    width: calc(100% - 70px);
     overflow: hidden;
-    position: relative; /* Ensure proper positioning of absolute content */
+    position: relative;
     transition: all 0.35s ease-in-out;
     background-image: url('images/doctor-with-stethoscope-hands-hospital-background.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-left: 70px; /* Match sidebar width */
+    margin-left: 70px;
 }
 
     .main::before {
@@ -152,23 +101,39 @@ button.btn.btn-primary.previousBtn.btn-lg {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgb(255, 255, 255, 0.68); /* Semi-transparent white background */
+        background-color: rgba(255, 255, 255, 0.68);
     }
 
-    /* Additional styles for the content within .main */
     .main .container-fluid {
-        position: relative; /* Ensure proper positioning of the content */
-        z-index: 1; /* Ensure content is above the background overlay */
-        padding: 20px; /* Optional padding for the content */
-        color: #000; /* White text color for better readability */
+        position: relative;
+        z-index: 1;
+        padding: 20px;
+        color: #000;
     }
 
+@keyframes heartbeat {
+    0%, 20%, 40%, 60%, 80%, 100% {
+        transform: scale(1);
+    }
 
+    10%, 30%, 50%, 70%, 90% {
+        transform: scale(1.2);
+    }
+}
 
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 #sidebar.expand {
     width: 200px;
-    min-width: 26px;
+    min-width: 200px;
 }
 
 .toggle-btn {
@@ -176,11 +141,16 @@ button.btn.btn-primary.previousBtn.btn-lg {
     cursor: pointer;
     border: 0;
     padding: 1rem 1.5rem;
+    transition: transform 0.3s ease;
 }
 
     .toggle-btn i {
         font-size: 1.5rem;
         color: #FFF;
+    }
+
+    .toggle-btn:hover {
+        transform: rotate(90deg);
     }
 
 .sidebar-logo {
@@ -211,6 +181,7 @@ a.sidebar-link {
     font-size: 0.9rem;
     white-space: nowrap;
     border-left: 3px solid transparent;
+    transition: background-color 0.3s ease, border-left 0.3s ease;
 }
 
 .sidebar-link i {
@@ -220,7 +191,7 @@ a.sidebar-link {
 
 a.sidebar-link:hover {
     background-color: rgba(255, 255, 255, .075);
-    border-left: 3px solid #ffffff;
+    border-left: 3px solid #FFCC00; /* Dorado */
 }
 
 .sidebar-item {
@@ -263,38 +234,34 @@ a.sidebar-link:hover {
 }
 
 .container-fluid {
-    backdrop-filter: blur(10px); /* Aplica un ligero desenfoque para suavizar el fondo */
-    background-color: rgba(165, 165, 165, 0.42); /* Fondo semi-transparente */
-    border-radius: 10px; /* Bordes redondeados para un aspecto más suave */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.67); /* Sombra ligera para levantar el contenedor */
-    padding: 30px; /* Espacio interior aumentado para mejor legibilidad */
-    margin-top: 100px; /* Espacio superior */
-    width: auto; /* Permitir que el contenedor se ajuste al contenido */
-    max-width: 90%; /* Limitar el ancho máximo relativo al tamaño de la ventana */
-    margin-left: auto; /* Centra horizontalmente */
-    margin-right: auto; /* Centra horizontalmente */
-    overflow: auto; /* Asegura que el contenido desborde correctamente */
+    backdrop-filter: blur(10px);
+    background-color: rgba(240, 240, 240, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 100px;
+    width: auto;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
 }
 
-
-
-/* Estilos para el formulario de horas disponibles */
 #formHorasDisponibles {
-    margin-top: 30px; /* Separación superior para distinguirlo del formulario principal */
-    padding: 20px; /* Espacio interior */
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
     #formHorasDisponibles h2 {
-        font-size: 24px; /* Tamaño de fuente */
-        font-weight: bold; /* Peso de fuente */
-        margin-bottom: 20px; /* Separación inferior */
-        text-align: center; /* Centrar el texto */
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
     }
 
-/* Estilos para la cuadrícula de horas */
 .hours-grid {
     display: flex;
     flex-wrap: wrap;
@@ -303,7 +270,6 @@ a.sidebar-link:hover {
     margin-top: 20px;
 }
 
-/* Estilos para las tarjetas de horas */
 .hour-card {
     display: flex;
     flex-direction: column;
@@ -329,18 +295,111 @@ a.sidebar-link:hover {
         margin-bottom: 10px;
     }
 
-
-
-
 @media (max-width: 768px) {
     .container-fluid {
-        padding: 20px; /* Reducción del espacio interior en dispositivos más pequeños */
+        padding: 20px;
     }
 }
 
-/* Login*/
+/* Switch Styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
 
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+input:checked + .slider {
+    background-color: #2b3990;
+}
+
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+    body.dark-mode .form-02-main {
+        background: url('/images/doctor-with-stethoscope-hands-hospital-background-dark.jpg') no-repeat center center fixed;
+    }
+
+    body.dark-mode .form-03-main {
+        background: rgba(33, 33, 33, 0.9);
+        color: #e0e0e0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+
+    body.dark-mode .form-group input {
+        background: #2b2b2b;
+        border: 1px solid #444;
+        color: #e0e0e0;
+    }
+
+        body.dark-mode .form-group input::placeholder {
+            color: #bbb; /* Color más claro para el modo oscuro */
+        }
+
+        body.dark-mode .form-group input:focus {
+            border-color: #FFCC00; /* Dorado */
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+        }
+
+    body.dark-mode .form-group button {
+        background: #444;
+        color: #fff;
+    }
+
+        body.dark-mode .form-group button:hover {
+            background: #333;
+        }
+
+    body.dark-mode .loading-overlay {
+        background: rgba(33, 33, 33, 0.8);
+    }
+
+        body.dark-mode .loading-overlay .spinner i {
+            color: #FFCC00; /* Dorado */
+        }
+
+        body.dark-mode .loading-overlay .spinner p {
+            color: #FFCC00; /* Dorado */
+        }
+
+/* Login */
 @media screen and (max-width: 600px) {
     .form-03-main {
         width: 100%;

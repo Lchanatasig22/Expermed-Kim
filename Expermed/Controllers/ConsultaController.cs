@@ -97,15 +97,44 @@ namespace Expermed.Controllers
         }
 
 
+
+
         [HttpGet]
         public async Task<IActionResult> BuscarPacientePorNombre(string nombre)
         {
             var paciente = await _consultaService.BuscarPacientePorNombreAsync(nombre);
-            if (paciente == null)
+            if (paciente != null)
+            {
+                return Json(new
+                {
+                    primerApellido = paciente.PrimerapellidoPacientes,
+                    segundoApellido = paciente.SegundoapellidoPacientes,
+                    primerNombre = paciente.PrimernombrePacientes,
+                    segundoNombre = paciente.SegundonombrePacientes,
+                    tipoDocumento = paciente.TipodocumentoPacientesC,
+                    numeroDocumento = paciente.CiPacientes,
+                    tipoSangre = paciente.TiposangrePacientesC,
+                    esDonante = paciente.DonantePacientes,
+                    fechaNacimiento = paciente.FechanacimientoPacientes.HasValue ? paciente.FechanacimientoPacientes.Value.ToString("yyyy-MM-dd") : string.Empty,
+                    edad = paciente.Edad,
+                    sexo = paciente.SexoPacientesC,
+                    estadoCivil = paciente.EstadocivilPacientesC,
+                    formacionProfesional = paciente.FormacionprofesionalPacientesC,
+                    nacionalidad = paciente.NacionalidadPacientesL,
+                    direccion = paciente.DireccionPacientes,
+                    telefono = paciente.TelefonocelularPacientes,
+                    telefonoCelular = paciente.TelefonocelularPacientes,
+                    email = paciente.EmailPacientes,
+                    ocupacion = paciente.OcupacionPacientes,
+                    empresa = paciente.EmpresaPacientes,
+                    seguroSalud = paciente.SegurosaludPacientesC
+
+                });
+            }
+            else
             {
                 return NotFound();
             }
-            return Json(paciente);
         }
 
 
