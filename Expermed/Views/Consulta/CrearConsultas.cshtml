@@ -46,6 +46,68 @@
                 padding: 0 10px;
                 font-size: 18px;
             }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .card-header {
+            font-weight: 700;
+            font-size: 16px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #00A7E1;
+                box-shadow: none;
+            }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+            .btn-success:hover {
+                background-color: #218838;
+                transform: scale(1.05);
+            }
+
+        .btn-outline-secondary {
+            border-color: #ccc;
+            color: #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+            .btn-outline-secondary:hover {
+                background-color: #e0e0e0;
+                transform: scale(1.05);
+            }
     </style>
 
 </head>
@@ -93,7 +155,7 @@
             </div>
             <br />
             <div class="row g-3">
-             
+
 
                 <div class="col-sm-3">
                     <label for="primerApellido">Primer apellido</label>
@@ -1179,189 +1241,222 @@
                 </div>
 
 
-                <form novalidate class="needs-validation" id="edit-form">
-                    <div class="mb-3">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="col-md-8">Diagnóstico</th>
-                                    <th class="col-md-2">Presuntivo/Definitivo</th>
-                                    <th class="col-md-2">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Buscar..." id="diagnostico0Input" autocomplete="off">
-                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-success">Presuntivo</button>
-                                            <button type="button" class="btn btn-outline-primary">Definitivo</button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle"></i> Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Buscar..." id="diagnostico1Input" autocomplete="off">
-                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-success">Presuntivo</button>
-                                            <button type="button" class="btn btn-outline-primary">Definitivo</button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle"></i> Eliminar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3">
-                                        <button type="button" class="btn btn-outline-success"><i class="bi bi-plus-circle"></i> Añadir</button>
-                                    </th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">Diagnóstico</div>
+                        <div class="card-body">
+                            <table class="table" id="diagnosticoTable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-6">Diagnóstico</th>
+                                        <th class="col-3">Presuntivo/Definitivo</th>
+                                        <th class="col-3">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="diagnosticoTableBody">
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Buscar...">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="options0" id="presuntivo0" autocomplete="off"> Presuntivo
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="options0" id="definitivo0" autocomplete="off"> Definitivo
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-secondary eliminar-fila" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3">
+                                            <button type="button" class="btn btn-success" id="anadirFila"><i class="fas fa-plus-circle"></i> Añadir</button>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="consulta-diagnostico-plan-tratamiento" class="form-label">Planes de tratamiento *</label>
-                        <textarea id="consulta-diagnostico-plan-tratamiento" class="form-control" maxlength="8000" placeholder="Máximo 8000 caracteres" rows="2"></textarea>
+
+                    <!-- Planes de tratamiento -->
+                    <div class="card">
+                        <div class="card-header">Planes de tratamiento</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="consulta-diagnostico-plan-tratamiento">Planes de tratamiento *</label>
+                                <textarea id="consulta-diagnostico-plan-tratamiento" maxlength="8000" name="consulta-diagnostico-plan-tratamiento" placeholder="Máximo 8000 caracteres" rows="2" class="form-control"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="col-md-4">Medicamento</th>
-                                    <th class="col-md-2">Cantidad</th>
-                                    <th class="col-md-4">Observación</th>
-                                    <th class="col-md-2">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Buscar..." id="medicamento0Input" autocomplete="off">
-                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control" max="999" placeholder="0" id="medicamento0cantidad">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" maxlength="300" placeholder="Máximo 300 caracteres" id="medicamento0observacion">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle"></i> Eliminar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3">
-                                        <button type="button" class="btn btn-outline-success"><i class="bi bi-plus-circle"></i> Añadir</button>
-                                    </th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                    <!-- Medicamentos -->
+                    <div class="card">
+                        <div class="card-header">Medicamentos</div>
+                        <div class="card-body">
+                            <table class="table" id="medicamentosTable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-6">Medicamento</th>
+                                        <th class="col-2">Cantidad</th>
+                                        <th class="col-6">Observación</th>
+                                        <th class="col-2">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="medicamentosTableBody">
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Buscar...">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" max="999" placeholder="0" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-secondary eliminar-fila-medicamento" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4">
+                                            <button type="button" class="btn btn-success" id="anadirFilaMedicamento"><i class="fas fa-plus-circle"></i> Añadir</button>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="col-md-4">Imagen (Examen)</th>
-                                    <th class="col-md-2">Cantidad</th>
-                                    <th class="col-md-4">Observación</th>
-                                    <th class="col-md-2">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Buscar..." id="imagen0Input" autocomplete="off">
-                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control" max="999" placeholder="0" id="imagen0cantidad">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" maxlength="300" placeholder="Máximo 300 caracteres" id="imagen0observacion">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle"></i> Eliminar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3">
-                                        <button type="button" class="btn btn-outline-success"><i class="bi bi-plus-circle"></i> Añadir</button>
-                                    </th>
-                                </tr>
-                            </tfoot>
-                        </table>
+
+                    <!-- Imágenes (Exámenes) -->
+                    <div class="card">
+                        <div class="card-header">Imagen (Exámen)</div>
+                        <div class="card-body">
+                            <table class="table" id="imagenesTable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-6">Imagen (Exámen)</th>
+                                        <th class="col-2">Cantidad</th>
+                                        <th class="col-6">Observación</th>
+                                        <th class="col-2">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="imagenesTableBody">
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Buscar...">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" max="999" placeholder="0" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-secondary eliminar-fila-imagen" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4">
+                                            <button type="button" class="btn btn-success" id="anadirFilaImagen"><i class="fas fa-plus-circle"></i> Añadir</button>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="col-md-4">Laboratorio</th>
-                                    <th class="col-md-2">Cantidad</th>
-                                    <th class="col-md-4">Observación</th>
-                                    <th class="col-md-2">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Buscar..." id="laboratorio0Input" autocomplete="off">
-                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control" max="999" placeholder="0" id="laboratorio0cantidad">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" maxlength="300" placeholder="Máximo 300 caracteres" id="laboratorio0observacion">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-danger"><i class="bi bi-x-circle"></i> Eliminar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3">
-                                        <button type="button" class="btn btn-outline-success"><i class="bi bi-plus-circle"></i> Añadir</button>
-                                    </th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                    <!-- Laboratorio -->
+                    <div class="card">
+                        <div class="card-header">Laboratorio</div>
+                        <div class="card-body">
+                            <table class="table" id="laboratorioTable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-6">Laboratorio</th>
+                                        <th class="col-2">Cantidad</th>
+                                        <th class="col-6">Observación</th>
+                                        <th class="col-2">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="laboratorioTableBody">
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Buscar...">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" max="999" placeholder="0" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-secondary eliminar-fila-laboratorio" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4">
+                                            <button type="button" class="btn btn-success" id="anadirFilaLaboratorio"><i class="fas fa-plus-circle"></i> Añadir</button>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="consulta-diagnostico-dias-incapacidad" class="form-label">Días de incapacidad</label>
-                        <input type="number" class="form-control" id="consulta-diagnostico-dias-incapacidad" max="10000" min="0" placeholder="0">
+                    <!-- Días de Incapacidad -->
+                    <div class="card">
+                        <div class="card-header">Días de Incapacidad</div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="consulta-diagnostico-dias-incapacidad">Días de incapacidad</label>
+                                    <input id="consulta-diagnostico-dias-incapacidad" max="10000" min="0" name="consulta-diagnostico-dias-incapacidad" placeholder="0" type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="consulta-diagnostico-observaciones" class="form-label">Observaciones finales</label>
-                        <textarea id="consulta-diagnostico-observaciones" class="form-control" maxlength="8000" placeholder="Máximo 8000 caracteres" rows="2"></textarea>
+                    <!-- Observaciones Finales -->
+                    <div class="card">
+                        <div class="card-header">Observaciones Finales</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="consulta-diagnostico-observaciones">Observaciones finales</label>
+                                <textarea id="consulta-diagnostico-observaciones" maxlength="8000" name="consulta-diagnostico-observaciones" placeholder="Máximo 8000 caracteres" rows="2" class="form-control"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
+                </div>
+
+
             </div>
             <button class="btn btn-success btn-lg pull-right mt-3" type="submit">Finalizar</button>
         </div>
@@ -1373,10 +1468,147 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 <script>
 
 
+
     $(document).ready(function () {
+        var filaIndex = 1;
+        var medicamentoIndex = 1;
+        var laboratorioIndex = 1;
+        var imagenIndex = 1;
+
+
+        // Añadir nueva fila
+        $('#anadirFila').on('click', function () {
+            var nuevaFila = `
+                                                <tr>
+                                                    <td>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" placeholder="Buscar...">
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                                </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                            <label class="btn btn-outline-secondary">
+                                                                <input type="radio" name="options${filaIndex}" id="presuntivo${filaIndex}" autocomplete="off"> Presuntivo
+                                                            </label>
+                                                            <label class="btn btn-outline-secondary">
+                                                                <input type="radio" name="options${filaIndex}" id="definitivo${filaIndex}" autocomplete="off"> Definitivo
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-secondary eliminar-fila"><i class="fas fa-times-circle"></i> Eliminar</button>
+                                                    </td>
+                                                </tr>`;
+            $('#diagnosticoTableBody').append(nuevaFila);
+            filaIndex++;
+        });
+
+        // Eliminar fila
+        $('#diagnosticoTableBody').on('click', '.eliminar-fila', function () {
+            $(this).closest('tr').remove();
+        });
+
+        // Añadir nueva fila en Medicamentos
+        $('#anadirFilaMedicamento').on('click', function () {
+            var nuevaFila = `
+                                            <tr>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Buscar...">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="number" max="999" placeholder="0" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-outline-secondary eliminar-fila-medicamento"><i class="fas fa-times-circle"></i> Eliminar</button>
+                                                </td>
+                                            </tr>`;
+            $('#medicamentosTableBody').append(nuevaFila);
+            medicamentoIndex++;
+        });
+
+        // Eliminar fila en Medicamentos
+        $('#medicamentosTableBody').on('click', '.eliminar-fila-medicamento', function () {
+            $(this).closest('tr').remove();
+        });
+
+        // Añadir nueva fila en Imágenes (Exámenes)
+        $('#anadirFilaImagen').on('click', function () {
+            var nuevaFila = `
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Buscar...">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="number" max="999" placeholder="0" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary eliminar-fila-imagen"><i class="fas fa-times-circle"></i> Eliminar</button>
+                                    </td>
+                                </tr>`;
+            $('#imagenesTableBody').append(nuevaFila);
+            imagenIndex++;
+        });
+
+        // Eliminar fila en Imágenes (Exámenes)
+        $('#imagenesTableBody').on('click', '.eliminar-fila-imagen', function () {
+            $(this).closest('tr').remove();
+        });
+
+        // Añadir nueva fila en Laboratorio
+        $('#anadirFilaLaboratorio').on('click', function () {
+            var nuevaFila = `
+                                        <tr>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Buscar...">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="number" max="999" placeholder="0" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-outline-secondary eliminar-fila-laboratorio"><i class="fas fa-times-circle"></i> Eliminar</button>
+                                            </td>
+                                        </tr>`;
+            $('#laboratorioTableBody').append(nuevaFila);
+            laboratorioIndex++;
+        });
+
+        // Eliminar fila en Laboratorio
+        $('#laboratorioTableBody').on('click', '.eliminar-fila-laboratorio', function () {
+            $(this).closest('tr').remove();
+        });
+
+
         var navListItems = $('div.stepwizard-step button'),
             allWells = $('.setup-content');
 
@@ -1514,11 +1746,8 @@
             });
         });
 
-
-
-
         // Activar el primer paso al cargar la página
         $('div.stepwizard-step button[data-step="1"]').trigger('click');
-
     });
+
 </script>

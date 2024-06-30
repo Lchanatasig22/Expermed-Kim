@@ -11,9 +11,11 @@ namespace Expermed.Servicios
     public class CitasService
     {
         private readonly Base_ExpermedContext _context;
-        public CitasService(Base_ExpermedContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public CitasService(Base_ExpermedContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
         /// <summary>
         /// Trae todos los medicos, basandose en el iddelperfil
@@ -63,11 +65,26 @@ namespace Expermed.Servicios
         /// <returns></returns>
         public async Task<List<Citum>> GetAllCitasAsync()
         {
-            return await _context.Cita
+            var loginUsuario = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
+
+            if (string.IsNullOrEmpty(loginUsuario))
+            {
+                throw new Exception("El nombre de usuario no está disponible en la sesión.");
+            }
+
+
+            // Filtrar las citas por el usuario de creación
+         
+         
+
+            var citas = await _context.Cita
+                .Where(c => c.UsuariocreacionCitas == loginUsuario)
                 .Include(c => c.MedicoCitasUNavigation)
                 .Include(c => c.PacienteCitasPNavigation)
                 .Include(c => c.ConsultaCitasCNavigation)
                 .ToListAsync();
+
+            return citas;
         }
 
 
