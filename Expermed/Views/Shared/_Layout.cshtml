@@ -66,9 +66,15 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" asp-area="" asp-controller="Cita" asp-action="ObtenerHorasDisponibles">
+                        <a class="sidebar-link" asp-area="" asp-controller="Cita" asp-action="ListarCitas">
                             <i class="fa fa-user-md"></i>
                             <span>Usuario</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Facturacion" asp-action="Facturacion">
+                            <i class="fa fa-stethoscope"></i>
+                            <span>Facturacion</span>
                         </a>
                     </li>
                 }
@@ -93,18 +99,25 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" asp-area="" asp-controller="Consulta" asp-action="Guardar">
+                        <a class="sidebar-link" asp-area="" asp-controller="Consulta" asp-action="CrearConsulta">
                             <i class="fa fa-stethoscope"></i>
                             <span>Consulta</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-area="" asp-controller="Facturacion" asp-action="Facturacion">
+                            <i class="fa fa-stethoscope"></i>
+                            <span>Facturacion</span>
                         </a>
                     </li>
 
                 }
             </ul>
+
             <div class="sidebar-footer">
                 <a asp-action="Login" asp-controller="Access" class="sidebar-link">
                     <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Logout</span>
+                    <span>Salir</span>
                 </a>
             </div>
         </aside>

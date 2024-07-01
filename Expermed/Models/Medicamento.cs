@@ -14,5 +14,7 @@ namespace Expermed.Models
         public string? CategoriaMedicamentos { get; set; }
         public string? DescripcionMedicamentos { get; set; }
         public string? ConcentracionMedicamentos { get; set; }
+
+        public virtual CMedicamento? CMedicamento { get; set; }
     }
 }

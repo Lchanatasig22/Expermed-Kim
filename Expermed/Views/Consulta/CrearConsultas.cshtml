@@ -322,13 +322,13 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="historiaClinica">Historia Clínica</label>
-                    <input type="text" class="form-control" id="historiaClinica" placeholder="Máximo 150 caracteres" required>
+                    <input type="text" class="form-control" id="historiaClinica" placeholder="Máximo 150 caracteres" required >
                 </div>
             </div>
 
             <div class="text-end mt-3">
                 <a asp-action="Listar" asp-controller="Consulta" class="btn btn-outline-secondary"><i class="fa fa-close"></i> Salir</a>
-                <button class="btn btn-primary nextBtn btn-lg ms-3" type="button">Siguiente <i class="fa fa-arrow-right"></i></button>
+                <button class="btn btn-primary nextBtn btn-lg ms-3" type="submit">Siguiente <i class="fa fa-arrow-right"></i></button>
             </div>
         </div>
         <!--Final primer formulario-->
@@ -487,11 +487,15 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="esdonante"> Parentesco</label>
-                    <select class="form-select" id="tipoParentesco">
-                        <option value="">Seleccione</option>
-                        <option value="1">Amigo</option>
-                        <option value="2"> Pareja</option>
-
+                    <select class="form-select" asp-for="TipoparienteConsulta" id="tipoParienteSelect" required>
+                        <option value="">Seleccione...</option>
+                        @if (ViewBag.TiposPariente != null)
+                        {
+                            @foreach (var tiposPariente in ViewBag.TiposPariente)
+                            {
+                                <option value="@tiposPariente.Value">@tiposPariente.Text</option>
+                            }
+                        }
                     </select>
                 </div>
 
@@ -1483,29 +1487,29 @@
         // Añadir nueva fila
         $('#anadirFila').on('click', function () {
             var nuevaFila = `
-                                                <tr>
-                                                    <td>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="Buscar...">
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                                                </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-outline-secondary">
-                                                                <input type="radio" name="options${filaIndex}" id="presuntivo${filaIndex}" autocomplete="off"> Presuntivo
-                                                            </label>
-                                                            <label class="btn btn-outline-secondary">
-                                                                <input type="radio" name="options${filaIndex}" id="definitivo${filaIndex}" autocomplete="off"> Definitivo
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-outline-secondary eliminar-fila"><i class="fas fa-times-circle"></i> Eliminar</button>
-                                                    </td>
-                                                </tr>`;
+                                                    <tr>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="Buscar...">
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                                    </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                                <label class="btn btn-outline-secondary">
+                                                                    <input type="radio" name="options${filaIndex}" id="presuntivo${filaIndex}" autocomplete="off"> Presuntivo
+                                                                </label>
+                                                                <label class="btn btn-outline-secondary">
+                                                                    <input type="radio" name="options${filaIndex}" id="definitivo${filaIndex}" autocomplete="off"> Definitivo
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-secondary eliminar-fila"><i class="fas fa-times-circle"></i> Eliminar</button>
+                                                        </td>
+                                                    </tr>`;
             $('#diagnosticoTableBody').append(nuevaFila);
             filaIndex++;
         });
@@ -1517,6 +1521,68 @@
 
         // Añadir nueva fila en Medicamentos
         $('#anadirFilaMedicamento').on('click', function () {
+            var nuevaFila = `
+                                                <tr>
+                                                    <td>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" placeholder="Buscar...">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" max="999" placeholder="0" class="form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-secondary eliminar-fila-medicamento"><i class="fas fa-times-circle"></i> Eliminar</button>
+                                                    </td>
+                                                </tr>`;
+            $('#medicamentosTableBody').append(nuevaFila);
+            medicamentoIndex++;
+        });
+
+        // Eliminar fila en Medicamentos
+        $('#medicamentosTableBody').on('click', '.eliminar-fila-medicamento', function () {
+            $(this).closest('tr').remove();
+        });
+
+        // Añadir nueva fila en Imágenes (Exámenes)
+        $('#anadirFilaImagen').on('click', function () {
+            var nuevaFila = `
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Buscar...">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" max="999" placeholder="0" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-secondary eliminar-fila-imagen"><i class="fas fa-times-circle"></i> Eliminar</button>
+                                        </td>
+                                    </tr>`;
+            $('#imagenesTableBody').append(nuevaFila);
+            imagenIndex++;
+        });
+
+        // Eliminar fila en Imágenes (Exámenes)
+        $('#imagenesTableBody').on('click', '.eliminar-fila-imagen', function () {
+            $(this).closest('tr').remove();
+        });
+
+        // Añadir nueva fila en Laboratorio
+        $('#anadirFilaLaboratorio').on('click', function () {
             var nuevaFila = `
                                             <tr>
                                                 <td>
@@ -1534,71 +1600,9 @@
                                                     <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-secondary eliminar-fila-medicamento"><i class="fas fa-times-circle"></i> Eliminar</button>
+                                                    <button type="button" class="btn btn-outline-secondary eliminar-fila-laboratorio"><i class="fas fa-times-circle"></i> Eliminar</button>
                                                 </td>
                                             </tr>`;
-            $('#medicamentosTableBody').append(nuevaFila);
-            medicamentoIndex++;
-        });
-
-        // Eliminar fila en Medicamentos
-        $('#medicamentosTableBody').on('click', '.eliminar-fila-medicamento', function () {
-            $(this).closest('tr').remove();
-        });
-
-        // Añadir nueva fila en Imágenes (Exámenes)
-        $('#anadirFilaImagen').on('click', function () {
-            var nuevaFila = `
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Buscar...">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="number" max="999" placeholder="0" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-secondary eliminar-fila-imagen"><i class="fas fa-times-circle"></i> Eliminar</button>
-                                    </td>
-                                </tr>`;
-            $('#imagenesTableBody').append(nuevaFila);
-            imagenIndex++;
-        });
-
-        // Eliminar fila en Imágenes (Exámenes)
-        $('#imagenesTableBody').on('click', '.eliminar-fila-imagen', function () {
-            $(this).closest('tr').remove();
-        });
-
-        // Añadir nueva fila en Laboratorio
-        $('#anadirFilaLaboratorio').on('click', function () {
-            var nuevaFila = `
-                                        <tr>
-                                            <td>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Buscar...">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <input type="number" max="999" placeholder="0" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-outline-secondary eliminar-fila-laboratorio"><i class="fas fa-times-circle"></i> Eliminar</button>
-                                            </td>
-                                        </tr>`;
             $('#laboratorioTableBody').append(nuevaFila);
             laboratorioIndex++;
         });
@@ -1709,6 +1713,7 @@
                     $('#ocupacion').val(data.ocupacion);
                     $('#empresa').val(data.empresa);
                     $('#seguroSelect').val(data.seguroSalud);
+                    // $('#historiaClinica').val(data.historiaClinica);
 
                     console.log($('#nacionalidadSelect').val()); // Verifica el valor asignado
                     console.log($('#nacionalidadSelect option:selected').text()); // Verifica el texto de la opción seleccionada

@@ -13,9 +13,7 @@ namespace Expermed.Models
         public int? MedicoCitasU { get; set; }
         public int? PacienteCitasP { get; set; }
         public string? Estado { get; set; }
-        public int? ConsultaCitasC { get; set; }
 
-        public virtual Consultum? ConsultaCitasCNavigation { get; set; }
         public virtual Usuario? MedicoCitasUNavigation { get; set; }
         public virtual Paciente? PacienteCitasPNavigation { get; set; }
     }

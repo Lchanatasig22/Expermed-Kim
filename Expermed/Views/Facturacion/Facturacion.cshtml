@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Facturacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Pasarela de Pagos</h1>
+<div class="tabs">
+    <button class="tab-link active" data-tab="tab-efectivo"><i class="fas fa-money-bill-wave"></i> Efectivo</button>
+    <button class="tab-link" data-tab="tab-transferencia"><i class="fas fa-exchange-alt"></i> Transferencia</button>
+    <button class="tab-link" data-tab="tab-tarjeta"><i class="fas fa-credit-card"></i> Tarjeta</button>
+</div>
+
+<div id="tab-efectivo" class="tab-content active">
+    <h2>Pago en Efectivo</h2>
+    <p>Para pagar en efectivo, por favor diríjase a nuestra oficina más cercana.</p>
+</div>
+
+<div id="tab-transferencia" class="tab-content">
+    <h2>Pago por Transferencia</h2>
+    <p>Por favor realice la transferencia a la siguiente cuenta bancaria y suba el comprobante de pago.</p>
+    <form>
+        <label for="banco">Banco:</label><br>
+        <input type="text" id="banco" name="banco" required><br><br>
+        <label for="numero-cuenta">Número de Cuenta:</label><br>
+        <input type="text" id="numero-cuenta" name="numero-cuenta" required><br><br>
+        <label for="comprobante">Subir Comprobante:</label><br>
+        <input type="file" id="comprobante" name="comprobante" required><br><br>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<div id="tab-tarjeta" class="tab-content">
+    <h2>Pago con Tarjeta</h2>
+    <form>
+        <label for="nombre-tarjeta">Nombre en la Tarjeta:</label><br>
+        <input type="text" id="nombre-tarjeta" name="nombre-tarjeta" required><br><br>
+        <label for="numero-tarjeta">Número de Tarjeta:</label><br>
+        <input type="text" id="numero-tarjeta" name="numero-tarjeta" required><br><br>
+        <label for="expiracion">Fecha de Expiración:</label><br>
+        <input type="text" id="expiracion" name="expiracion" placeholder="MM/AA" required><br><br>
+        <label for="cvv">CVV:</label><br>
+        <input type="text" id="cvv" name="cvv" required><br><br>
+        <button type="submit">Pagar</button>
+    </form>
+</div>
+
+<script>
+    document.querySelectorAll('.tab-link').forEach(button => {
+        button.addEventListener('click', () => {
+            const tab = button.getAttribute('data-tab');
+
+            document.querySelectorAll('.tab-link').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            button.classList.add('active');
+            document.getElementById(tab).classList.add('active');
+        });
+    });
+</script>

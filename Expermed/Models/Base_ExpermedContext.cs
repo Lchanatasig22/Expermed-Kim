@@ -22,7 +22,6 @@ namespace Expermed.Models
         public virtual DbSet<Catalogo> Catalogos { get; set; } = null!;
         public virtual DbSet<Citum> Cita { get; set; } = null!;
         public virtual DbSet<Consultum> Consulta { get; set; } = null!;
-        public virtual DbSet<Diagnostico> Diagnosticos { get; set; } = null!;
         public virtual DbSet<Establecimiento> Establecimientos { get; set; } = null!;
         public virtual DbSet<Localidad> Localidads { get; set; } = null!;
         public virtual DbSet<Medicamento> Medicamentos { get; set; } = null!;
@@ -34,9 +33,9 @@ namespace Expermed.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Server=localhost;Database=Base_Expermed;User Id=sa;Password=1717;");
-           }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=localhost;Database=Base_Expermed;User Id=sa;Password=1717;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -118,7 +117,9 @@ namespace Expermed.Models
 
                 entity.ToTable("C_Medicamento");
 
-                entity.Property(e => e.IdMedicamento).HasColumnName("id_medicamento");
+                entity.Property(e => e.IdMedicamento)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id_medicamento");
 
                 entity.Property(e => e.CantidadMedicamentoC).HasColumnName("cantidad_medicamento_c");
 
@@ -127,6 +128,8 @@ namespace Expermed.Models
                 entity.Property(e => e.FechacreacionMedicamento)
                     .HasColumnType("datetime")
                     .HasColumnName("fechacreacion_medicamento");
+
+                entity.Property(e => e.IdMedicamentosMedicamentoM).HasColumnName("id_medicamentos_medicamento_m");
 
                 entity.Property(e => e.ObservacionMedicamento)
                     .HasMaxLength(500)
@@ -137,6 +140,12 @@ namespace Expermed.Models
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("usuariocreacion_medicamento");
+
+                entity.HasOne(d => d.IdMedicamentoNavigation)
+                    .WithOne(p => p.CMedicamento)
+                    .HasForeignKey<CMedicamento>(d => d.IdMedicamento)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__C_Medicam__id_me__1EA48E88");
             });
 
             modelBuilder.Entity<Catalogo>(entity =>
@@ -190,8 +199,6 @@ namespace Expermed.Models
 
                 entity.Property(e => e.IdCitas).HasColumnName("id_citas");
 
-                entity.Property(e => e.ConsultaCitasC).HasColumnName("consulta_citas_c");
-
                 entity.Property(e => e.Estado)
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('En Curso')");
@@ -215,11 +222,6 @@ namespace Expermed.Models
                     .IsUnicode(false)
                     .HasColumnName("usuariocreacion_citas");
 
-                entity.HasOne(d => d.ConsultaCitasCNavigation)
-                    .WithMany(p => p.Cita)
-                    .HasForeignKey(d => d.ConsultaCitasC)
-                    .HasConstraintName("FK__Cita__consulta_c__0F624AF8");
-
                 entity.HasOne(d => d.MedicoCitasUNavigation)
                     .WithMany(p => p.Cita)
                     .HasForeignKey(d => d.MedicoCitasU)
@@ -238,19 +240,79 @@ namespace Expermed.Models
 
                 entity.Property(e => e.IdConsulta).HasColumnName("id_consulta");
 
+                entity.Property(e => e.Abdomen)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Alergias)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.AntecedentespersonalesConsulta)
                     .IsUnicode(false)
                     .HasColumnName("antecedentespersonales_consulta");
+
+                entity.Property(e => e.Cabeza)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Cancer)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CardioVascular)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("Cardio_Vascular");
+
+                entity.Property(e => e.Cardiopatia)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Cirugias)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ConsultaprincipalConsulta)
                     .IsUnicode(false)
                     .HasColumnName("consultaprincipal_consulta");
 
+                entity.Property(e => e.Cuello)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.DetalleConsultaD).HasColumnName("detalle_consulta_d");
+
+                entity.Property(e => e.Diabetes)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.DiasincapacidadConsulta).HasColumnName("diasincapacidad_consulta");
 
+                entity.Property(e => e.Digestivo)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.DocumentoConsultaD).HasColumnName("documento_consulta_d");
+
+                entity.Property(e => e.Endocrino)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EnfCardiovascular)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("Enf_Cardiovascular");
+
+                entity.Property(e => e.EnfInfecciosa)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("Enf_Infecciosa");
+
+                entity.Property(e => e.EnfMental)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("Enf_Mental");
 
                 entity.Property(e => e.EnfermedadConsulta)
                     .IsUnicode(false)
@@ -259,6 +321,10 @@ namespace Expermed.Models
                 entity.Property(e => e.EspecialidadConsultaC).HasColumnName("especialidad_consulta_c");
 
                 entity.Property(e => e.EstadoConsultaC).HasColumnName("estado_consulta_c");
+
+                entity.Property(e => e.Extremidades)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.FechacreacionConsulta)
                     .HasColumnType("datetime")
@@ -269,10 +335,32 @@ namespace Expermed.Models
                     .IsUnicode(false)
                     .HasColumnName("frecuenciarespiratoria_consulta");
 
+                entity.Property(e => e.Genital)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Hipertension)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.HistorialConsulta)
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("historial_consulta");
+
+                entity.Property(e => e.Linfatico)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MEsqueletico)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("M_Esqueletico");
+
+                entity.Property(e => e.MalFormacion)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("Mal_Formacion");
 
                 entity.Property(e => e.MedicamentoConsultaM).HasColumnName("medicamento_consulta_m");
 
@@ -281,6 +369,10 @@ namespace Expermed.Models
                 entity.Property(e => e.MotivoConsulta)
                     .IsUnicode(false)
                     .HasColumnName("motivo_consulta");
+
+                entity.Property(e => e.Nervioso)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.NombreparienteConsulta)
                     .HasMaxLength(500)
@@ -291,11 +383,136 @@ namespace Expermed.Models
                     .IsUnicode(false)
                     .HasColumnName("notasevolucion_consulta");
 
+                entity.Property(e => e.ObserAbdomen)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Abdomen");
+
+                entity.Property(e => e.ObserAlergias)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Alergias");
+
+                entity.Property(e => e.ObserCabeza)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Cabeza");
+
+                entity.Property(e => e.ObserCancer)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Cancer");
+
+                entity.Property(e => e.ObserCardioVascular)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Cardio_Vascular");
+
+                entity.Property(e => e.ObserCardiopatia)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Cardiopatia");
+
+                entity.Property(e => e.ObserCirugias)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Cirugias");
+
+                entity.Property(e => e.ObserCuello)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Cuello");
+
+                entity.Property(e => e.ObserDiabetes)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Diabetes");
+
+                entity.Property(e => e.ObserDigestivo)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Digestivo");
+
+                entity.Property(e => e.ObserEndocrino)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Endocrino");
+
+                entity.Property(e => e.ObserEnfCardiovascular)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Enf_Cardiovascular");
+
+                entity.Property(e => e.ObserEnfInfecciosa)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Enf_Infecciosa");
+
+                entity.Property(e => e.ObserEnfMental)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Enf_Mental");
+
+                entity.Property(e => e.ObserExtremidades)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Extremidades");
+
+                entity.Property(e => e.ObserGenital)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Genital");
+
+                entity.Property(e => e.ObserHipertensión)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Hipertensión");
+
+                entity.Property(e => e.ObserLinfatico)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Linfatico");
+
+                entity.Property(e => e.ObserMEsqueletico)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_M_Esqueletico");
+
+                entity.Property(e => e.ObserMalFormacion)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Mal_Formacion");
+
+                entity.Property(e => e.ObserNervioso)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Nervioso");
+
+                entity.Property(e => e.ObserOrgSentidos)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Org_Sentidos");
+
+                entity.Property(e => e.ObserOtro)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Otro");
+
+                entity.Property(e => e.ObserPelvis)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Pelvis");
+
+                entity.Property(e => e.ObserRespiratorio)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Respiratorio");
+
+                entity.Property(e => e.ObserTorax)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Torax");
+
+                entity.Property(e => e.ObserTuberculosis)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Tuberculosis");
+
+                entity.Property(e => e.ObserUrinario)
+                    .IsUnicode(false)
+                    .HasColumnName("Obser_Urinario");
+
                 entity.Property(e => e.ObservacionConsulta)
                     .IsUnicode(false)
                     .HasColumnName("observacion_consulta");
 
+                entity.Property(e => e.OrgSentidos)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("Org_Sentidos");
+
+                entity.Property(e => e.Otro)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.PacienteConsultaP).HasColumnName("paciente_consulta_p");
+
+                entity.Property(e => e.Pelvis)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PesoConsulta)
                     .HasMaxLength(500)
@@ -321,6 +538,10 @@ namespace Expermed.Models
                     .IsUnicode(false)
                     .HasColumnName("pulso_consulta");
 
+                entity.Property(e => e.Respiratorio)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.SecuencialConsulta)
                     .HasMaxLength(500)
                     .IsUnicode(false)
@@ -341,6 +562,18 @@ namespace Expermed.Models
                 entity.Property(e => e.TipoConsultaC).HasColumnName("tipo_consulta_c");
 
                 entity.Property(e => e.TipoparienteConsulta).HasColumnName("tipopariente_consulta");
+
+                entity.Property(e => e.Torax)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Tuberculosis)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Urinario)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UsuariocreacionConsulta)
                     .HasMaxLength(500)
@@ -366,57 +599,6 @@ namespace Expermed.Models
                     .WithMany(p => p.Consulta)
                     .HasForeignKey(d => d.PacienteConsultaP)
                     .HasConstraintName("FK__Consulta__pacien__534D60F1");
-            });
-
-            modelBuilder.Entity<Diagnostico>(entity =>
-            {
-                entity.HasKey(e => e.IdDiagnostico)
-                    .HasName("PK__Diagnost__1384B745D744B684");
-
-                entity.ToTable("Diagnostico");
-
-                entity.Property(e => e.IdDiagnostico).HasColumnName("id_diagnostico");
-
-                entity.Property(e => e.ActivoDiagnostico).HasColumnName("activo_diagnostico");
-
-                entity.Property(e => e.CategoriaDiagnostico)
-                    .HasMaxLength(500)
-                    .IsUnicode(false)
-                    .HasColumnName("categoria_diagnostico");
-
-                entity.Property(e => e.CodigoDiagnostico)
-                    .HasMaxLength(500)
-                    .IsUnicode(false)
-                    .HasColumnName("codigo_diagnostico");
-
-                entity.Property(e => e.ConsultaDiagnosticoC).HasColumnName("consulta_diagnostico_c");
-
-                entity.Property(e => e.DescripcionDiagnostico)
-                    .IsUnicode(false)
-                    .HasColumnName("descripcion_diagnostico");
-
-                entity.Property(e => e.FechacreacionDiagnostico)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fechacreacion_diagnostico");
-
-                entity.Property(e => e.FechamodificacionDiagnostico)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fechamodificacion_diagnostico");
-
-                entity.Property(e => e.UsuariocreacionDiagnostico)
-                    .HasMaxLength(500)
-                    .IsUnicode(false)
-                    .HasColumnName("usuariocreacion_diagnostico");
-
-                entity.Property(e => e.UsuariomodificacionDiagnostico)
-                    .HasMaxLength(500)
-                    .IsUnicode(false)
-                    .HasColumnName("usuariomodificacion_diagnostico");
-
-                entity.HasOne(d => d.ConsultaDiagnosticoCNavigation)
-                    .WithMany(p => p.Diagnosticos)
-                    .HasForeignKey(d => d.ConsultaDiagnosticoC)
-                    .HasConstraintName("FK__Diagnosti__consu__04E4BC85");
             });
 
             modelBuilder.Entity<Establecimiento>(entity =>
