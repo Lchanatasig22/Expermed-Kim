@@ -199,6 +199,8 @@ namespace Expermed.Models
 
                 entity.Property(e => e.IdCitas).HasColumnName("id_citas");
 
+                entity.Property(e => e.ConsultaCitaC).HasColumnName("consulta_cita_c");
+
                 entity.Property(e => e.Estado)
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('En Curso')");
@@ -221,6 +223,11 @@ namespace Expermed.Models
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("usuariocreacion_citas");
+
+                entity.HasOne(d => d.ConsultaCitaCNavigation)
+                    .WithMany(p => p.Cita)
+                    .HasForeignKey(d => d.ConsultaCitaC)
+                    .HasConstraintName("FK__Cita__consulta_c__282DF8C2");
 
                 entity.HasOne(d => d.MedicoCitasUNavigation)
                     .WithMany(p => p.Cita)

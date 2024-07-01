@@ -5,6 +5,11 @@ namespace Expermed.Models
 {
     public partial class Consultum
     {
+        public Consultum()
+        {
+            Cita = new HashSet<Citum>();
+        }
+
         public int IdConsulta { get; set; }
         public DateTime? FechacreacionConsulta { get; set; }
         public string? UsuariocreacionConsulta { get; set; }
@@ -97,5 +102,6 @@ namespace Expermed.Models
         public virtual CDocumento? DocumentoConsultaDNavigation { get; set; }
         public virtual CMedicamento? MedicamentoConsultaMNavigation { get; set; }
         public virtual Paciente? PacienteConsultaPNavigation { get; set; }
+        public virtual ICollection<Citum> Cita { get; set; }
     }
 }

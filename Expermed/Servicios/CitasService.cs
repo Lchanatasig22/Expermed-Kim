@@ -81,7 +81,7 @@ namespace Expermed.Servicios
                 .Where(c => c.UsuariocreacionCitas == loginUsuario)
                 .Include(c => c.MedicoCitasUNavigation)
                 .Include(c => c.PacienteCitasPNavigation)
-                .Include(c => c.ConsultaCitasCNavigation)
+                .Include(c => c.ConsultaCitaCNavigation)
                 .ToListAsync();
 
             return citas;
