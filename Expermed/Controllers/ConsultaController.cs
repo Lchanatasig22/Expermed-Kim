@@ -1,10 +1,14 @@
-﻿using Expermed.Servicios;
+﻿using Expermed.Models;
+using Expermed.Servicios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Expermed.Controllers
 {
+
     public class ConsultaController : Controller
     {
         private readonly CatalogService _catalogoService;
@@ -97,7 +101,12 @@ namespace Expermed.Controllers
 
 
 
+            // Obtener el nombre de usuario de la sesión
 
+            var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
+
+            // Pasar el nombre de usuario a la vista
+            ViewBag.UsuarioNombre = usuarioNombre;
 
             return View();
 
@@ -105,6 +114,17 @@ namespace Expermed.Controllers
 
 
 
+        [HttpPost]
+        public async Task<IActionResult> InsertarConsulta(Consultum model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _consultaService.InsertarConsultaAsync(model);
+                return RedirectToAction("ListarConsultas"); // Redirige a la vista principal u otra vista después de insertar la consulta
+            }
+
+            return View(model); // Si el modelo no es válido, regresa a la vista con el modelo para mostrar los errores de validación
+        }
 
         [HttpGet]
         public async Task<IActionResult> BuscarPacientePorNombre(string nombre)
@@ -114,6 +134,7 @@ namespace Expermed.Controllers
             {
                 return Json(new
                 {
+                    idPaciente = paciente.IdPacientes,
                     primerApellido = paciente.PrimerapellidoPacientes,
                     segundoApellido = paciente.SegundoapellidoPacientes,
                     primerNombre = paciente.PrimernombrePacientes,

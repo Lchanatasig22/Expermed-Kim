@@ -5,17 +5,21 @@ namespace Expermed.Models
 {
     public partial class Diagnostico
     {
-        public int IdDiagnostico { get; set; }
-        public DateTime? FechacreacionDiagnostico { get; set; }
-        public string? UsuariocreacionDiagnostico { get; set; }
-        public DateTime? FechamodificacionDiagnostico { get; set; }
-        public string? UsuariomodificacionDiagnostico { get; set; }
-        public int? ActivoDiagnostico { get; set; }
-        public string? CategoriaDiagnostico { get; set; }
-        public string? DescripcionDiagnostico { get; set; }
-        public string? CodigoDiagnostico { get; set; }
-        public int? ConsultaDiagnosticoC { get; set; }
+        public Diagnostico()
+        {
+            CDiagnosticos = new HashSet<CDiagnostico>();
+        }
 
-        public virtual Consultum? ConsultaDiagnosticoCNavigation { get; set; }
+        public int IdDiagnosticos { get; set; }
+        public DateTime? FechacreacionDiagnosticos { get; set; }
+        public string? UsuariocreacionDiagnosticos { get; set; }
+        public DateTime? FechamodificacionDiagnosticos { get; set; }
+        public string? UsuariomodificacionDiagnosticos { get; set; }
+        public int? ActivoDiagnosticso { get; set; }
+        public string? CategoriaDiagnosticos { get; set; }
+        public string? DescripcionDiagnosticos { get; set; }
+        public string? CodigoDiagnosticos { get; set; }
+
+        public virtual ICollection<CDiagnostico> CDiagnosticos { get; set; }
     }
 }

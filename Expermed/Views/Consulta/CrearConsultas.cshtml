@@ -139,7 +139,12 @@
 
         <hr>
     </div>
-    <form role="form">
+   <form role="form" id="consultaForm" asp-action="InsertarConsulta" method="post">
+
+        <div class="form-group col-sm-3" hidden>
+            <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
+            <input type="text" asp-for="UsuariocreacionConsulta" class="form-control" id="usuariocreacion" value="@ViewBag.UsuarioNombre" readonly />
+        </div>
         <!--Inicia Primer formulario-->
         <div class="setup-content" id="step-1">
             <div class="hr-text">
@@ -156,7 +161,10 @@
             <br />
             <div class="row g-3">
 
-
+                <div class="col-sm-3">
+                    <label for="idPaciente">Identificador Paciente</label>
+                    <input type="text" asp-for="PacienteConsultaP" class="form-control" id="idPaciente" placeholder="Máximo 200 caracteres" disabled>
+                </div>
                 <div class="col-sm-3">
                     <label for="primerApellido">Primer apellido</label>
                     <input type="text" class="form-control" id="primerApellido" placeholder="Máximo 200 caracteres" disabled>
@@ -322,7 +330,7 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="historiaClinica">Historia Clínica</label>
-                    <input type="text" class="form-control" id="historiaClinica" placeholder="Máximo 150 caracteres" required >
+                    <input type="text" class="form-control" asp-for="HistorialConsulta" id="historiaClinica" placeholder="Máximo 150 caracteres" required>
                 </div>
             </div>
 
@@ -482,8 +490,8 @@
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="segundoNombre">Acompañante</label>
-                    <input type="text" class="form-control" id="acompañante" placeholder="Nombre(s),Apellido(s) 150 caracteres">
+                    <label for="nombrePariente">Acompañante</label>
+                    <input type="text" class="form-control" id="acompañante" asp-for="NombreparienteConsulta" placeholder="Nombre(s),Apellido(s) 150 caracteres">
                 </div>
                 <div class="col-sm-3">
                     <label for="esdonante"> Parentesco</label>
@@ -500,13 +508,13 @@
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="segundoNombre">Telefono</label>
-                    <input type="number" class="form-control" id="segundoNombre" placeholder="Nombre(s),Apellido(s) 150 caracteres">
+                    <label for="telefonoPariente">Telefono</label>
+                    <input type="number" class="form-control" asp-for="TelefonoConsulta" id="telefonoPariente" placeholder="Ingrese el telefono">
                 </div>
 
-                <div class="col-sm-3">
-                    <label for="segundoNombre">Motivo de consulta*</label>
-                    <input type="text" class="form-control" id="segundoNombre" placeholder="Nombre(s),Apellido(s) 150 caracteres">
+                <div class="col-sm-4">
+                    <label for="motivoConsulta">Motivo de consulta*</label>
+                    <input type="text" class="form-control" asp-for="MotivoConsulta" id="motivoConsulta" placeholder="Motivo de su consulta 150 caracteres">
                 </div>
                 <div class="hr-text">
                     <hr>
@@ -516,7 +524,7 @@
 
                 <div class="col-sm-3">
 
-                    <input type="text" class="form-control" id="segundoNombre" placeholder="Max 150 caracteres">
+                    <input type="text" class="form-control" asp-for="AntecedentespersonalesConsulta" id="segundoNombre" placeholder="Max 150 caracteres">
                 </div>
 
                 <div class="hr-text">
@@ -529,120 +537,120 @@
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3393">
+                                    <input class="form-check-input consulta-antecedente-checked" asp-for="Cardiopatia" type="checkbox" id="consulta-antecedente-checked_3393">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3393">Cardiopatía</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3393" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" asp-for="ObserCardiopatia" type="text" id="consulta-antecedente-observacion_3393" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3394">
+                                    <input class="form-check-input consulta-antecedente-checked" asp-for="Diabetes" type="checkbox" id="consulta-antecedente-checked_3394">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3394">Diabetes</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3394" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" asp-for="ObserDiabetes" type="text" id="consulta-antecedente-observacion_3394" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3395">
+                                    <input class="form-check-input consulta-antecedente-checked" asp-for="EnfCardiovascular" type="checkbox" id="consulta-antecedente-checked_3395">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3395">Enfermedad Cardiovascular</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3395" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" asp-for="ObserEnfCardiovascular" type="text" id="consulta-antecedente-observacion_3395" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3396">
+                                    <input class="form-check-input consulta-antecedente-checked" asp-for="Hipertension" type="checkbox" id="consulta-antecedente-checked_3396">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3396">Hipertensión</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3396" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserHipertensión" id="consulta-antecedente-observacion_3396" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3397">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Cancer" id="consulta-antecedente-checked_3397">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3397">Cáncer</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3397" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserCancer" id="consulta-antecedente-observacion_3397" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3398">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Tuberculosis" id="consulta-antecedente-checked_3398">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3398">Tuberculosis</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3398" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserTuberculosis" id="consulta-antecedente-observacion_3398" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3399">
+                                    <input class="form-check-input consulta-antecedente-checked" asp-for="EnfMental" type="checkbox" id="consulta-antecedente-checked_3399">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3399">Enfermedad Mental</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3399" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" asp-for="ObserEnfMental" type="text" id="consulta-antecedente-observacion_3399" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3400">
+                                    <input class="form-check-input consulta-antecedente-checked" asp-for="EnfInfecciosa" type="checkbox" id="consulta-antecedente-checked_3400">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3400">Enfermedad Infecciosa</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3400" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserEnfInfecciosa" id="consulta-antecedente-observacion_3400" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3401">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="MalFormacion" id="consulta-antecedente-checked_3401">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3401">Mal Formación</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3401" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3401" asp-for="ObserMalFormacion" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3402">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Otro" id="consulta-antecedente-checked_3402">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3402">Otro</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserOtro" id="consulta-antecedente-observacion_3402" class="form-control" disabled>
                             </div>
                         </div>
 
@@ -655,7 +663,7 @@
                 </div>
                 <div class="col-sm-3">
 
-                    <input type="text" class="form-control" id="segundoNombre" placeholder="Max 150 caracteres">
+                    <input type="text" class="form-control" asp-for="EnfermedadConsulta" id="enfermedadProblema" placeholder="Max 150 caracteres">
                 </div>
 
             </div>
@@ -830,120 +838,120 @@
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3393">
+                                    <input class="form-check-input consulta-antecedente-checked" asp-for="OrgSentidos" type="checkbox" id="consulta-antecedente-checked_3393">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3393">Órganos de los sentidos</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3393" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" asp-for="ObserOrgSentidos" type="text" id="consulta-antecedente-observacion_3393" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3394">
+                                    <input class="form-check-input consulta-antecedente-checked" asp-for="Respiratorio" type="checkbox" id="consulta-antecedente-checked_3394">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3394">Respiratorio</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3394" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserRespiratorio" id="consulta-antecedente-observacion_3394" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3395">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="CardioVascular" id="consulta-antecedente-checked_3395">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3395">Cardio Vascular</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3395" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserCardioVascular" id="consulta-antecedente-observacion_3395" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3396">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Digestivo" id="consulta-antecedente-checked_3396">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3396">Digestivo</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3396" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3396" asp-for="ObserDigestivo" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3397">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Genital" id="consulta-antecedente-checked_3397">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3397">Genital</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3397" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserGenital" id="consulta-antecedente-observacion_3397" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3398">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Urinario" id="consulta-antecedente-checked_3398">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3398">Urinario</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3398" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3398" asp-for="ObserUrinario" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3399">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="MEsqueletico" id="consulta-antecedente-checked_3399">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3399">Músculo Esquelético</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3399" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserMEsqueletico" id="consulta-antecedente-observacion_3399" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3400">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Endocrino" id="consulta-antecedente-checked_3400">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3400">Endocrino</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3400" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserEndocrino" id="consulta-antecedente-observacion_3400" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3401">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Linfatico" id="consulta-antecedente-checked_3401">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3401">Hemo Linfático</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3401" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3401" asp-for="ObserLinfatico" class="form-control" disabled>
                             </div>
                         </div>
 
                         <div class="fields">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" id="consulta-antecedente-checked_3402">
+                                    <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Nervioso" id="consulta-antecedente-checked_3402">
                                     <label class="form-check-label" for="consulta-antecedente-checked_3402">Nervioso</label>
                                 </div>
                             </div>
                             <div class="col-12 consulta-antecedente-observacion" style="display: none;">
-                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" class="form-control" disabled>
+                                <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserNervioso" class="form-control" disabled>
                             </div>
                         </div>
                     </div>
@@ -968,29 +976,29 @@
                     <tbody>
                         <tr>
                             <td class="text-end">Temperatura ºC *</td>
-                            <td><input id="consulta-temperatura" max="100" min="0" name="consulta-temperatura" placeholder="0" type="number" class="form-control" disabled></td>
+                            <td><input id="consulta-temperatura" max="100" min="0" name="consulta-temperatura" asp-for="TemperaturaConsulta" placeholder="0" type="number" class="form-control"></td>
                             <td></td>
                             <td></td>
                             <td class="text-end">Frecuencia respiratoria *</td>
-                            <td><input id="consulta-frecuencia-respiratoria" max="10000" min="0" name="consulta-frecuencia-respiratoria" placeholder="0" type="number" class="form-control" disabled></td>
+                            <td><input id="consulta-frecuencia-respiratoria" max="10000" asp-for="FrecuenciarespiratoriaConsulta" min="0" name="consulta-frecuencia-respiratoria" placeholder="0" type="number" class="form-control"></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td class="text-end">Presión arterial *</td>
-                            <td><input id="consulta-presion-sistolica" max="10000" min="0" name="consulta-presion-sistolica" placeholder="0" type="number" class="form-control" disabled></td>
-                            <td><input id="consulta-presion-diastolica" max="10000" min="0" name="consulta-presion-diastolica" placeholder="0" type="number" class="form-control" disabled></td>
+                            <td><input id="consulta-presion-sistolica" max="10000" min="0" name="consulta-presion-sistolica" asp-for="PresionarterialsistolicaConsulta" placeholder="0" type="number" class="form-control"></td>
+                            <td><input id="consulta-presion-diastolica" max="10000" min="0" name="consulta-presion-diastolica" asp-for="PresionarterialdiastolicaConsulta" placeholder="0" type="number" class="form-control"></td>
                             <td>(mm Hg)</td>
                             <td class="text-end">Pulso por minuto *</td>
-                            <td><input id="consulta-pulso-x-minuto" max="1000" min="0" name="consulta-pulso-x-minuto" placeholder="0" type="number" class="form-control" disabled></td>
+                            <td><input id="consulta-pulso-x-minuto" max="1000" min="0" name="consulta-pulso-x-minuto" asp-for="PulsoConsulta" placeholder="0" type="number" class="form-control"></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td class="text-end">Peso *</td>
-                            <td><input id="consulta-peso" max="1000" min="0" name="consulta-peso" placeholder="0" type="number" class="form-control" disabled></td>
+                            <td><input id="consulta-peso" max="1000" min="0" name="consulta-peso" placeholder="0" type="number" asp-for="PesoConsulta" class="form-control"></td>
                             <td>(Kg)</td>
                             <td></td>
                             <td class="text-end">Talla *</td>
-                            <td><input id="consulta-talla" max="1000" min="0" name="consulta-talla" placeholder="0" type="number" class="form-control" disabled></td>
+                            <td><input id="consulta-talla" max="1000" min="0" name="consulta-talla" placeholder="0" type="number" asp-for="TallaConsulta" class="form-control"></td>
                             <td>(cm)</td>
                         </tr>
                     </tbody>
@@ -1001,89 +1009,81 @@
                     <span><i class="fa fa-stethoscope"></i>Exámen físico regional </span>
                     <hr>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="examen-checked_3415">Cabeza</label>
+
+                <div class="fields">
+                    <div class="col-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="examen-checked_3415" disabled>
-                            <label class="form-check-label" for="examen-checked_3415">Sin evidencia de patología</label>
+                            <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Cabeza" id="consulta-antecedente-checked_3402">
+                            <label class="form-check-label" for="consulta-antecedente-checked_3402">Cabeza</label>
                         </div>
                     </div>
-                    <div class="col-md-8" hidden>
-                        <label>&nbsp;</label>
-                        <input type="text" class="form-control" placeholder="Observación (Máximo 300 caracteres)" id="examen-observacion_3415" readonly disabled>
+                    <div class="col-12 consulta-antecedente-observacion" style="display: none;">
+                        <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserCabeza" class="form-control" disabled>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="examen-checked_3416">Cuello</label>
+                <div class="fields">
+                    <div class="col-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="examen-checked_3416" disabled>
-                            <label class="form-check-label" for="examen-checked_3416">Sin evidencia de patología</label>
+                            <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Cuello" id="consulta-antecedente-checked_3402">
+                            <label class="form-check-label" for="consulta-antecedente-checked_3402">Cuello</label>
                         </div>
                     </div>
-                    <div class="col-md-8" hidden>
-                        <label>&nbsp;</label>
-                        <input type="text" class="form-control" placeholder="Observación (Máximo 300 caracteres)" id="examen-observacion_3416" readonly disabled>
+                    <div class="col-12 consulta-antecedente-observacion" style="display: none;">
+                        <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserCuello" class="form-control" disabled>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="examen-checked_3417">Tórax</label>
+
+                <div class="fields">
+                    <div class="col-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="examen-checked_3417" disabled>
-                            <label class="form-check-label" for="examen-checked_3417">Sin evidencia de patología</label>
+                            <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Torax" id="consulta-antecedente-checked_3402">
+                            <label class="form-check-label" for="consulta-antecedente-checked_3402">Torax</label>
                         </div>
                     </div>
-                    <div class="col-md-8" hidden>
-                        <label>&nbsp;</label>
-                        <input type="text" class="form-control" placeholder="Observación (Máximo 300 caracteres)" id="examen-observacion_3417" readonly disabled>
+                    <div class="col-12 consulta-antecedente-observacion" style="display: none;">
+                        <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserTorax" class="form-control" disabled>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="examen-checked_3418">Abdomen</label>
+                <div class="fields">
+                    <div class="col-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="examen-checked_3418" disabled>
-                            <label class="form-check-label" for="examen-checked_3418">Sin evidencia de patología</label>
+                            <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Abdomen" id="consulta-antecedente-checked_3402">
+                            <label class="form-check-label" for="consulta-antecedente-checked_3402">Abdomen</label>
                         </div>
                     </div>
-                    <div class="col-md-8" hidden>
-                        <label>&nbsp;</label>
-                        <input type="text" class="form-control" placeholder="Observación (Máximo 300 caracteres)" id="examen-observacion_3418" readonly disabled>
+                    <div class="col-12 consulta-antecedente-observacion" style="display: none;">
+                        <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserAbdomen" class="form-control" disabled>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="examen-checked_3419">Pelvis</label>
+                <div class="fields">
+                    <div class="col-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="examen-checked_3419" disabled>
-                            <label class="form-check-label" for="examen-checked_3419">Sin evidencia de patología</label>
+                            <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Pelvis" id="consulta-antecedente-checked_3402">
+                            <label class="form-check-label" for="consulta-antecedente-checked_3402">Pelvis</label>
                         </div>
                     </div>
-                    <div class="col-md-8" hidden>
-                        <label>&nbsp;</label>
-                        <input type="text" class="form-control" placeholder="Observación (Máximo 300 caracteres)" id="examen-observacion_3419" readonly disabled>
+                    <div class="col-12 consulta-antecedente-observacion" style="display: none;">
+                        <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserPelvis" class="form-control" disabled>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="examen-checked_3420">Extremidades</label>
+                <div class="fields">
+                    <div class="col-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="examen-checked_3420" disabled>
-                            <label class="form-check-label" for="examen-checked_3420">Sin evidencia de patología</label>
+                            <input class="form-check-input consulta-antecedente-checked" type="checkbox" asp-for="Extremidades" id="consulta-antecedente-checked_3402">
+                            <label class="form-check-label" for="consulta-antecedente-checked_3402">Extremidades</label>
                         </div>
                     </div>
-                    <div class="col-md-8" hidden>
-                        <label>&nbsp;</label>
-                        <input type="text" class="form-control" placeholder="Observación (Máximo 300 caracteres)" id="examen-observacion_3420" readonly disabled>
+                    <div class="col-12 consulta-antecedente-observacion" style="display: none;">
+                        <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserExtremidades" class="form-control" disabled>
                     </div>
                 </div>
+
+
 
             </div>
             <div class="text-end mt-3">
@@ -1270,12 +1270,13 @@
                                         <td>
                                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-outline-secondary">
-                                                    <input type="radio" name="options0" id="presuntivo0" autocomplete="off"> Presuntivo
+                                                    <input type="checkbox" name="options0" asp-for="DiagnosticoConsultaDiNavigation.PresuntivoDiagnosticos" id="presuntivo0" autocomplete="off"> Presuntivo
                                                 </label>
                                                 <label class="btn btn-outline-secondary">
-                                                    <input type="radio" name="options0" id="definitivo0" autocomplete="off"> Definitivo
+                                                    <input type="checkbox" name="options0" id="definitivo0" asp-for="DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos" autocomplete="off"> Definitivo
                                                 </label>
                                             </div>
+
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-outline-secondary eliminar-fila" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
@@ -1299,7 +1300,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="consulta-diagnostico-plan-tratamiento">Planes de tratamiento *</label>
-                                <textarea id="consulta-diagnostico-plan-tratamiento" maxlength="8000" name="consulta-diagnostico-plan-tratamiento" placeholder="Máximo 8000 caracteres" rows="2" class="form-control"></textarea>
+                                <textarea id="consulta-diagnostico-plan-tratamiento" asp-for="PlantratamientoConsulta" maxlength="8000" name="consulta-diagnostico-plan-tratamiento" placeholder="Máximo 8000 caracteres" rows="2" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -1462,7 +1463,8 @@
 
 
             </div>
-            <button class="btn btn-success btn-lg pull-right mt-3" type="submit">Finalizar</button>
+            <button type="submit" >Submit</button>
+
         </div>
         <!--Final cuarto formulario-->
     </form>
@@ -1472,213 +1474,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
+<script src="~/scripconsut.js"></script>
 <script>
 
 
-
     $(document).ready(function () {
-        var filaIndex = 1;
-        var medicamentoIndex = 1;
-        var laboratorioIndex = 1;
-        var imagenIndex = 1;
 
-
-        // Añadir nueva fila
-        $('#anadirFila').on('click', function () {
-            var nuevaFila = `
-                                                    <tr>
-                                                        <td>
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="Buscar...">
-                                                                    <div class="input-group-append">
-                                                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                                                    </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                                <label class="btn btn-outline-secondary">
-                                                                    <input type="radio" name="options${filaIndex}" id="presuntivo${filaIndex}" autocomplete="off"> Presuntivo
-                                                                </label>
-                                                                <label class="btn btn-outline-secondary">
-                                                                    <input type="radio" name="options${filaIndex}" id="definitivo${filaIndex}" autocomplete="off"> Definitivo
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-secondary eliminar-fila"><i class="fas fa-times-circle"></i> Eliminar</button>
-                                                        </td>
-                                                    </tr>`;
-            $('#diagnosticoTableBody').append(nuevaFila);
-            filaIndex++;
-        });
-
-        // Eliminar fila
-        $('#diagnosticoTableBody').on('click', '.eliminar-fila', function () {
-            $(this).closest('tr').remove();
-        });
-
-        // Añadir nueva fila en Medicamentos
-        $('#anadirFilaMedicamento').on('click', function () {
-            var nuevaFila = `
-                                                <tr>
-                                                    <td>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="Buscar...">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" max="999" placeholder="0" class="form-control">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-outline-secondary eliminar-fila-medicamento"><i class="fas fa-times-circle"></i> Eliminar</button>
-                                                    </td>
-                                                </tr>`;
-            $('#medicamentosTableBody').append(nuevaFila);
-            medicamentoIndex++;
-        });
-
-        // Eliminar fila en Medicamentos
-        $('#medicamentosTableBody').on('click', '.eliminar-fila-medicamento', function () {
-            $(this).closest('tr').remove();
-        });
-
-        // Añadir nueva fila en Imágenes (Exámenes)
-        $('#anadirFilaImagen').on('click', function () {
-            var nuevaFila = `
-                                    <tr>
-                                        <td>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Buscar...">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input type="number" max="999" placeholder="0" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-secondary eliminar-fila-imagen"><i class="fas fa-times-circle"></i> Eliminar</button>
-                                        </td>
-                                    </tr>`;
-            $('#imagenesTableBody').append(nuevaFila);
-            imagenIndex++;
-        });
-
-        // Eliminar fila en Imágenes (Exámenes)
-        $('#imagenesTableBody').on('click', '.eliminar-fila-imagen', function () {
-            $(this).closest('tr').remove();
-        });
-
-        // Añadir nueva fila en Laboratorio
-        $('#anadirFilaLaboratorio').on('click', function () {
-            var nuevaFila = `
-                                            <tr>
-                                                <td>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="Buscar...">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <input type="number" max="999" placeholder="0" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-outline-secondary eliminar-fila-laboratorio"><i class="fas fa-times-circle"></i> Eliminar</button>
-                                                </td>
-                                            </tr>`;
-            $('#laboratorioTableBody').append(nuevaFila);
-            laboratorioIndex++;
-        });
-
-        // Eliminar fila en Laboratorio
-        $('#laboratorioTableBody').on('click', '.eliminar-fila-laboratorio', function () {
-            $(this).closest('tr').remove();
-        });
-
-
-        var navListItems = $('div.stepwizard-step button'),
-            allWells = $('.setup-content');
-
-        allWells.hide();
-
-        // Manejo de clicks en los pasos del wizard
-        navListItems.click(function (e) {
-            e.preventDefault();
-            var $target = $('#step-' + $(this).data('step')),
-                $item = $(this);
-
-            if (!$item.hasClass('disabled')) {
-                navListItems.removeClass('btn-primary').addClass('btn-secondary');
-                $item.addClass('btn-primary');
-                allWells.hide();
-                $target.show();
-                $target.find('input:eq(0)').focus();
-            }
-        });
-
-        // Función para manejar el botón "Siguiente"
-        $('div.setup-content button.nextBtn').click(function () {
-            var curStep = $(this).closest(".setup-content"),
-                curStepBtn = curStep.attr("id"),
-                nextStepWizard = $('div.stepwizard-step button[data-step="' + (parseInt(curStepBtn.split('-')[1]) + 1) + '"]'),
-                curInputs = curStep.find("input[type='text'],input[type='url']"),
-                isValid = true;
-
-            $(".form-group").removeClass("has-error");
-            for (var i = 0; i < curInputs.length; i++) {
-                if (!curInputs[i].validity.valid) {
-                    isValid = false;
-                    $(curInputs[i]).closest(".form-group").addClass("has-error");
-                }
-            }
-
-            if (isValid) {
-                nextStepWizard.removeAttr('disabled').trigger('click');
-            }
-        });
-
-        // Función para manejar el botón "Regresar"
-        $('div.setup-content button.previousBtn').click(function () {
-            var curStep = $(this).closest(".setup-content"),
-                curStepBtn = curStep.attr("id"),
-                prevStepWizard = $('div.stepwizard-step button[data-step="' + (parseInt(curStepBtn.split('-')[1]) - 1) + '"]');
-
-            navListItems.removeClass('btn-primary').addClass('btn-secondary');
-            prevStepWizard.addClass('btn-primary');
-            allWells.hide();
-            $('#step-' + (parseInt(curStepBtn.split('-')[1]) - 1)).show();
-        });
-
-        // Mostrar u ocultar campos de observación al cambiar los switches
-        $('.consulta-antecedente-checked').change(function () {
-            var isChecked = $(this).prop('checked');
-            var $observacionField = $(this).closest('.fields').find('.consulta-antecedente-observacion');
-
-            if (isChecked) {
-                $observacionField.show(); // Mostrar el campo de observación
-                $observacionField.find('input').removeAttr('disabled'); // Habilitar el input
-            } else {
-                $observacionField.hide(); // Ocultar el campo de observación
-                $observacionField.find('input').attr('disabled', 'disabled'); // Deshabilitar el input
-            }
-        });
 
         $('#btnBuscarPaciente').click(function () {
             var nombre = $('#nombrePaciente').val();
@@ -1690,6 +1491,7 @@
                     console.log(data); // Depuración: verifica la estructura de 'data'
 
                     // Datos personales
+                    $("#idPaciente").val(data.idPaciente)
                     $('#primerApellido').val(data.primerApellido);
                     $('#segundoApellido').val(data.segundoApellido);
                     $('#primerNombre').val(data.primerNombre);
@@ -1751,8 +1553,33 @@
             });
         });
 
+        function submitConsulta() {
+            var formData = $("#consultaForm").serializeArray();
+            var consulta = {};
+            $.each(formData, function (i, field) {
+                consulta[field.name] = field.value;
+            });
+
+            // Verifica el contenido del objeto consulta antes de enviarlo
+            console.log("Consulta:", consulta);
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CrearConsultas", "Consulta")',
+                data: JSON.stringify(consulta),
+                contentType: "application/json",
+                success: function (response) {
+                    alert("Consulta insertada exitosamente.");
+                },
+                error: function (error) {
+                    console.error("Error al insertar la consulta:", error);
+                    alert("Ocurrió un error al insertar la consulta.");
+                }
+            });
+        }
+
+
         // Activar el primer paso al cargar la página
         $('div.stepwizard-step button[data-step="1"]').trigger('click');
     });
-
 </script>
