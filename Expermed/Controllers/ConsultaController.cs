@@ -115,15 +115,15 @@ namespace Expermed.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> InsertarConsulta(Consultum model)
+        public async Task<IActionResult> InsertarConsulta(Consultum consulta)
         {
             if (ModelState.IsValid)
             {
-                await _consultaService.InsertarConsultaAsync(model);
+                await _consultaService.InsertarConsultaAsync(consulta);
                 return RedirectToAction("ListarConsultas"); // Redirige a la vista principal u otra vista después de insertar la consulta
             }
 
-            return View(model); // Si el modelo no es válido, regresa a la vista con el modelo para mostrar los errores de validación
+            return View(consulta); // Si el modelo no es válido, regresa a la vista con el modelo para mostrar los errores de validación
         }
 
         [HttpGet]
