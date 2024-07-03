@@ -65,6 +65,22 @@ namespace Expermed.Servicios
             // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
             return await _context.Catalogos.Where(c => c.CategoriaCatalogo == "PARENTESCO").ToListAsync();
         }
+        public async Task<List<Medicamento>> ObtenerMedicamentosAsync()
+        {
+            // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
+            return await _context.Medicamentos.Where(c => c.CategoriaMedicamentos == "MEDICAMENTOS").ToListAsync();
+        }
+        public async Task<List<Laboratorio>> ObtenerLaboratoriosAsync()
+        {
+            // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
+            return await _context.Laboratorios.Where(c => c.CategoriaLaboratorios == "LABORATORIO").ToListAsync();
+        }
+
+        public async Task<List<Imagene>> ObtenerImagenAsync()
+        {
+            // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
+            return await _context.Imagenes.Where(c => c.CategoriaImagenes == "IMAGEN").ToListAsync();
+        }
         // obviamente se puede crear varios metodos que generemos para las listas aqui mismo no solo de la tabla catalogo
 
     }

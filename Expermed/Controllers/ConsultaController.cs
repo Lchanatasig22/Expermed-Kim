@@ -42,6 +42,7 @@ namespace Expermed.Controllers
             var tiposProvincia = await _catalogoService.ObtenerTiposDeProvinciaPAsync();
             var tiposSeguro = await _catalogoService.ObtenerTiposDeSeguroAsync();
             var tiposPariente = await _catalogoService.ObtenerParienteAsync();
+            var tiposLaboratorio = await _catalogoService.ObtenerLaboratoriosAsync();
             // Puedes crear una lista de SelectListItem para usar en tu select
             var tiposDocumentosSelectList = tiposDocumentos.Select(d => new SelectListItem
             {
@@ -88,6 +89,11 @@ namespace Expermed.Controllers
                 Value = s.UuidCatalogo.ToString(), // Aquí debes asignar el valor correcto
                 Text = s.DescripcionCatalogo // Aquí debes asignar el texto que se mostrará en la opción
             }).ToList();
+            var tipoLaboratorioSelectList = tiposLaboratorio.Select(s => new SelectListItem
+            {
+                Value = s.CodigoLaboratorios.ToString(), // Aquí debes asignar el valor correcto
+                Text = s.DescripcionLaboratorios // Aquí debes asignar el texto que se mostrará en la opción
+            }).ToList();
 
             ViewBag.TiposDocumentos = tiposDocumentosSelectList;
             ViewBag.TiposSangre = tiposSangreSelectList;
@@ -98,6 +104,7 @@ namespace Expermed.Controllers
             ViewBag.TiposProvincia = tiposNacionalidadSelectList;
             ViewBag.TiposSeguro = tipoSegurorSelectList;
             ViewBag.TiposPariente = tipoParienteSelectList;
+            ViewBag.TiposLaboratorio = tipoLaboratorioSelectList;
 
 
 
