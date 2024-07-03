@@ -20,6 +20,7 @@ namespace Expermed.Models
         public virtual DbSet<CDiagnostico> CDiagnosticos { get; set; } = null!;
         public virtual DbSet<CDocumento> CDocumentos { get; set; } = null!;
         public virtual DbSet<CImagen> CImagens { get; set; } = null!;
+        public virtual DbSet<CLaboratorio> CLaboratorios { get; set; } = null!;
         public virtual DbSet<CMedicamento> CMedicamentos { get; set; } = null!;
         public virtual DbSet<Catalogo> Catalogos { get; set; } = null!;
         public virtual DbSet<Citum> Cita { get; set; } = null!;
@@ -27,6 +28,7 @@ namespace Expermed.Models
         public virtual DbSet<Diagnostico> Diagnosticos { get; set; } = null!;
         public virtual DbSet<Establecimiento> Establecimientos { get; set; } = null!;
         public virtual DbSet<Imagene> Imagenes { get; set; } = null!;
+        public virtual DbSet<Laboratorio> Laboratorios { get; set; } = null!;
         public virtual DbSet<Localidad> Localidads { get; set; } = null!;
         public virtual DbSet<Medicamento> Medicamentos { get; set; } = null!;
         public virtual DbSet<Paciente> Pacientes { get; set; } = null!;
@@ -44,8 +46,6 @@ namespace Expermed.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<CDetalle>(entity =>
             {
                 entity.HasKey(e => e.IdDetalle)
@@ -190,6 +190,40 @@ namespace Expermed.Models
                     .WithMany(p => p.CImagens)
                     .HasForeignKey(d => d.IdImagenesImagenI)
                     .HasConstraintName("FK__C_Imagen__id_ima__367C1819");
+            });
+
+            modelBuilder.Entity<CLaboratorio>(entity =>
+            {
+                entity.HasKey(e => e.IdLaboratorio)
+                    .HasName("PK__C_Labora__781B42E28E94BB5A");
+
+                entity.ToTable("C_Laboratorio");
+
+                entity.Property(e => e.IdLaboratorio).HasColumnName("id_laboratorio");
+
+                entity.Property(e => e.CantidadLaboratorio).HasColumnName("cantidad_laboratorio");
+
+                entity.Property(e => e.ConsultaLaboratorioC).HasColumnName("consulta_laboratorio_c");
+
+                entity.Property(e => e.FechacreacionLaboratorio)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechacreacion_laboratorio");
+
+                entity.Property(e => e.IdLaboratoriosLaboratorioL).HasColumnName("id_laboratorios_laboratorio_l");
+
+                entity.Property(e => e.ObservacionLaboratorio)
+                    .IsUnicode(false)
+                    .HasColumnName("observacion_laboratorio");
+
+                entity.Property(e => e.UsuariocreacionLaboratorio)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("usuariocreacion_laboratorio");
+
+                entity.HasOne(d => d.IdLaboratoriosLaboratorioLNavigation)
+                    .WithMany(p => p.CLaboratorios)
+                    .HasForeignKey(d => d.IdLaboratoriosLaboratorioL)
+                    .HasConstraintName("FK__C_Laborat__id_la__3E1D39E1");
             });
 
             modelBuilder.Entity<CMedicamento>(entity =>
@@ -695,6 +729,11 @@ namespace Expermed.Models
                     .HasForeignKey(d => d.ImagenConsultaI)
                     .HasConstraintName("FK__Consulta__imagen__3864608B");
 
+                entity.HasOne(d => d.LaboratorioConsultaLaNavigation)
+                    .WithMany(p => p.Consulta)
+                    .HasForeignKey(d => d.LaboratorioConsultaLa)
+                    .HasConstraintName("FK__Consulta__labora__3F115E1A");
+
                 entity.HasOne(d => d.MedicamentoConsultaMNavigation)
                     .WithMany(p => p.Consulta)
                     .HasForeignKey(d => d.MedicamentoConsultaM)
@@ -833,6 +872,48 @@ namespace Expermed.Models
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("usuariomodificacion_imagenes");
+            });
+
+            modelBuilder.Entity<Laboratorio>(entity =>
+            {
+                entity.HasKey(e => e.IdLaboratorios)
+                    .HasName("PK__Laborato__839D0769D1C7ACE8");
+
+                entity.Property(e => e.IdLaboratorios).HasColumnName("id_laboratorios");
+
+                entity.Property(e => e.ActivoLaboratorios).HasColumnName("activo_laboratorios");
+
+                entity.Property(e => e.CategoriaLaboratorios)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("categoria_laboratorios");
+
+                entity.Property(e => e.CodigoLaboratorios)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("codigo_laboratorios");
+
+                entity.Property(e => e.DescripcionLaboratorios)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion_laboratorios");
+
+                entity.Property(e => e.FechacreacionLaboratorios)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechacreacion_laboratorios");
+
+                entity.Property(e => e.FechamodificacionLaboratorios)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechamodificacion_laboratorios");
+
+                entity.Property(e => e.UsuariocreacionLaboratorios)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("usuariocreacion_laboratorios");
+
+                entity.Property(e => e.UsuariomodificacionLaboratorios)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("usuariomodificacion_laboratorios");
             });
 
             modelBuilder.Entity<Localidad>(entity =>

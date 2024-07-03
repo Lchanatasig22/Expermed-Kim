@@ -8,7 +8,6 @@ namespace Expermed.Models
         public Consultum()
         {
             Cita = new HashSet<Citum>();
-            SecuencialConsulta = "3";
         }
 
         public int IdConsulta { get; set; }
@@ -106,6 +105,7 @@ namespace Expermed.Models
         public virtual CDiagnostico? DiagnosticoConsultaDiNavigation { get; set; }
         public virtual CDocumento? DocumentoConsultaDNavigation { get; set; }
         public virtual CImagen? ImagenConsultaINavigation { get; set; }
+        public virtual CLaboratorio? LaboratorioConsultaLaNavigation { get; set; }
         public virtual CMedicamento? MedicamentoConsultaMNavigation { get; set; }
         public virtual Paciente? PacienteConsultaPNavigation { get; set; }
         public virtual ICollection<Citum> Cita { get; set; }

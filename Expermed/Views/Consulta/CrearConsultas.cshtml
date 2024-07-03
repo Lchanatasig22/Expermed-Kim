@@ -139,7 +139,7 @@
 
         <hr>
     </div>
-   <form role="form" id="consultaForm" asp-action="InsertarConsulta" method="post">
+    <form role="form" id="consultaForm" asp-action="InsertarConsulta" method="post">
 
         <div class="form-group col-sm-3" hidden>
             <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
@@ -160,10 +160,9 @@
             </div>
             <br />
             <div class="row g-3">
-
                 <div class="col-sm-3">
                     <label for="idPaciente">Identificador Paciente</label>
-                    <input type="text" asp-for="PacienteConsultaP" class="form-control" id="idPaciente" placeholder="Máximo 200 caracteres" disabled>
+                    <input type="text" asp-for="PacienteConsultaP" class="form-control" id="idPaciente" placeholder="Máximo 200 caracteres" readonly>
                 </div>
                 <div class="col-sm-3">
                     <label for="primerApellido">Primer apellido</label>
@@ -286,7 +285,6 @@
                             {
                                 <option value="@tiposNacionalidad.Value">@tiposNacionalidad.Text</option>
                             }
-
                         }
                     </select>
                 </div>
@@ -336,13 +334,13 @@
 
             <div class="text-end mt-3">
                 <a asp-action="Listar" asp-controller="Consulta" class="btn btn-outline-secondary"><i class="fa fa-close"></i> Salir</a>
-                <button class="btn btn-primary nextBtn btn-lg ms-3" type="submit">Siguiente <i class="fa fa-arrow-right"></i></button>
+                <button class="btn btn-primary nextBtn btn-lg ms-3" type="button" onclick="goToNextStep(2)">Siguiente <i class="fa fa-arrow-right"></i></button>
             </div>
         </div>
         <!--Final primer formulario-->
         <!--Inicia segundo formulario-->
         <div class="setup-content" id="step-2" style="display: none;">
-            <h3> Datos consulta</h3>
+            <h3>Datos consulta</h3>
             <div class="row g-3">
                 <div class="one field">
                     <div class="field">
@@ -523,7 +521,6 @@
                 </div>
 
                 <div class="col-sm-3">
-
                     <input type="text" class="form-control" asp-for="AntecedentespersonalesConsulta" id="segundoNombre" placeholder="Max 150 caracteres">
                 </div>
 
@@ -653,7 +650,6 @@
                                 <input placeholder="Observación (Máximo 300 caracteres)" type="text" asp-for="ObserOtro" id="consulta-antecedente-observacion_3402" class="form-control" disabled>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="hr-text">
@@ -662,16 +658,12 @@
                     <hr>
                 </div>
                 <div class="col-sm-3">
-
                     <input type="text" class="form-control" asp-for="EnfermedadConsulta" id="enfermedadProblema" placeholder="Max 150 caracteres">
                 </div>
-
             </div>
             <div class="text-end mt-3">
-
-
-                <button class="btn btn-primary previousBtn btn-lg" type="button"><i class="fa fa-arrow-left"></i> Regresar</button>
-                <button class="btn btn-primary nextBtn btn-lg ms-3" type="button">Siguiente <i class="fa fa-arrow-right"></i></button>
+                <button class="btn btn-primary previousBtn btn-lg" type="button" onclick="goToPreviousStep(1)"><i class="fa fa-arrow-left"></i> Regresar</button>
+                <button class="btn btn-primary nextBtn btn-lg ms-3" type="button" onclick="goToNextStep(3)">Siguiente <i class="fa fa-arrow-right"></i></button>
             </div>
         </div>
         <!--Fin segundo formulario-->
@@ -824,14 +816,11 @@
                     </div>
                 </div>
 
-
-
                 <div class="hr-text">
                     <hr>
-                    <span><i class="fa fa-stethoscope"></i>Revisiön actual de Organos y sistemas</span>
+                    <span><i class="fa fa-stethoscope"></i>Revisión actual de Órganos y sistemas</span>
                     <hr>
                 </div>
-
 
                 <div class="container mt-5">
                     <div class="field">
@@ -959,16 +948,15 @@
 
                 <div class="hr-text">
                     <hr>
-                    <span><i class="fa fa-stethoscope"></i>Signos vitales y antropometria</span>
+                    <span><i class="fa fa-stethoscope"></i>Signos vitales y antropometría</span>
                     <hr>
                 </div>
-
 
                 <div class="alert alert-primary d-flex align-items-center" role="alert">
                     <i class="fas fa-calculator me-2"></i>
                     <div>
                         <div class="fw-bold">Separador decimal</div>
-                        Debes usar el caracter <span style="font-size: 30px;">,</span> para separa decimales
+                        Debes usar el caracter <span style="font-size: 30px;">,</span> para separar decimales
                     </div>
                 </div>
 
@@ -976,29 +964,29 @@
                     <tbody>
                         <tr>
                             <td class="text-end">Temperatura ºC *</td>
-                            <td><input id="consulta-temperatura" max="100" min="0" name="consulta-temperatura" asp-for="TemperaturaConsulta" placeholder="0" type="number" class="form-control"></td>
+                            <td><input id="temperatura_consulta" max="100" min="0" name="TemperaturaConsulta" asp-for="TemperaturaConsulta" placeholder="0" type="text" class="form-control"></td>
                             <td></td>
                             <td></td>
                             <td class="text-end">Frecuencia respiratoria *</td>
-                            <td><input id="consulta-frecuencia-respiratoria" max="10000" asp-for="FrecuenciarespiratoriaConsulta" min="0" name="consulta-frecuencia-respiratoria" placeholder="0" type="number" class="form-control"></td>
+                            <td><input id="frecuenciarespiratoria_consulta" max="10000" asp-for="FrecuenciarespiratoriaConsulta" min="0" name="FrecuenciarespiratoriaConsulta" placeholder="0" type="number" class="form-control"></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td class="text-end">Presión arterial *</td>
-                            <td><input id="consulta-presion-sistolica" max="10000" min="0" name="consulta-presion-sistolica" asp-for="PresionarterialsistolicaConsulta" placeholder="0" type="number" class="form-control"></td>
-                            <td><input id="consulta-presion-diastolica" max="10000" min="0" name="consulta-presion-diastolica" asp-for="PresionarterialdiastolicaConsulta" placeholder="0" type="number" class="form-control"></td>
+                            <td><input id="presionarterialsistolica_consulta" max="10000" min="0" name="PresionarterialsistolicaConsulta" asp-for="PresionarterialsistolicaConsulta" placeholder="0" type="number" class="form-control"></td>
+                            <td><input id="presionarterialdiastolica_consulta" max="10000" min="0" name="PresionarterialdiastolicaConsulta" asp-for="PresionarterialdiastolicaConsulta" placeholder="0" type="number" class="form-control"></td>
                             <td>(mm Hg)</td>
                             <td class="text-end">Pulso por minuto *</td>
-                            <td><input id="consulta-pulso-x-minuto" max="1000" min="0" name="consulta-pulso-x-minuto" asp-for="PulsoConsulta" placeholder="0" type="number" class="form-control"></td>
+                            <td><input id="pulso_consulta" max="1000" min="0" name="PulsoConsulta" asp-for="PulsoConsulta" placeholder="0" type="number" class="form-control"></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td class="text-end">Peso *</td>
-                            <td><input id="consulta-peso" max="1000" min="0" name="consulta-peso" placeholder="0" type="number" asp-for="PesoConsulta" class="form-control"></td>
+                            <td><input id="peso_consulta" max="1000" min="0" name="PesoConsulta" placeholder="0" type="number" asp-for="PesoConsulta" class="form-control"></td>
                             <td>(Kg)</td>
                             <td></td>
                             <td class="text-end">Talla *</td>
-                            <td><input id="consulta-talla" max="1000" min="0" name="consulta-talla" placeholder="0" type="number" asp-for="TallaConsulta" class="form-control"></td>
+                            <td><input id="talla_consulta" max="1000" min="0" name="TallaConsulta" placeholder="0" type="number" asp-for="TallaConsulta" class="form-control"></td>
                             <td>(cm)</td>
                         </tr>
                     </tbody>
@@ -1006,7 +994,7 @@
 
                 <div class="hr-text">
                     <hr>
-                    <span><i class="fa fa-stethoscope"></i>Exámen físico regional </span>
+                    <span><i class="fa fa-stethoscope"></i>Examen físico regional</span>
                     <hr>
                 </div>
 
@@ -1033,7 +1021,6 @@
                         <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserCuello" class="form-control" disabled>
                     </div>
                 </div>
-
 
                 <div class="fields">
                     <div class="col-3">
@@ -1082,14 +1069,9 @@
                         <input placeholder="Observación (Máximo 300 caracteres)" type="text" id="consulta-antecedente-observacion_3402" asp-for="ObserExtremidades" class="form-control" disabled>
                     </div>
                 </div>
-
-
-
             </div>
+
             <div class="text-end mt-3">
-
-
-
                 <button class="btn btn-primary previousBtn btn-lg" type="button"><i class="fa fa-arrow-left"></i> Regresar</button>
                 <button class="btn btn-primary nextBtn btn-lg ms-3" type="button">Siguiente <i class="fa fa-arrow-right"></i></button>
             </div>
@@ -1110,7 +1092,7 @@
                                                 <i class="fas fa-user"></i>
                                                 <div class="content">
                                                     <div class="header">Paciente</div>
-                                                    <div class="description" id="pacienteNombreStep3">Sin especificar</div>
+                                                    <div class="description" id="pacienteNombreStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1121,7 +1103,7 @@
                                                 <i class="fas fa-id-card"></i>
                                                 <div class="content">
                                                     <div class="header">Número de documento</div>
-                                                    <div class="description" id="numeroDocumentoTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="numeroDocumentoTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1132,7 +1114,7 @@
                                                 <i class="fas fa-venus-mars"></i>
                                                 <div class="content">
                                                     <div class="header">Sexo</div>
-                                                    <div class="description" id="sexoTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="sexoTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1143,7 +1125,7 @@
                                                 <i class="fas fa-tint"></i>
                                                 <div class="content">
                                                     <div class="header">Tipo de sangre</div>
-                                                    <div class="description" id="tipoSangreTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="tipoSangreTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1154,7 +1136,7 @@
                                                 <i class="fas fa-calendar-alt"></i>
                                                 <div class="content">
                                                     <div class="header">Fecha de nacimiento</div>
-                                                    <div class="description" id="fechaNacimientoTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="fechaNacimientoTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1165,7 +1147,7 @@
                                                 <i class="fas fa-calendar"></i>
                                                 <div class="content">
                                                     <div class="header">Edad</div>
-                                                    <div class="description" id="edadTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="edadTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1178,7 +1160,7 @@
                                                 <i class="fas fa-id-badge"></i>
                                                 <div class="content">
                                                     <div class="header">Estado civil</div>
-                                                    <div class="description" id="estadoCivilTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="estadoCivilTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1189,7 +1171,7 @@
                                                 <i class="fas fa-bookmark"></i>
                                                 <div class="content">
                                                     <div class="header">Formación profesional</div>
-                                                    <div class="description" id="formacionProfesionalTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="formacionProfesionalTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1200,7 +1182,7 @@
                                                 <i class="fas fa-thumbtack"></i>
                                                 <div class="content">
                                                     <div class="header">Nacionalidad</div>
-                                                    <div class="description" id="nacionalidadTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="nacionalidadTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1211,7 +1193,7 @@
                                                 <i class="fas fa-phone-square"></i>
                                                 <div class="content">
                                                     <div class="header">Teléfono</div>
-                                                    <div class="description" id="telefonoTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="telefonoTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1222,7 +1204,7 @@
                                                 <i class="fas fa-mobile-alt"></i>
                                                 <div class="content">
                                                     <div class="header">Teléfono celular</div>
-                                                    <div class="description" id="telefonoCelularTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="telefonoCelularTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1233,7 +1215,7 @@
                                                 <i class="fas fa-envelope-square"></i>
                                                 <div class="content">
                                                     <div class="header">Email</div>
-                                                    <div class="description" id="emailTablaStep3">Sin especificar</div>
+                                                    <div class="description" id="emailTablaStep4">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1243,7 +1225,6 @@
                         </table>
                     </div>
                 </div>
-
 
                 <div class="container">
                     <div class="card">
@@ -1276,7 +1257,6 @@
                                                     <input type="checkbox" name="options0" id="definitivo0" asp-for="DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos" autocomplete="off"> Definitivo
                                                 </label>
                                             </div>
-
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-outline-secondary eliminar-fila" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
@@ -1304,6 +1284,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Medicamentos -->
                     <div class="card">
                         <div class="card-header">Medicamentos</div>
@@ -1393,6 +1374,7 @@
                             </table>
                         </div>
                     </div>
+
                     <!-- Laboratorio -->
                     <div class="card">
                         <div class="card-header">Laboratorio</div>
@@ -1437,6 +1419,7 @@
                             </table>
                         </div>
                     </div>
+
                     <!-- Días de Incapacidad -->
                     <div class="card">
                         <div class="card-header">Días de Incapacidad</div>
@@ -1449,6 +1432,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Observaciones Finales -->
                     <div class="card">
                         <div class="card-header">Observaciones Finales</div>
@@ -1460,13 +1444,16 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-            <button type="submit" >Submit</button>
 
+            <div class="text-end mt-3">
+                <button class="btn btn-primary previousBtn btn-lg" type="button"><i class="fa fa-arrow-left"></i> Regresar</button>
+                <button class="btn btn-primary nextBtn btn-lg ms-3" type="button">Siguiente <i class="fa fa-arrow-right"></i></button>
+            </div>
         </div>
         <!--Final cuarto formulario-->
+
+        <button type="submit">Submit</button>
     </form>
 
 
