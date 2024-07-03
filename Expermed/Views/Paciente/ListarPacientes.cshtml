@@ -70,7 +70,7 @@
                     <td>@paciente.Edad</td>
                     <td>@paciente.NacionalidadPacientesLNavigation.GentilicioLocalidad</td>
                     <td>
-                        <form asp-action="CambiarEstadoUsuario" method="post">
+                        <form asp-action="CambiarEstadoPaciente" method="post">
                             <input type="hidden" name="id" value="@paciente.IdPacientes" />
                             <input type="hidden" name="activo" value="@(paciente.ActivoPacientes == 1 ? 0 : 1)" />
                             <button type="submit" class="btn btn-sm @(paciente.ActivoPacientes == 1 ? "btn-outline-success" : "btn-outline-danger")">
@@ -164,7 +164,7 @@
 
     function cambiarEstadoUsuario(id, activo) {
         $.ajax({
-            url: '@Url.Action("CambiarEstadoUsuario", "Usuario")',
+            url: '@Url.Action("CambiarEstadoPacientes", "Paciente")',
             type: 'POST',
             data: { id: id, activo: activo },
             success: function (response) {

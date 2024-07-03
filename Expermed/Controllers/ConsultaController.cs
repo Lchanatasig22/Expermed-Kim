@@ -43,6 +43,7 @@ namespace Expermed.Controllers
             var tiposSeguro = await _catalogoService.ObtenerTiposDeSeguroAsync();
             var tiposPariente = await _catalogoService.ObtenerParienteAsync();
             var tiposLaboratorio = await _catalogoService.ObtenerLaboratoriosAsync();
+            var tiposImagen = await _catalogoService.ObtenerImagenAsync();
             // Puedes crear una lista de SelectListItem para usar en tu select
             var tiposDocumentosSelectList = tiposDocumentos.Select(d => new SelectListItem
             {
@@ -93,6 +94,11 @@ namespace Expermed.Controllers
             {
                 Value = s.CodigoLaboratorios.ToString(), // Aquí debes asignar el valor correcto
                 Text = s.DescripcionLaboratorios // Aquí debes asignar el texto que se mostrará en la opción
+            }).ToList();     
+            var tipoImagenSelectList = tiposImagen.Select(s => new SelectListItem
+            {
+                Value = s.CodigoImagenes.ToString(), // Aquí debes asignar el valor correcto
+                Text = s.DescripcionImagenes // Aquí debes asignar el texto que se mostrará en la opción
             }).ToList();
 
             ViewBag.TiposDocumentos = tiposDocumentosSelectList;
@@ -105,6 +111,7 @@ namespace Expermed.Controllers
             ViewBag.TiposSeguro = tipoSegurorSelectList;
             ViewBag.TiposPariente = tipoParienteSelectList;
             ViewBag.TiposLaboratorio = tipoLaboratorioSelectList;
+            ViewBag.TiposImagen = tipoImagenSelectList;
 
 
 
@@ -134,9 +141,9 @@ namespace Expermed.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> BuscarPacientePorNombre(string nombre)
+        public async Task<IActionResult> BuscarPacientePorNombre(string nombre, int ci)
         {
-            var paciente = await _consultaService.BuscarPacientePorNombreAsync(nombre);
+            var paciente = await _consultaService.BuscarPacientePorNombreAsync(nombre,ci);
             if (paciente != null)
             {
                 return Json(new

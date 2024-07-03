@@ -185,7 +185,7 @@ namespace Expermed.Servicios
         /// <summary>
         ///  Listado de todas las citas, no tiene sp para listar, uso funciones del mismo EF
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id"></param>z
         /// <returns></returns>
         public async Task<Citum> GetCitaByIdAsync(int id)
         {

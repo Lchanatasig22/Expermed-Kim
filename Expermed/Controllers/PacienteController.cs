@@ -2,6 +2,7 @@
 using Expermed.Servicios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Expermed.Controllers
 {
@@ -219,5 +220,18 @@ namespace Expermed.Controllers
                 return StatusCode(500, "Error interno del servidor");
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CambiarEstadoPaciente(int id, bool activo)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            await _pacienteService.CambiarEstadoPacienteAsync(id, activo);
+            return RedirectToAction("ListarPacientes"); // Redirige a la lista de usuarios después de cambiar el estado
+        }
+
     }
 }

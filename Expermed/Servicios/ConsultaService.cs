@@ -1,6 +1,7 @@
 ﻿using Expermed.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Data;
 
 namespace Expermed.Servicios
@@ -16,12 +17,17 @@ namespace Expermed.Servicios
             _pacienteService = pacienteService;
         }
 
-        public async Task<Paciente> BuscarPacientePorNombreAsync(string nombre)
+        public async Task<Paciente> BuscarPacientePorNombreAsync(string nombre, int ci)
         {
             return await _context.Pacientes
-                .Where(p => p.PrimernombrePacientes.Contains(nombre) || p.SegundonombrePacientes.Contains(nombre) || p.PrimerapellidoPacientes.Contains(nombre) || p.SegundoapellidoPacientes.Contains(nombre))
+                .Where(p => p.PrimernombrePacientes.Contains(nombre) ||
+                            p.SegundonombrePacientes.Contains(nombre) ||
+                            p.PrimerapellidoPacientes.Contains(nombre) ||
+                            p.SegundoapellidoPacientes.Contains(nombre) ||
+                            p.CiPacientes == ci) 
                 .FirstOrDefaultAsync();
         }
+
 
         public async Task InsertarConsultaAsync(Consultum consulta)
         {
@@ -146,6 +152,11 @@ namespace Expermed.Servicios
         }
 
 
+        //public async Task ImprimirConsulta(int idConsulta)
+        //{
 
+
+        //    Consultum modelo =  _context.Consulta.Include (co => co.)  )
+        //}
     }
 }

@@ -24,6 +24,7 @@ builder.Services.AddScoped<PacienteService>(); // Registra el servicio de pacien
 builder.Services.AddScoped<CatalogService>(); // Registra el servicio de catálogo.
 builder.Services.AddScoped<CitasService>(); // Registra el servicio de citas.
 builder.Services.AddScoped<ConsultaService>(); // Registra el servicio de consultas.
+builder.Services.AddScoped<FacturacionService>(); // Registra el servicio de consultas.
 
 //Registra IHttpContextAccessor para acceder al contexto HTTP.
 builder.Services.AddHttpContextAccessor();
@@ -47,4 +48,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Access}/{action=Login}/{id?}"); // Configura la ruta predeterminada para los controladores.
 
+
+//IWebHostEnvironment env = app.Environment;
+//Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa/Windows");
 app.Run(); // Ejecuta la aplicación.

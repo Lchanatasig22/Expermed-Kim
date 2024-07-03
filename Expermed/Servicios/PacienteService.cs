@@ -138,7 +138,15 @@ namespace Expermed.Servicios
 
 
 
-
+        public async Task CambiarEstadoPacienteAsync(int id, bool activo)
+        {
+            var paciente = await _context.Pacientes.FindAsync(id);
+            if (paciente != null)
+            {
+                paciente.ActivoPacientes = activo ? 1 : 0;
+                await _context.SaveChangesAsync();
+            }
+        }
 
     }
 }
