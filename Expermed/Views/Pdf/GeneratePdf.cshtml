@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "GeneratePdf";
+    Layout = "~/Views/Shared/_pdf.cshtml";
+}
+
+<div class="container">
+    @if (Model.Receta)
+    {
+        <div class="section">
+            <h2>Receta Médica</h2>
+            <p>
+                <strong>Nombre del Paciente:</strong> @Model.NombrePaciente<br>
+                <strong>Fecha:</strong> @Model.FechaActual<br>
+            </p>
+            <p><strong>Medicamentos:</strong></p>
+            <div class="highlight">
+                @Model.Medicamentos
+            </div>
+            <p><strong>Instrucciones adicionales:</strong></p>
+            <div class="highlight">
+                @Model.InstruccionesAdicionales
+            </div>
+        </div>
+    }
+
+    @if (Model.Justificacion)
+    {
+        <div class="section">
+            <h2>Justificación Médica</h2>
+            <p>
+                <strong>Nombre del Paciente:</strong> @Model.NombrePaciente<br>
+                <strong>Fecha:</strong> @Model.FechaActual<br>
+            </p>
+            <p><strong>Motivo de la justificación:</strong></p>
+            <div class="highlight">
+                @Model.MotivoJustificacion
+            </div>
+            <p><strong>Recomendaciones:</strong></p>
+            <div class="highlight">
+                @Model.Recomendaciones
+            </div>
+        </div>
+    }
+
+    @if (Model.FormatoConsulta)
+    {
+        <div class="section">
+            <h2>Formato de Consulta</h2>
+            <p>
+                <strong>Nombre del Paciente:</strong> @Model.NombrePaciente<br>
+                <strong>Fecha:</strong> @Model.FechaActual<br>
+            </p>
+            <p><strong>Motivo de la consulta:</strong></p>
+            <div class="highlight">
+                @Model.MotivoConsulta
+            </div>
+            <p><strong>Diagnóstico:</strong></p>
+            <div class="highlight">
+                @Model.Diagnostico
+            </div>
+            <p><strong>Plan de tratamiento:</strong></p>
+            <div class="highlight">
+                @Model.PlanTratamiento
+            </div>
+        </div>
+    }
+</div>
+<div class="footer">
+    <p>Este es un documento generado automáticamente. Por favor, no lo firme ni lo modifique manualmente.</p>
+</div>

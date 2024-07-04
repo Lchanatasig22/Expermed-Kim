@@ -11,10 +11,12 @@ namespace Expermed.Servicios
         private readonly Base_ExpermedContext _context;
 
         private readonly PacienteService _pacienteService;
-        public ConsultaService(Base_ExpermedContext context, PacienteService pacienteService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public ConsultaService(Base_ExpermedContext context, PacienteService pacienteService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _pacienteService = pacienteService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Paciente> BuscarPacientePorNombreAsync(string nombre, int ci)
@@ -152,11 +154,32 @@ namespace Expermed.Servicios
         }
 
 
-        //public async Task ImprimirConsulta(int idConsulta)
+        // Método para obtener una consulta por su ID
+        public async Task<Consultum> ObtenerConsultaPorIdAsync(int idConsulta)
+        {
+            return await _context.Consulta
+                .Include(c => c.PacienteConsultaPNavigation) // Incluye la navegación al paciente
+                .FirstOrDefaultAsync(c => c.IdConsulta == idConsulta);
+        }
+
+
+        //public async Task<List<Consultum>> GetAllConsultasAsync()
         //{
+        //    // Obtener el nombre de usuario de la sesión
+        //    var loginUsuario = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
 
+        //    if (string.IsNullOrEmpty(loginUsuario))
+        //    {
+        //        throw new Exception("El nombre de usuario no está disponible en la sesión.");
+        //    }
 
-        //    Consultum modelo =  _context.Consulta.Include (co => co.)  )
+        //    // Filtrar los pacientes por el usuario de creación
+        //    var consultas = await _context.Consulta
+        //        .Where(p => p.activiUsuario == loginUsuario)
+        //        .Include(p => p.NacionalidadPacientesLNavigation)
+        //        .ToListAsync();
+
+        //    return consultas;
         //}
     }
 }

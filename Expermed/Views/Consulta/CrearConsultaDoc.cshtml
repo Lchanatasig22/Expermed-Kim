@@ -147,7 +147,7 @@
 
         <hr>
     </div>
-    <form role="form" id="consultaForm" asp-action="InsertarConsulta" method="post">
+    <form role="form" id="consultaForm" asp-action="CrearConsulta" method="post">
 
         <div class="form-group col-sm-3" hidden>
             <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
@@ -196,7 +196,7 @@
                         {
                             @foreach (var tipoDocumento in ViewBag.TiposDocumentos)
                             {
-                                <option  value="@tipoDocumento.Value">@tipoDocumento.Text</option>
+                                <option value="@tipoDocumento.Value">@tipoDocumento.Text</option>
                             }
                         }
                     </select>
@@ -1354,7 +1354,7 @@
                                 <tbody id="imagenesTableBody">
                                     <tr>
                                         <td>
-                                            <div class="input-group" >
+                                            <div class="input-group">
                                                 <select asp-for="ImagenConsultaINavigation.IdImagen" class="form-control" id="ImagenId">
                                                     <option value="">Seleccione...</option>
 
@@ -1468,18 +1468,23 @@
                 </div>
             </div>
 
-           
+
 
 
 
         </div>
         <!--Final cuarto formulario-->
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+        <div class="form-group mt-3">
+            <button type="button" class="btn btn-outline-primary" onclick="showModal()">
+                <i class="fa-regular fa-file-pdf"></i> Generar Documento
+            </button>
+            <button type="button" class="btn btn-success" onclick="finalizarConsulta()">
+                <i class="fa fa-check"></i> Finalizar
+            </button>
         </div>
     </form>
-   
+
+    
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -1611,6 +1616,55 @@
         });
 
 
-      
+       
+
     });
+
+    function showModal() {
+        $('#pdfModal').modal('show');
+    }
+
+    function generatePdf() {
+        const receta = document.getElementById('receta').checked;
+        const justificacion = document.getElementById('justificacion').checked;
+        const formatoConsulta = document.getElementById('formatoConsulta').checked;
+
+        const url = `/Pdf/GeneratePdf?receta=${receta}&justificacion=${justificacion}&formatoConsulta=${formatoConsulta}`;
+
+        window.open(url, '_blank');
+
+        // Cerrar el modal después de generar el PDF
+        $('#pdfModal').modal('hide');
+    }
+
+    function finalizarConsulta() {
+        // Usando SweetAlert2 para mostrar un mensaje de confirmación
+        Swal.fire({
+            title: '¿Está seguro de finalizar la consulta?',
+            text: 'Una vez finalizada la consulta, no podrá ser editada.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, finalizar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Mostrar mensaje de éxito y redirigir
+                Swal.fire({
+                    title: 'Consulta finalizada',
+                    text: 'La consulta ha sido finalizada con éxito. Serás redirigido en unos segundos.',
+                    icon: 'success',
+                    timer: 3000, // Duración de la alerta en milisegundos
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    willClose: () => {
+                        // Redirigir a otra acción después de que la alerta se cierre
+                        window.location.href = '/Consulta/ListarConsultas'; // Cambia esta URL a donde quieras redirigir
+                    }
+                });
+            }
+        });
+    }
+
 </script>

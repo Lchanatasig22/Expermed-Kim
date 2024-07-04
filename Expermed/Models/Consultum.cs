@@ -100,6 +100,7 @@ namespace Expermed.Models
         public int? ImagenConsultaI { get; set; }
         public int? LaboratorioConsultaLa { get; set; }
         public int? DiagnosticoConsultaDi { get; set; }
+        public int? ActivoConsulta { get; set; }
 
         public virtual CDetalle? DetalleConsultaDNavigation { get; set; }
         public virtual CDiagnostico? DiagnosticoConsultaDiNavigation { get; set; }

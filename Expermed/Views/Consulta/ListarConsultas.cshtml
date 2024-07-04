@@ -1,8 +1,186 @@
-﻿
+﻿@model List<Consultum>
 @{
     ViewData["Title"] = "ListarConsultas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ListarConsultas</h2>
+
+
+
+
+
+<h3>Lista de consultas</h3>
+
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-3">
+            <label for="opcion">Buscar por</label>
+            <select class="form-control" id="opcion" onchange="onSearchChanged()">
+                <option value="-2">Listar todo</option>
+                <option value="1">Nombre(s)</option>
+                <option value="2">Número de documento</option>
+                <option value="3">Email</option>
+                <option value="4">Nacionalidad</option>
+            </select>
+
+        </div>
+        <div class="col-md-5 d-none" id="buscarFields">
+            <label>&nbsp;</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Ingresar criterio de búsqueda" id="buscarCriterio" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" onclick="onSearch()">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="table-primary">
+                <th>Acciones</th>
+                <th>Fecha de la consulta</th>
+
+                <th>Especialidad</th>
+                <th>Motivo</th>
+                <th>Enfermedad</th>
+                <th>Historial</th>
+                <th>Estado</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var consulta in Model)
+            {
+                <tr id="@consulta.IdConsulta">
+                    <!-- Añade un id único para cada fila -->
+                    <td>
+                        <a asp-action="Editarconsulta" asp-route-id="@consulta.IdConsulta" class="btn btn-outline-primary">
+                            <i class="fa-regular fa-pen-to-square"></i> Revisar
+                        </a>
+                    </td>
+                    <td>@consulta.FechacreacionConsulta</td>
+                    <td>@consulta.PacienteConsultaPNavigation.PrimernombrePacientes</td>
+                    <td>@consulta.EspecialidadConsultaC</td>
+                    <td>@consulta.MotivoConsulta)</td>
+                    <td>@consulta.EnfermedadConsulta</td>
+                    <td>@consulta.HistorialConsulta</td>
+                    <td>@consulta.ActivoConsulta</td>
+
+                    @* <td>
+                        <form asp-action="CambiarEstadoconsulta" method="post">
+                            <input type="hidden" name="id" value="@consulta.IdConsulta" />
+                            <input type="hidden" name="activo" value="@(consulta.ActivoConsulta == 1 ? 0 : 1)" />
+                            <button type="submit" class="btn btn-sm @(consulta.ActivoConsulta == 1 ? "btn-outline-success" : "btn-outline-danger")">
+                                @(consulta.ActivoConsulta == 1 ? "En Curso" : "Finalizado")
+                            </button>
+                        </form>
+                    </td> *@
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="noResults" class="no-results d-none">
+        No se encontraron resultados.<a asp-action="Crearconsulta" asp-controller="consulta" class="btn btn-outline-primary" style="margin-left:80%">
+            <i class="fa fa-plus"></i> Añadir nuevo consulta
+        </a>
+    </div>
+
+</div>
+
+<a asp-action="Crearconsulta" asp-controller="consulta" class="btn btn-outline-primary" style="margin-left:80%">
+    <i class="fa fa-plus"></i> Añadir nuevo consulta
+</a>
+<script>
+    function onSearchChanged() {
+        var selectElement = document.getElementById('opcion');
+        var searchFields = document.getElementById('buscarFields');
+        var tableRows = document.getElementsByTagName('tr'); // Obtén todas las filas de la tabla
+
+        if (selectElement.value === '-2') {
+            searchFields.classList.add('d-none');
+            // Restablece la visibilidad de todas las filas
+            for (var i = 0; i < tableRows.length; i++) {
+                var currentRow = tableRows[i];
+                if (currentRow.id !== '') { // Asegúrate de que sea una fila de datos (tiene un id)
+                    currentRow.style.display = ''; // Muestra todas las filas
+                }
+            }
+            document.getElementById('noResults').classList.add('d-none'); // Oculta el mensaje de "no resultados"
+        } else {
+            searchFields.classList.remove('d-none');
+        }
+    }
+
+    function onSearch() {
+        var criterio = document.getElementById('buscarCriterio').value.toLowerCase(); // Obtén el criterio de búsqueda
+        var optionValue = document.getElementById('opcion').value; // Obtén el valor de la opción seleccionada
+
+        var tableRows = document.getElementsByTagName('tr'); // Obtén todas las filas de la tabla
+        var found = false; // Variable para rastrear si se encontró algún resultado
+
+        for (var i = 0; i < tableRows.length; i++) {
+            var currentRow = tableRows[i];
+
+            if (currentRow.id !== '') { // Asegúrate de que sea una fila de datos (tiene un id)
+                var cellValue = ''; // Valor de la celda que coincide con el criterio de búsqueda
+                switch (optionValue) {
+                    case '1': // Nombre(s)
+                        cellValue = currentRow.getElementsByTagName('td')[1].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    case '2': // Número de documento
+                        cellValue = currentRow.getElementsByTagName('td')[2].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    case '3': // Email
+                        cellValue = currentRow.getElementsByTagName('td')[3].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    case '4': // Nacionalidad
+                        cellValue = currentRow.getElementsByTagName('td')[4].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    default:
+                        break;
+                }
+
+                // Comprueba si el criterio de búsqueda coincide con el valor de la celda
+                if (cellValue.includes(criterio)) {
+                    currentRow.style.display = ''; // Muestra la fila si coincide
+                    found = true; // Se encontró al menos una coincidencia
+                } else {
+                    currentRow.style.display = 'none'; // Oculta la fila si no coincide
+                }
+            }
+        }
+
+        if (!found) {
+            document.getElementById('noResults').classList.remove('d-none'); // Muestra el mensaje de "no resultados"
+        } else {
+            document.getElementById('noResults').classList.add('d-none'); // Oculta el mensaje de "no resultados" sd
+        }
+    }
+
+    function cambiarEstadoUsuario(id, activo) {
+        $.ajax({
+            url: '@Url.Action("CambiarEstadoconsultas", "consulta")',
+            type: 'POST',
+            data: { id: id, activo: activo },
+            success: function (response) {
+                if (response.success) {
+                    alert('Estado del consulta actualizado con éxito');
+                } else {
+                    alert('Error al actualizar el estado del consulta');
+                }
+            },
+            error: function () {
+                alert('Error al enviar la solicitud');
+            }
+        });
+    }
+</script>
+
 

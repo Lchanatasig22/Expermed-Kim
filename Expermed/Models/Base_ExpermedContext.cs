@@ -46,6 +46,8 @@ namespace Expermed.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<CDetalle>(entity =>
             {
                 entity.HasKey(e => e.IdDetalle)
@@ -366,6 +368,8 @@ namespace Expermed.Models
                 entity.Property(e => e.Abdomen)
                     .HasMaxLength(500)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ActivoConsulta).HasColumnName("activo_consulta");
 
                 entity.Property(e => e.Alergias)
                     .HasMaxLength(500)
@@ -994,6 +998,10 @@ namespace Expermed.Models
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("categoria_medicamentos");
+
+                entity.Property(e => e.CodigoMedicamentos)
+                    .HasMaxLength(500)
+                    .HasColumnName("codigo_medicamentos");
 
                 entity.Property(e => e.ConcentracionMedicamentos)
                     .HasMaxLength(500)

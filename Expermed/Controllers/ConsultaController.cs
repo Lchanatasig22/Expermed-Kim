@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Data;
 
 namespace Expermed.Controllers
@@ -28,11 +29,10 @@ namespace Expermed.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> CrearConsultas()
         {
-
-
             var tiposDocumentos = await _catalogoService.ObtenerTiposDocumentosAsync();
             var tiposSangre = await _catalogoService.ObtenerTiposDeSangreAsync();
             var tiposFormacion = await _catalogoService.ObtenerTiposDeFormacionPAsync();
@@ -44,106 +44,107 @@ namespace Expermed.Controllers
             var tiposPariente = await _catalogoService.ObtenerParienteAsync();
             var tiposLaboratorio = await _catalogoService.ObtenerLaboratoriosAsync();
             var tiposImagen = await _catalogoService.ObtenerImagenAsync();
-            // Puedes crear una lista de SelectListItem para usar en tu select
-            var tiposDocumentosSelectList = tiposDocumentos.Select(d => new SelectListItem
-            {
-                Value = d.UuidCatalogo.ToString(), // Aquí debes asignar el valor correcto
-                Text = d.DescripcionCatalogo // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tiposSangreSelectList = tiposSangre.Select(s => new SelectListItem
-            {
-                Value = s.UuidCatalogo.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.DescripcionCatalogo // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tiposFormacionSelectList = tiposFormacion.Select(s => new SelectListItem
-            {
-                Value = s.UuidCatalogo.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.DescripcionCatalogo // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tiposEstadoCivilSelectList = tiposEstadoCivil.Select(s => new SelectListItem
-            {
-                Value = s.UuidCatalogo.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.DescripcionCatalogo // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tiposGeneroSelectList = tiposGenero.Select(s => new SelectListItem
-            {
-                Value = s.UuidCatalogo.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.DescripcionCatalogo // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tiposNacionalidadSelectList = tiposNacionalidad.Select(s => new SelectListItem
-            {
-                Value = s.IdLocalidad.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.GentilicioLocalidad // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tiposProvinciaSelectList = tiposProvincia.Select(s => new SelectListItem
-            {
-                Value = s.IdLocalidad.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.PrefijoLocalidad // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tipoSegurorSelectList = tiposSeguro.Select(s => new SelectListItem
-            {
-                Value = s.UuidCatalogo.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.DescripcionCatalogo // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tipoParienteSelectList = tiposPariente.Select(s => new SelectListItem
-            {
-                Value = s.UuidCatalogo.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.DescripcionCatalogo // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
-            var tipoLaboratorioSelectList = tiposLaboratorio.Select(s => new SelectListItem
-            {
-                Value = s.CodigoLaboratorios.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.DescripcionLaboratorios // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();     
-            var tipoImagenSelectList = tiposImagen.Select(s => new SelectListItem
-            {
-                Value = s.CodigoImagenes.ToString(), // Aquí debes asignar el valor correcto
-                Text = s.DescripcionImagenes // Aquí debes asignar el texto que se mostrará en la opción
-            }).ToList();
 
-            ViewBag.TiposDocumentos = tiposDocumentosSelectList;
-            ViewBag.TiposSangre = tiposSangreSelectList;
-            ViewBag.TiposFormacion = tiposFormacionSelectList;
-            ViewBag.TiposEstadoCivil = tiposEstadoCivilSelectList;
-            ViewBag.TiposGenero = tiposGeneroSelectList;
-            ViewBag.TiposNacionalidad = tiposNacionalidadSelectList;
-            ViewBag.TiposProvincia = tiposNacionalidadSelectList;
-            ViewBag.TiposSeguro = tipoSegurorSelectList;
-            ViewBag.TiposPariente = tipoParienteSelectList;
-            ViewBag.TiposLaboratorio = tipoLaboratorioSelectList;
-            ViewBag.TiposImagen = tipoImagenSelectList;
-
-
-
-            // Obtener el nombre de usuario de la sesión
+            ViewBag.TiposDocumentos = tiposDocumentos.Select(d => new SelectListItem
+            {
+                Value = d.UuidCatalogo.ToString(),
+                Text = d.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposSangre = tiposSangre.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposFormacion = tiposFormacion.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposEstadoCivil = tiposEstadoCivil.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposGenero = tiposGenero.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposNacionalidad = tiposNacionalidad.Select(s => new SelectListItem
+            {
+                Value = s.IdLocalidad.ToString(),
+                Text = s.GentilicioLocalidad
+            }).ToList();
+            ViewBag.TiposProvincia = tiposProvincia.Select(s => new SelectListItem
+            {
+                Value = s.IdLocalidad.ToString(),
+                Text = s.PrefijoLocalidad
+            }).ToList();
+            ViewBag.TiposSeguro = tiposSeguro.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposPariente = tiposPariente.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposLaboratorio = tiposLaboratorio.Select(s => new SelectListItem
+            {
+                Value = s.CodigoLaboratorios.ToString(),
+                Text = s.DescripcionLaboratorios
+            }).ToList();
+            ViewBag.TiposImagen = tiposImagen.Select(s => new SelectListItem
+            {
+                Value = s.CodigoImagenes.ToString(),
+                Text = s.DescripcionImagenes
+            }).ToList();
 
             var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
-
-            // Pasar el nombre de usuario a la vista
             ViewBag.UsuarioNombre = usuarioNombre;
 
             return View();
-
         }
 
-
-
         [HttpPost]
-        public async Task<IActionResult> InsertarConsulta(Consultum consulta)
+        public async Task<IActionResult> InsertarConsulta(Consultum model)
         {
             if (ModelState.IsValid)
             {
-                await _consultaService.InsertarConsultaAsync(consulta);
-                return RedirectToAction("ListarConsultas"); // Redirige a la vista principal u otra vista después de insertar la consulta
+                await _consultaService.InsertarConsultaAsync(model);
+                TempData["ConsultaReciente"] = JsonConvert.SerializeObject(model);
+
+                return RedirectToAction("CrearConsultaDoc", new { id = model.IdConsulta });
             }
 
-            return View(consulta); // Si el modelo no es válido, regresa a la vista con el modelo para mostrar los errores de validación
+            return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> BuscarPacientePorNombre(string nombre, int ci)
+        public async Task<IActionResult> CrearConsultaDoc(int id)
         {
-            var paciente = await _consultaService.BuscarPacientePorNombreAsync(nombre,ci);
+            Consultum model;
+
+            if (TempData["ConsultaReciente"] != null)
+            {
+                model = JsonConvert.DeserializeObject<Consultum>(TempData["ConsultaReciente"].ToString());
+            }
+            else
+            {
+                model = await _consultaService.ObtenerConsultaPorIdAsync(id);
+            }
+
+            var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
+            ViewBag.UsuarioNombre = usuarioNombre;
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BuscarPacientePorNombre(string nombre,int ci)
+        {
+            var paciente = await _consultaService.BuscarPacientePorNombreAsync(nombre, ci);
             if (paciente != null)
             {
                 return Json(new
@@ -170,7 +171,6 @@ namespace Expermed.Controllers
                     ocupacion = paciente.OcupacionPacientes,
                     empresa = paciente.EmpresaPacientes,
                     seguroSalud = paciente.SegurosaludPacientesC
-
                 });
             }
             else
@@ -178,8 +178,5 @@ namespace Expermed.Controllers
                 return NotFound();
             }
         }
-
-
-
     }
 }
