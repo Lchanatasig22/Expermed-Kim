@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Expermed.Models
 {
@@ -8,8 +10,15 @@ namespace Expermed.Models
         public Consultum()
         {
             Cita = new HashSet<Citum>();
+            ActivoConsulta = 1;
+            SecuencialConsulta ="3";
+            EspecialidadConsultaC = 2;
+            EstadoConsultaC = 1;
+           
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdConsulta { get; set; }
         public DateTime? FechacreacionConsulta { get; set; }
         public string? UsuariocreacionConsulta { get; set; }

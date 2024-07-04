@@ -103,23 +103,34 @@ namespace Expermed.Controllers
 
             var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
             ViewBag.UsuarioNombre = usuarioNombre;
+            var usuarioId = _httpContextAccessor.HttpContext.Session.GetInt32("UsuarioId");
+            ViewBag.IdUsuario = usuarioId;
 
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> InsertarConsulta(Consultum model)
         {
             if (ModelState.IsValid)
             {
                 await _consultaService.InsertarConsultaAsync(model);
-                TempData["ConsultaReciente"] = JsonConvert.SerializeObject(model);
 
+                // Verifica si el IdConsulta no es 0 después de la inserción
+                if (model.IdConsulta == 0)
+                {
+                    // Manejo del error, en caso de que no se haya generado un ID
+                    ModelState.AddModelError("", "Error inserting the consultation. Please try again.");
+                    return View(model);
+                }
+
+                TempData["ConsultaReciente"] = JsonConvert.SerializeObject(model);
                 return RedirectToAction("CrearConsultaDoc", new { id = model.IdConsulta });
             }
 
             return View(model);
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> CrearConsultaDoc(int id)
@@ -142,9 +153,9 @@ namespace Expermed.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> BuscarPacientePorNombre(string nombre,int ci)
+        public async Task<IActionResult> BuscarPacientePorNombre(int ci)
         {
-            var paciente = await _consultaService.BuscarPacientePorNombreAsync(nombre, ci);
+            var paciente = await _consultaService.BuscarPacientePorNombreAsync(ci);
             if (paciente != null)
             {
                 return Json(new
@@ -171,6 +182,7 @@ namespace Expermed.Controllers
                     ocupacion = paciente.OcupacionPacientes,
                     empresa = paciente.EmpresaPacientes,
                     seguroSalud = paciente.SegurosaludPacientesC
+
                 });
             }
             else
@@ -178,5 +190,18 @@ namespace Expermed.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ActualizarConsulta(Consultum consulta)
+        {
+            if (ModelState.IsValid)
+            {
+                await _consultaService.ActualizarConsultaAsync(consulta);
+                return RedirectToAction("ListarConsultas"); // Redirigir a una vista que confirme la actualización
+            }
+
+            return View(consulta);
+        }
+
     }
 }

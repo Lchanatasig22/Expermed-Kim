@@ -19,16 +19,13 @@ namespace Expermed.Servicios
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<Paciente> BuscarPacientePorNombreAsync(string nombre, int ci)
+        public async Task<Paciente> BuscarPacientePorNombreAsync(int ci)
         {
             return await _context.Pacientes
-                .Where(p => p.PrimernombrePacientes.Contains(nombre) ||
-                            p.SegundonombrePacientes.Contains(nombre) ||
-                            p.PrimerapellidoPacientes.Contains(nombre) ||
-                            p.SegundoapellidoPacientes.Contains(nombre) ||
-                            p.CiPacientes == ci) 
+                .Where(p => p.CiPacientes == ci)
                 .FirstOrDefaultAsync();
         }
+
 
 
         public async Task InsertarConsultaAsync(Consultum consulta)
@@ -65,9 +62,9 @@ namespace Expermed.Servicios
                     command.Parameters.AddWithValue("@antecedentespersonales_consulta", consulta.AntecedentespersonalesConsulta ?? "sin especificar");
                     command.Parameters.AddWithValue("@diasincapacidad_consulta", consulta.DiasincapacidadConsulta ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@medico_consulta_d", consulta.MedicoConsultaD);
-                    command.Parameters.AddWithValue("@especialidad_consulta_c", consulta.EspecialidadConsultaC);
+                    command.Parameters.AddWithValue("@especialidad_consulta_c", consulta.EspecialidadConsultaC ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@estado_consulta_c", consulta.EstadoConsultaC);
-                    command.Parameters.AddWithValue("@tipo_consulta_c", consulta.TipoConsultaC);
+                    command.Parameters.AddWithValue("@tipo_consulta_c", consulta.TipoConsultaC ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@notasevolucion_consulta", consulta.NotasevolucionConsulta ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@consultaprincipal_consulta", consulta.ConsultaprincipalConsulta ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@medicamento_consulta_m", consulta.MedicamentoConsultaM ?? (object)DBNull.Value);
@@ -136,16 +133,27 @@ namespace Expermed.Servicios
                     command.Parameters.AddWithValue("@diagnostico_consulta_di", consulta.DiagnosticoConsultaDi ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@imagen_consulta_i", consulta.ImagenConsultaI ?? (object)DBNull.Value);
 
-                    // Log de parámetros para depuración
-                    foreach (SqlParameter param in command.Parameters)
+                    // Parámetro de salida para el ID
+                    SqlParameter idConsultaParam = new SqlParameter("@IdConsulta", SqlDbType.Int)
                     {
-                        Console.WriteLine($"{param.ParameterName}: {param.Value}");
-                    }
+                        Direction = ParameterDirection.Output
+                    };
+                    command.Parameters.Add(idConsultaParam);
+
+                    //// Log de parámetros para depuración
+                    //foreach (SqlParameter param in command.Parameters)
+                    //{
+                    //    Console.WriteLine($"{param.ParameterName}: {param.Value}");
+                    //}
 
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
+
+                    // Obtener el ID generado
+                    consulta.IdConsulta = (int)idConsultaParam.Value;
                 }
             }
+            
             catch (Exception ex)
             {
                 // Log del mensaje de excepción
@@ -154,12 +162,111 @@ namespace Expermed.Servicios
         }
 
 
+
         // Método para obtener una consulta por su ID
         public async Task<Consultum> ObtenerConsultaPorIdAsync(int idConsulta)
         {
             return await _context.Consulta
                 .Include(c => c.PacienteConsultaPNavigation) // Incluye la navegación al paciente
                 .FirstOrDefaultAsync(c => c.IdConsulta == idConsulta);
+        }
+
+        public async Task ActualizarConsultaAsync(Consultum consulta)
+        {
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC sp_ActualizarConsulta @id_consulta, @fechacreacion_consulta, @usuariocreacion_consulta, @historial_consulta, @secuencial_consulta, @paciente_consulta_p, @motivo_consulta, @enfermedad_consulta, @nombrepariente_consulta, @tipopariente_consulta, @telefono_consulta, @temperatura_consulta, @frecuenciarespiratoria_consulta, @presionarterialsistolica_consulta, @presionarterialdiastolica_consulta, @pulso_consulta, @peso_consulta, @talla_consulta, @plantratamiento_consulta, @observacion_consulta, @antecedentespersonales_consulta, @diasincapacidad_consulta, @medico_consulta_d, @especialidad_consulta_c, @estado_consulta_c, @tipo_consulta_c, @notasevolucion_consulta, @consultaprincipal_consulta, @medicamento_consulta_m, @documento_consulta_d, @detalle_consulta_d, @Cardiopatia, @Obser_Cardiopatia, @Diabetes, @Obser_Diabetes, @Enf_Cardiovascular, @Obser_Enf_Cardiovascular, @Hipertension, @Obser_Hipertensión, @Cancer, @Obser_Cancer, @Tuberculosis, @Obser_Tuberculosis, @Enf_Mental, @Obser_Enf_Mental, @Enf_Infecciosa, @Obser_Enf_Infecciosa, @Mal_Formacion, @Obser_Mal_Formacion, @Otro, @Obser_Otro, @Alergias, @Obser_Alergias, @Cirugias, @Obser_Cirugias, @Org_Sentidos, @Obser_Org_Sentidos, @Respiratorio, @Obser_Respiratorio, @Cardio_Vascular, @Obser_Cardio_Vascular, @Digestivo, @Obser_Digestivo, @Genital, @Obser_Genital, @Urinario, @Obser_Urinario, @M_Esqueletico, @Obser_M_Esqueletico, @Endocrino, @Obser_Endocrino, @Linfatico, @Obser_Linfatico, @Nervioso, @Obser_Nervioso, @Cabeza, @Obser_Cabeza, @Cuello, @Obser_Cuello, @Torax, @Obser_Torax, @Abdomen, @Obser_Abdomen, @Pelvis, @Obser_Pelvis, @Extremidades, @Obser_Extremidades, @imagen_consulta_i, @laboratorio_consulta_la, @diagnostico_consulta_di, @activo_consulta",
+                new SqlParameter("@id_consulta", consulta.IdConsulta),
+                new SqlParameter("@fechacreacion_consulta", consulta.FechacreacionConsulta),
+                new SqlParameter("@usuariocreacion_consulta", consulta.UsuariocreacionConsulta),
+                new SqlParameter("@historial_consulta", consulta.HistorialConsulta),
+                new SqlParameter("@secuencial_consulta", consulta.SecuencialConsulta),
+                new SqlParameter("@paciente_consulta_p", consulta.PacienteConsultaP),
+                new SqlParameter("@motivo_consulta", consulta.MotivoConsulta),
+                new SqlParameter("@enfermedad_consulta", consulta.EnfermedadConsulta),
+                new SqlParameter("@nombrepariente_consulta", consulta.NombreparienteConsulta),
+                new SqlParameter("@tipopariente_consulta", consulta.TipoparienteConsulta),
+                new SqlParameter("@telefono_consulta", consulta.TelefonoConsulta),
+                new SqlParameter("@temperatura_consulta", consulta.TemperaturaConsulta),
+                new SqlParameter("@frecuenciarespiratoria_consulta", consulta.FrecuenciarespiratoriaConsulta),
+                new SqlParameter("@presionarterialsistolica_consulta", consulta.PresionarterialsistolicaConsulta),
+                new SqlParameter("@presionarterialdiastolica_consulta", consulta.PresionarterialdiastolicaConsulta),
+                new SqlParameter("@pulso_consulta", consulta.PulsoConsulta),
+                new SqlParameter("@peso_consulta", consulta.PesoConsulta),
+                new SqlParameter("@talla_consulta", consulta.TallaConsulta),
+                new SqlParameter("@plantratamiento_consulta", consulta.PlantratamientoConsulta),
+                new SqlParameter("@observacion_consulta", consulta.ObservacionConsulta),
+                new SqlParameter("@antecedentespersonales_consulta", consulta.AntecedentespersonalesConsulta),
+                new SqlParameter("@diasincapacidad_consulta", consulta.DiasincapacidadConsulta),
+                new SqlParameter("@medico_consulta_d", consulta.MedicoConsultaD),
+                new SqlParameter("@especialidad_consulta_c", consulta.EspecialidadConsultaC),
+                new SqlParameter("@estado_consulta_c", consulta.EstadoConsultaC),
+                new SqlParameter("@tipo_consulta_c", consulta.TipoConsultaC),
+                new SqlParameter("@notasevolucion_consulta", consulta.NotasevolucionConsulta),
+                new SqlParameter("@consultaprincipal_consulta", consulta.ConsultaprincipalConsulta),
+                new SqlParameter("@medicamento_consulta_m", consulta.MedicamentoConsultaM),
+                new SqlParameter("@documento_consulta_d", consulta.DocumentoConsultaD),
+                new SqlParameter("@detalle_consulta_d", consulta.DetalleConsultaD),
+                new SqlParameter("@Cardiopatia", consulta.Cardiopatia),
+                new SqlParameter("@Obser_Cardiopatia", consulta.ObserCardiopatia),
+                new SqlParameter("@Diabetes", consulta.Diabetes),
+                new SqlParameter("@Obser_Diabetes", consulta.ObserDiabetes),
+                new SqlParameter("@Enf_Cardiovascular", consulta.EnfCardiovascular),
+                new SqlParameter("@Obser_Enf_Cardiovascular", consulta.ObserEnfCardiovascular),
+                new SqlParameter("@Hipertension", consulta.Hipertension),
+                new SqlParameter("@Obser_Hipertensión", consulta.ObserHipertensión),
+                new SqlParameter("@Cancer", consulta.Cancer),
+                new SqlParameter("@Obser_Cancer", consulta.ObserCancer),
+                new SqlParameter("@Tuberculosis", consulta.Tuberculosis),
+                new SqlParameter("@Obser_Tuberculosis", consulta.ObserTuberculosis),
+                new SqlParameter("@Enf_Mental", consulta.EnfMental),
+                new SqlParameter("@Obser_Enf_Mental", consulta.ObserEnfMental),
+                new SqlParameter("@Enf_Infecciosa", consulta.EnfInfecciosa),
+                new SqlParameter("@Obser_Enf_Infecciosa", consulta.ObserEnfInfecciosa),
+                new SqlParameter("@Mal_Formacion", consulta.MalFormacion),
+                new SqlParameter("@Obser_Mal_Formacion", consulta.ObserMalFormacion),
+                new SqlParameter("@Otro", consulta.Otro),
+                new SqlParameter("@Obser_Otro", consulta.ObserOtro),
+                new SqlParameter("@Alergias", consulta.Alergias),
+                new SqlParameter("@Obser_Alergias", consulta.ObserAlergias),
+                new SqlParameter("@Cirugias", consulta.Cirugias),
+                new SqlParameter("@Obser_Cirugias", consulta.ObserCirugias),
+                new SqlParameter("@Org_Sentidos", consulta.OrgSentidos),
+                new SqlParameter("@Obser_Org_Sentidos", consulta.ObserOrgSentidos),
+                new SqlParameter("@Respiratorio", consulta.Respiratorio),
+                new SqlParameter("@Obser_Respiratorio", consulta.ObserRespiratorio),
+                new SqlParameter("@Cardio_Vascular", consulta.CardioVascular),
+                new SqlParameter("@Obser_Cardio_Vascular", consulta.ObserCardioVascular),
+                new SqlParameter("@Digestivo", consulta.Digestivo),
+                new SqlParameter("@Obser_Digestivo", consulta.ObserDigestivo),
+                new SqlParameter("@Genital", consulta.Genital),
+                new SqlParameter("@Obser_Genital", consulta.ObserGenital),
+                new SqlParameter("@Urinario", consulta.Urinario),
+                new SqlParameter("@Obser_Urinario", consulta.ObserUrinario),
+                new SqlParameter("@M_Esqueletico", consulta.MEsqueletico),
+                new SqlParameter("@Obser_M_Esqueletico", consulta.ObserMEsqueletico),
+                new SqlParameter("@Endocrino", consulta.Endocrino),
+                new SqlParameter("@Obser_Endocrino", consulta.ObserEndocrino),
+                new SqlParameter("@Linfatico", consulta.Linfatico),
+                new SqlParameter("@Obser_Linfatico", consulta.ObserLinfatico),
+                new SqlParameter("@Nervioso", consulta.Nervioso),
+                new SqlParameter("@Obser_Nervioso", consulta.ObserNervioso),
+                new SqlParameter("@Cabeza", consulta.Cabeza),
+                new SqlParameter("@Obser_Cabeza", consulta.ObserCabeza),
+                new SqlParameter("@Cuello", consulta.Cuello),
+                new SqlParameter("@Obser_Cuello", consulta.ObserCuello),
+                new SqlParameter("@Torax", consulta.Torax),
+                new SqlParameter("@Obser_Torax", consulta.ObserTorax),
+                new SqlParameter("@Abdomen", consulta.Abdomen),
+                new SqlParameter("@Obser_Abdomen", consulta.ObserAbdomen),
+                new SqlParameter("@Pelvis", consulta.Pelvis),
+                new SqlParameter("@Obser_Pelvis", consulta.ObserPelvis),
+                new SqlParameter("@Extremidades", consulta.Extremidades),
+                new SqlParameter("@Obser_Extremidades", consulta.ObserExtremidades),
+                new SqlParameter("@imagen_consulta_i", consulta.ImagenConsultaI),
+                new SqlParameter("@laboratorio_consulta_la", consulta.LaboratorioConsultaLa),
+                new SqlParameter("@diagnostico_consulta_di", consulta.DiagnosticoConsultaDi),
+                new SqlParameter("@activo_consulta", consulta.ActivoConsulta)
+            );
         }
 
 

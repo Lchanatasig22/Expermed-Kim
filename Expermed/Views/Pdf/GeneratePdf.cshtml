@@ -1,4 +1,4 @@
-﻿
+﻿@model PdfViewModel
 @{
     ViewData["Title"] = "GeneratePdf";
     Layout = "~/Views/Shared/_pdf.cshtml";
@@ -9,13 +9,16 @@
     {
         <div class="section">
             <h2>Receta Médica</h2>
-            <p>
-                <strong>Nombre del Paciente:</strong> @Model.NombrePaciente<br>
-                <strong>Fecha:</strong> @Model.FechaActual<br>
-            </p>
+            <div class="details">
+                <p><strong>Nombre del Paciente:</strong> @Model.NombrePaciente</p>
+                <p><strong>Fecha:</strong> @Model.FechaActual</p>
+            </div>
             <p><strong>Medicamentos:</strong></p>
             <div class="highlight">
-                @Model.Medicamentos
+                @foreach (var medicamento in @Model.Medicamentos)
+                {
+                    <p>- @medicamento</p>
+                }
             </div>
             <p><strong>Instrucciones adicionales:</strong></p>
             <div class="highlight">
@@ -28,17 +31,20 @@
     {
         <div class="section">
             <h2>Justificación Médica</h2>
-            <p>
-                <strong>Nombre del Paciente:</strong> @Model.NombrePaciente<br>
-                <strong>Fecha:</strong> @Model.FechaActual<br>
-            </p>
+            <div class="details">
+                <p><strong>Nombre del Paciente:</strong> @Model.NombrePaciente</p>
+                <p><strong>Fecha:</strong> @Model.FechaActual</p>
+            </div>
             <p><strong>Motivo de la justificación:</strong></p>
             <div class="highlight">
                 @Model.MotivoJustificacion
             </div>
             <p><strong>Recomendaciones:</strong></p>
             <div class="highlight">
-                @Model.Recomendaciones
+                @foreach (var recomendacion in Model.Recomendaciones)
+                {
+                    <p>- @recomendacion</p>
+                }
             </div>
         </div>
     }
@@ -47,10 +53,10 @@
     {
         <div class="section">
             <h2>Formato de Consulta</h2>
-            <p>
-                <strong>Nombre del Paciente:</strong> @Model.NombrePaciente<br>
-                <strong>Fecha:</strong> @Model.FechaActual<br>
-            </p>
+            <div class="details">
+                <p><strong>Nombre del Paciente:</strong> @Model.NombrePaciente</p>
+                <p><strong>Fecha:</strong> @Model.FechaActual</p>
+            </div>
             <p><strong>Motivo de la consulta:</strong></p>
             <div class="highlight">
                 @Model.MotivoConsulta

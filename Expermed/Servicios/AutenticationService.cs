@@ -39,7 +39,6 @@ namespace Expermed.Servicios
             var parameterClaveUsuario = new SqlParameter("@clave_usuario", claveUsuario);
 
             var user = new Usuario();
-            //cadena de conexion 
             using (var connection = new SqlConnection(_context.Database.GetDbConnection().ConnectionString))
             {
                 await connection.OpenAsync();
@@ -54,6 +53,12 @@ namespace Expermed.Servicios
                     {
                         if (await reader.ReadAsync())
                         {
+                            // Obtener el ID del usuario
+                            if (!reader.IsDBNull(reader.GetOrdinal("id_usuario")))
+                            {
+                                user.IdUsuario = reader.GetInt32(reader.GetOrdinal("id_usuario"));
+                            }
+
                             // Obtener el valor del perfil del usuario
                             if (!reader.IsDBNull(reader.GetOrdinal("perfil_usuario_p")))
                             {
@@ -66,10 +71,10 @@ namespace Expermed.Servicios
                                 user.LoginUsuario = reader.GetString(reader.GetOrdinal("login_usuario"));
                             }
 
-                            // Almacenar el nombre de usuario en la sesión
+                            // Almacenar el nombre de usuario y el ID en la sesión
                             _httpContextAccessor.HttpContext.Session.SetString("UsuarioNombre", user.LoginUsuario);
 
-                            //este formulario permite la captura de datos que esten tanto en la tabla de Perfil y la de Usuario
+                            _httpContextAccessor.HttpContext.Session.SetInt32("UsuarioId", user.IdUsuario);
                         }
                     }
                 }
@@ -77,6 +82,7 @@ namespace Expermed.Servicios
 
             return user;
         }
+
 
     }
 }

@@ -1,6 +1,7 @@
 using Expermed.Models; // Importa los modelos de datos del proyecto.
 using Expermed.Servicios; // Importa los servicios del proyecto.
 using Microsoft.EntityFrameworkCore; // Importa Entity Framework Core para trabajar con la base de datos.
+using Rotativa.AspNetCore; // Importa Rotativa para la generación de PDFs.
 
 var builder = WebApplication.CreateBuilder(args); // Crea una instancia del constructor de la aplicación web.
 
@@ -15,8 +16,8 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation(); // Agrega soporte para Razor Pages con compilación en tiempo de ejecución.
 builder.Services.AddDbContext<Base_ExpermedContext>(options =>
-
     options.UseSqlServer(builder.Configuration.GetConnectionString("CadenaSQL"))); // Configura el contexto de la base de datos utilizando SQL Server.
+
 builder.Services.AddScoped<AutenticationService>(); // Registra el servicio de autenticación.
 builder.Services.AddScoped<UserService>(); // Registra el servicio de usuarios.
 builder.Services.AddScoped<PerfilesService>(); // Registra el servicio de perfiles.
@@ -24,7 +25,7 @@ builder.Services.AddScoped<PacienteService>(); // Registra el servicio de pacien
 builder.Services.AddScoped<CatalogService>(); // Registra el servicio de catálogo.
 builder.Services.AddScoped<CitasService>(); // Registra el servicio de citas.
 builder.Services.AddScoped<ConsultaService>(); // Registra el servicio de consultas.
-builder.Services.AddScoped<FacturacionService>(); // Registra el servicio de consultas.
+builder.Services.AddScoped<FacturacionService>(); // Registra el servicio de facturación.
 
 //Registra IHttpContextAccessor para acceder al contexto HTTP.
 builder.Services.AddHttpContextAccessor();
@@ -48,7 +49,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Access}/{action=Login}/{id?}"); // Configura la ruta predeterminada para los controladores.
 
+// Configura Rotativa para la generación de PDFs
+IWebHostEnvironment env = app.Environment;
+Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa");
 
-//IWebHostEnvironment env = app.Environment;
-//Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa/Windows");
 app.Run(); // Ejecuta la aplicación.

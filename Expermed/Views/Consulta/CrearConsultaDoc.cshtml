@@ -153,6 +153,12 @@
             <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
             <input type="text" asp-for="UsuariocreacionConsulta" class="form-control" id="usuariocreacion" value="@ViewBag.UsuarioNombre" readonly />
         </div>
+
+        
+        <div class="form-group col-sm-3" >
+            <label for="UsuarioCreacion" class="form-label">Id Consulta</label>
+            <input type="text" asp-for="IdConsulta" class="form-control" id="idConsulta"  readonly />
+        </div>
         <!--Inicia Primer formulario-->
         <div class="setup-content" id="step-1">
             <div class="hr-text">
@@ -1636,9 +1642,7 @@
         // Cerrar el modal después de generar el PDF
         $('#pdfModal').modal('hide');
     }
-
     function finalizarConsulta() {
-        // Usando SweetAlert2 para mostrar un mensaje de confirmación
         Swal.fire({
             title: '¿Está seguro de finalizar la consulta?',
             text: 'Una vez finalizada la consulta, no podrá ser editada.',
@@ -1650,21 +1654,35 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Mostrar mensaje de éxito y redirigir
-                Swal.fire({
-                    title: 'Consulta finalizada',
-                    text: 'La consulta ha sido finalizada con éxito. Serás redirigido en unos segundos.',
-                    icon: 'success',
-                    timer: 3000, // Duración de la alerta en milisegundos
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    willClose: () => {
-                        // Redirigir a otra acción después de que la alerta se cierre
-                        window.location.href = '/Consulta/ListarConsultas'; // Cambia esta URL a donde quieras redirigir
+                // Realizar la llamada AJAX para actualizar la consulta
+                $.ajax({
+                    url: '@Url.Action("ActualizarConsulta", "Consulta")',
+                    type: 'POST',
+                    data: $('#consultaForm').serialize(),
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Consulta finalizada',
+                            text: 'La consulta ha sido finalizada con éxito. Serás redirigido en unos segundos.',
+                            icon: 'success',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            willClose: () => {
+                                window.location.href = '/Consulta/ListarConsultas';
+                            }
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un problema al finalizar la consulta.',
+                        });
                     }
                 });
             }
         });
     }
+
 
 </script>

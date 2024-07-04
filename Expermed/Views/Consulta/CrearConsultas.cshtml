@@ -149,10 +149,16 @@
     </div>
     <form role="form" id="consultaForm" asp-action="InsertarConsulta" method="post">
 
-        <div class="form-group col-sm-3" hidden>
+        <div class="form-group col-sm-3">
             <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
-            <input type="text" asp-for="UsuariocreacionConsulta" class="form-control" id="usuariocreacion" value="@ViewBag.UsuarioNombre" readonly />
+            <input type="text" class="form-control"  asp-for="UsuariocreacionConsulta" id="usuarioNombre" value="@ViewBag.UsuarioNombre" readonly />
         </div>
+
+        <div class="form-group col-sm-3">
+            <label for="UsuarioId" class="form-label">ID del Usuario</label>
+            <input type="text" class="form-control" id="usuarioId" asp-for="MedicoConsultaD" value="@ViewBag.IdUsuario" readonly />
+        </div>
+
         <!--Inicia Primer formulario-->
         <div class="setup-content" id="step-1">
             <div class="hr-text">
@@ -161,11 +167,12 @@
                 <hr>
             </div>
             <div class="input-group" style="width: 300px; height:27px">
-                <input type="text" class="form-control" id="nombrePaciente" placeholder="Buscar paciente por nombre">
+                <input type="text" class="form-control" id="ciPaciente" placeholder="Buscar paciente por cédula">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button" id="btnBuscarPaciente">Buscar</button>
                 </div>
             </div>
+
             <br />
             <div class="row g-3">
                 <div class="col-sm-3">
@@ -1498,11 +1505,11 @@
 
 
         $('#btnBuscarPaciente').click(function () {
-            var nombre = $('#nombrePaciente').val();
+            var ci = $('#ciPaciente').val();
             $.ajax({
                 url: '@Url.Action("BuscarPacientePorNombre", "Consulta")',
                 type: 'GET',
-                data: { nombre: nombre },
+                data: { ci: ci },
                 success: function (data) {
                     console.log(data); // Depuración: verifica la estructura de 'data'
 
@@ -1531,10 +1538,6 @@
                     $('#ocupacion').val(data.ocupacion);
                     $('#empresa').val(data.empresa);
                     $('#seguroSelect').val(data.seguroSalud);
-                    // $('#historiaClinica').val(data.historiaClinica);
-
-                    console.log($('#nacionalidadSelect').val()); // Verifica el valor asignado
-                    console.log($('#nacionalidadSelect option:selected').text()); // Verifica el texto de la opción seleccionada
 
                     // Actualiza la tabla con los datos del paciente
                     var pacienteNombre = data.primerNombre + ' ' + data.primerApellido;
@@ -1568,11 +1571,11 @@
                         icon: 'error',
                         title: 'Error',
                         text: 'Paciente no encontrado',
-
                     });
                 }
             });
         });
+
 
 
 
