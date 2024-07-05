@@ -60,6 +60,7 @@ namespace Expermed.Servicios
             // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
             return await _context.Usuarios.Where(c => c.PerfilUsuarioP == 2).ToListAsync();
         }
+       
         public async Task<List<Catalogo>> ObtenerParienteAsync()
         {
             // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
@@ -85,6 +86,11 @@ namespace Expermed.Servicios
         {
             // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
             return await _context.Catalogos.Where(c => c.CategoriaCatalogo == "BANCO").ToListAsync();
+        }   
+        public async Task<List<Diagnostico>> ObtenerDiagnosticoAsync()
+        {
+            // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
+            return await _context.Diagnosticos.Where(c => c.CategoriaDiagnosticos == "DIAGNOSTICOS").ToListAsync();
         }
         // obviamente se puede crear varios metodos que generemos para las listas aqui mismo no solo de la tabla catalogo
 

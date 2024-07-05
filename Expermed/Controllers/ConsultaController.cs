@@ -44,6 +44,9 @@ namespace Expermed.Controllers
             var tiposPariente = await _catalogoService.ObtenerParienteAsync();
             var tiposLaboratorio = await _catalogoService.ObtenerLaboratoriosAsync();
             var tiposImagen = await _catalogoService.ObtenerImagenAsync();
+            var tiposMedicamento = await _catalogoService.ObtenerMedicamentosAsync();
+            var tiposDiagnostico = await _catalogoService.ObtenerMedicamentosAsync();
+
 
             ViewBag.TiposDocumentos = tiposDocumentos.Select(d => new SelectListItem
             {
@@ -100,6 +103,11 @@ namespace Expermed.Controllers
                 Value = s.CodigoImagenes.ToString(),
                 Text = s.DescripcionImagenes
             }).ToList();
+            ViewBag.TiposMedicamento = tiposMedicamento.Select(s => new SelectListItem
+            {
+                Value = s.CodigoMedicamentos.ToString(),
+                Text = s.DescripcionMedicamentos
+            }).ToList();
 
             var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
             ViewBag.UsuarioNombre = usuarioNombre;
@@ -146,7 +154,7 @@ namespace Expermed.Controllers
                 model = await _consultaService.ObtenerConsultaPorIdAsync(id);
             }
 
-            var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
+            var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("Usuario Nombre");
             ViewBag.UsuarioNombre = usuarioNombre;
 
             return View(model);

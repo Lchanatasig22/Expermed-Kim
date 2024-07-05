@@ -116,7 +116,7 @@ namespace Expermed.Controllers
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> CrearCita(Cita cita)
         {
             try

@@ -15,14 +15,20 @@
     <div class="form-group row g-3">
         <div class="form-group col-sm-3">
             <label class="form-label">Rol Usuario</label>
-            <select asp-for="PerfilUsuarioP" class="form-control">
+            <select asp-for="PerfilUsuarioP">
+                <option value="1">Administrador</option>
+                <option value="2">Medico</option>
+               
+
+            </select>
+           @*  <select asp-for="PerfilUsuarioP" class="form-control">
                 
                 <option value="">Seleccione un perfil</option>
-                @foreach (var perfil in ViewBag.Perfiles)
+                @foreach (var perfiles in ViewBag.Perfiles)
                 {
-                    <option value="@perfil.IdPerfil">@perfil.descripcion_perfil</option>
+                    <option value="@perfiles.">@perfiles.descripcion_perfil</option>
                 }
-            </select>
+            </select> *@
         </div>
 
 

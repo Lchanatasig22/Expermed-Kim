@@ -149,12 +149,12 @@
     </div>
     <form role="form" id="consultaForm" asp-action="InsertarConsulta" method="post">
 
-        <div class="form-group col-sm-3">
+        <div class="form-group col-sm-3" hidden>
             <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
             <input type="text" class="form-control"  asp-for="UsuariocreacionConsulta" id="usuarioNombre" value="@ViewBag.UsuarioNombre" readonly />
         </div>
 
-        <div class="form-group col-sm-3">
+        <div class="form-group col-sm-3" hidden>
             <label for="UsuarioId" class="form-label">ID del Usuario</label>
             <input type="text" class="form-control" id="usuarioId" asp-for="MedicoConsultaD" value="@ViewBag.IdUsuario" readonly />
         </div>
@@ -175,7 +175,7 @@
 
             <br />
             <div class="row g-3">
-                <div class="col-sm-3">
+                <div class="col-sm-3" hidden>
                     <label for="idPaciente">Identificador Paciente</label>
                     <input type="text" asp-for="PacienteConsultaP" class="form-control" id="idPaciente" placeholder="Máximo 200 caracteres" readonly>
                 </div>
