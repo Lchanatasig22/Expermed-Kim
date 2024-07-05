@@ -13,10 +13,10 @@
         <span asp-validation-for="FechadelacitaCitas" class="text-danger" id="fechaError"></span>
     </div>
 
-    <div class="col-md-6" >
+    <div class="col-md-6">
         <label asp-for="HoradelacitaCitas" class="form-label">Hora de la Cita</label>
-       
-        <input type="text" asp-for="HoradelacitaCitas" id="horaCita" />
+
+        <input type="text" asp-for="HoradelacitaCitas" id="horaCita"  readonly/>
         <span asp-validation-for="HoradelacitaCitas" class="text-danger"></span>
     </div>
 
@@ -40,7 +40,7 @@
     <input type="hidden" asp-for="Estado" />
 
     <input type="hidden" asp-for="UsuariocreacionCitas" value="@ViewBag.UsuarioNombre" />
-    
+
 
     <div class="col-12">
         <button type="button" onclick="consultarCita()" class="btn btn-secondary">Consultar Cita</button>
@@ -115,6 +115,10 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<!-- Incluye SweetAlert2 desde un CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     $(document).ready(function () {
         // Inicializar Select2 en el select de médicos
@@ -142,6 +146,7 @@
         if (fechaCita <= today) {
             fechaError.textContent = "La fecha de la cita debe ser posterior al día actual.";
             document.getElementById('crearCitaBtn').setAttribute('disabled', true);
+            Swal.fire('Error', 'La fecha de la cita debe ser posterior al día actual.', 'error');
         } else {
             fechaError.textContent = "";
         }
@@ -166,10 +171,11 @@
                 },
                 error: function (error) {
                     console.error('Error al obtener las horas disponibles:', error);
+                    Swal.fire('Error', 'Error al obtener las horas disponibles.', 'error');
                 }
             });
         } else {
-            alert('Por favor, seleccione una fecha y un médico.');
+            Swal.fire('Advertencia', 'Por favor, seleccione una fecha y un médico.', 'warning');
         }
     }
 
@@ -194,11 +200,20 @@
 
                 // Puedes agregar un evento click para seleccionar la hora
                 card.addEventListener('click', function () {
-                    if (confirm(`¿Estás seguro de que deseas seleccionar la hora: ${hour}?`)) {
-                        document.getElementById('horaCita').value = hour; // Asigna el valor seleccionado al input hidden
-                        document.getElementById('formHorasDisponibles').style.display = 'none';
-                        validarCampos(); // Verificar campos después de seleccionar la hora
-                    }
+                    Swal.fire({
+                        title: 'Confirmar selección',
+                        text: `¿Estás seguro de que deseas seleccionar la hora: ${hour}?`,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('horaCita').value = hour; // Asigna el valor seleccionado al input hidden
+                            document.getElementById('formHorasDisponibles').style.display = 'none';
+                            validarCampos(); // Verificar campos después de seleccionar la hora
+                        }
+                    });
                 });
             });
         } else {

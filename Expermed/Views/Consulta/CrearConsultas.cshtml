@@ -147,18 +147,31 @@
 
         <hr>
     </div>
-    <form role="form" id="consultaForm" asp-action="InsertarConsulta" method="post">
+
+    @if (ViewData["ModelStateErrors"] != null)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in (List<string>)ViewData["ModelStateErrors"])
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <form role="form" id="consultaForm" asp-action="CrearConsultas" method="post">
 
         <div class="form-group col-sm-3" hidden>
             <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
-            <input type="text" class="form-control"  asp-for="UsuariocreacionConsulta" id="usuarioNombre" value="@ViewBag.UsuarioNombre" readonly />
+            <input type="text" class="form-control" asp-for="UsuariocreacionConsulta" id="usuarioNombre" value="@ViewBag.UsuarioNombre" readonly />
         </div>
 
         <div class="form-group col-sm-3" hidden>
             <label for="UsuarioId" class="form-label">ID del Usuario</label>
             <input type="text" class="form-control" id="usuarioId" asp-for="MedicoConsultaD" value="@ViewBag.IdUsuario" readonly />
         </div>
-
+        
         <!--Inicia Primer formulario-->
         <div class="setup-content" id="step-1">
             <div class="hr-text">
@@ -203,7 +216,7 @@
                         {
                             @foreach (var tipoDocumento in ViewBag.TiposDocumentos)
                             {
-                                <option  value="@tipoDocumento.Value">@tipoDocumento.Text</option>
+                                <option value="@tipoDocumento.Value">@tipoDocumento.Text</option>
                             }
                         }
                     </select>
@@ -1257,7 +1270,17 @@
                                     <tr>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Buscar...">
+                                                <select asp-for="DiagnosticoConsultaDiNavigation.IdDiagnosticosDiagnosticoD" class="form-control" id="DiagnosticoId">
+                                                    <option value="">Seleccione...</option>
+
+                                                    @if (ViewBag.TiposDiagnostico != null)
+                                                    {
+                                                        @foreach (var tiposDiagnostico in ViewBag.TiposDiagnostico)
+                                                        {
+                                                            <option value="@tiposDiagnostico.Value">@tiposDiagnostico.Text</option>
+                                                        }
+                                                    }
+                                                </select>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                                                 </div>
@@ -1317,7 +1340,17 @@
                                     <tr>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Buscar...">
+                                                <select asp-for="MedicamentoConsultaMNavigation.IdMedicamentosMedicamentoM" class="form-control" id="MedicamentoId">
+                                                    <option value="">Seleccione...</option>
+
+                                                    @if (ViewBag.TiposMedicamento != null)
+                                                    {
+                                                        @foreach (var tiposMedicamento in ViewBag.TiposMedicamento)
+                                                        {
+                                                            <option value="@tiposMedicamento.Value">@tiposMedicamento.Text</option>
+                                                        }
+                                                    }
+                                                </select>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                                                 </div>
@@ -1361,8 +1394,8 @@
                                 <tbody id="imagenesTableBody">
                                     <tr>
                                         <td>
-                                            <div class="input-group" >
-                                                <select asp-for="ImagenConsultaINavigation.IdImagen" class="form-control" id="ImagenId">
+                                            <div class="input-group">
+                                                <select asp-for="ImagenConsultaINavigation.IdImagenesImagenI" class="form-control" id="ImagenId">
                                                     <option value="">Seleccione...</option>
 
                                                     @if (ViewBag.TiposImagen != null)
@@ -1414,7 +1447,7 @@
                                     <tr>
                                         <td>
                                             <div class="input-group">
-                                                <select asp-for="LaboratorioConsultaLaNavigation.IdLaboratorio" class="form-control" id="LaboratorioId">
+                                                <select asp-for="LaboratorioConsultaLaNavigation.IdLaboratoriosLaboratorioL" class="form-control" id="LaboratorioId">
                                                     <option value="">Seleccione...</option>
 
                                                     @if (ViewBag.TiposLaboratorio != null)
@@ -1475,18 +1508,18 @@
                 </div>
             </div>
 
-           
 
 
 
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
         </div>
         <!--Final cuarto formulario-->
 
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
+
     </form>
-   
+
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -1614,6 +1647,6 @@
         });
 
 
-      
+
     });
 </script>

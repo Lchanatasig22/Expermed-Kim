@@ -45,7 +45,7 @@ namespace Expermed.Controllers
             var tiposLaboratorio = await _catalogoService.ObtenerLaboratoriosAsync();
             var tiposImagen = await _catalogoService.ObtenerImagenAsync();
             var tiposMedicamento = await _catalogoService.ObtenerMedicamentosAsync();
-            var tiposDiagnostico = await _catalogoService.ObtenerMedicamentosAsync();
+            var tiposDiagnostico = await _catalogoService.ObtenerDiagnosticoAsync();
 
 
             ViewBag.TiposDocumentos = tiposDocumentos.Select(d => new SelectListItem
@@ -95,18 +95,23 @@ namespace Expermed.Controllers
             }).ToList();
             ViewBag.TiposLaboratorio = tiposLaboratorio.Select(s => new SelectListItem
             {
-                Value = s.CodigoLaboratorios.ToString(),
+                Value = s.IdLaboratorios.ToString(),
                 Text = s.DescripcionLaboratorios
             }).ToList();
             ViewBag.TiposImagen = tiposImagen.Select(s => new SelectListItem
             {
-                Value = s.CodigoImagenes.ToString(),
+                Value = s.IdImagenes.ToString(),
                 Text = s.DescripcionImagenes
             }).ToList();
             ViewBag.TiposMedicamento = tiposMedicamento.Select(s => new SelectListItem
             {
-                Value = s.CodigoMedicamentos.ToString(),
+                Value = s.IdMedicamentos.ToString(),
                 Text = s.DescripcionMedicamentos
+            }).ToList();
+            ViewBag.TiposDiagnostico = tiposDiagnostico.Select(s => new SelectListItem
+            {
+                Value = s.IdDiagnosticos.ToString(),
+                Text = s.DescripcionDiagnosticos
             }).ToList();
 
             var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
@@ -121,22 +126,33 @@ namespace Expermed.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _consultaService.InsertarConsultaAsync(model);
+                int consultaId = await _consultaService.InsertarConsultaAsync(model);
 
                 // Verifica si el IdConsulta no es 0 después de la inserción
-                if (model.IdConsulta == 0)
+                if (consultaId == 0)
                 {
                     // Manejo del error, en caso de que no se haya generado un ID
                     ModelState.AddModelError("", "Error inserting the consultation. Please try again.");
                     return View(model);
                 }
 
+                // Almacena la consulta reciente en TempData
+                model.IdConsulta = consultaId;
                 TempData["ConsultaReciente"] = JsonConvert.SerializeObject(model);
-                return RedirectToAction("CrearConsultaDoc", new { id = model.IdConsulta });
+
+                // Redirige a la acción CrearConsultaDoc con el ID de la consulta recién insertada
+                return RedirectToAction("CrearConsultaDoc", new { id = consultaId });
             }
 
+            // Agrega los errores del ModelState a ViewData
+            ViewData["ModelStateErrors"] = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
+            // Si el modelo no es válido, devuelve la vista con el modelo actual y muestra los errores
             return View(model);
         }
+
+
+
 
 
 
@@ -147,12 +163,25 @@ namespace Expermed.Controllers
 
             if (TempData["ConsultaReciente"] != null)
             {
+                // Deserializar TempData["ConsultaReciente"] a un objeto Consultum
                 model = JsonConvert.DeserializeObject<Consultum>(TempData["ConsultaReciente"].ToString());
             }
             else
             {
-                model = await _consultaService.ObtenerConsultaPorIdAsync(id);
+                // Asegúrate de que 'id' esté disponible y no sea nulo antes de usarlo
+                if (id != null)
+                {
+                    // Obtener la consulta por ID si TempData["ConsultaReciente"] es nulo
+                    model = await _consultaService.ObtenerConsultaPorIdAsync(id);
+                }
+                else
+                {
+                    // Manejar el caso cuando 'id' también es nulo
+                    // Puedes inicializar model con un valor predeterminado o lanzar una excepción, según sea necesario.
+                    model = new Consultum(); // o alguna otra acción apropiada.
+                }
             }
+
 
             var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("Usuario Nombre");
             ViewBag.UsuarioNombre = usuarioNombre;

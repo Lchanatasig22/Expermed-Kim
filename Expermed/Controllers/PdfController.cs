@@ -10,9 +10,9 @@ namespace Expermed.Controllers
         {
             var model = new PdfViewModel
             {
-                Receta = receta,
-                Justificacion = justificacion,
-                FormatoConsulta = formatoConsulta
+                //Receta = receta,
+                //Justificacion = justificacion,
+                //FormatoConsulta = formatoConsulta
             };
 
             return new ViewAsPdf("GeneratePdf", model)

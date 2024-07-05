@@ -28,13 +28,13 @@ namespace Expermed.Servicios
 
 
 
-        public async Task InsertarConsultaAsync(Consultum consulta)
+        public async Task<int> InsertarConsultaAsync(Consultum consulta)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(_context.Database.GetConnectionString()))
                 {
-                    SqlCommand command = new SqlCommand("sp_InsertarConsulta", connection)
+                    SqlCommand command = new SqlCommand("InsertConsultaMod", connection)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
@@ -67,7 +67,6 @@ namespace Expermed.Servicios
                     command.Parameters.AddWithValue("@tipo_consulta_c", consulta.TipoConsultaC ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@notasevolucion_consulta", consulta.NotasevolucionConsulta ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@consultaprincipal_consulta", consulta.ConsultaprincipalConsulta ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@medicamento_consulta_m", consulta.MedicamentoConsultaM ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@documento_consulta_d", consulta.DocumentoConsultaD ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@detalle_consulta_d", consulta.DetalleConsultaD ?? (object)DBNull.Value);
 
@@ -92,6 +91,10 @@ namespace Expermed.Servicios
                     command.Parameters.AddWithValue("@Obser_Mal_Formacion", consulta.ObserMalFormacion ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@Otro", consulta.Otro ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@Obser_Otro", consulta.ObserOtro ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Alergias", consulta.Alergias ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Obser_Alergias", consulta.ObserAlergias ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Cirugias", consulta.Cirugias ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Obser_Cirugias", consulta.ObserCirugias ?? (object)DBNull.Value);
 
                     // Revisiones actuales de órganos y sistemas
                     command.Parameters.AddWithValue("@Org_Sentidos", consulta.OrgSentidos ?? (object)DBNull.Value);
@@ -129,37 +132,59 @@ namespace Expermed.Servicios
                     command.Parameters.AddWithValue("@Extremidades", consulta.Extremidades ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@Obser_Extremidades", consulta.ObserExtremidades ?? (object)DBNull.Value);
 
-                    // Diagnósticos
-                    command.Parameters.AddWithValue("@diagnostico_consulta_di", consulta.DiagnosticoConsultaDi ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@imagen_consulta_i", consulta.ImagenConsultaI ?? (object)DBNull.Value);
+                    // Medicamento
+                    command.Parameters.AddWithValue("@medicamento_fechacreacion", consulta.MedicamentoConsultaMNavigation.FechacreacionMedicamento);
+                    command.Parameters.AddWithValue("@medicamento_usuariocreacion", consulta.MedicamentoConsultaMNavigation.UsuariocreacionMedicamento ?? "sin especificar");
+                    command.Parameters.AddWithValue("@medicamento_cantidad", consulta.MedicamentoConsultaMNavigation.CantidadMedicamentoC);
+                    command.Parameters.AddWithValue("@medicamento_observacion", consulta.MedicamentoConsultaMNavigation.ObservacionMedicamento ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@medicamento_id_medicamentos", consulta.MedicamentoConsultaMNavigation.IdMedicamentosMedicamentoM);
 
-                    // Parámetro de salida para el ID
-                    SqlParameter idConsultaParam = new SqlParameter("@IdConsulta", SqlDbType.Int)
+                    // Imagen
+                    command.Parameters.AddWithValue("@imagen_fechacreacion", consulta.ImagenConsultaINavigation.FechacreacionImagen);
+                    command.Parameters.AddWithValue("@imagen_usuariocreacion", consulta.ImagenConsultaINavigation.UsuariocreacionImagen ?? "sin especificar");
+                    command.Parameters.AddWithValue("@imagen_cantidad", consulta.ImagenConsultaINavigation.CantidadImagen);
+                    command.Parameters.AddWithValue("@imagen_observacion", consulta.ImagenConsultaINavigation.ObservacionImagen ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@imagen_id_imagenes", consulta.ImagenConsultaINavigation.IdImagenesImagenI);
+
+                    // Laboratorio
+                    command.Parameters.AddWithValue("@laboratorio_fechacreacion", consulta.LaboratorioConsultaLaNavigation.FechacreacionLaboratorio);
+                    command.Parameters.AddWithValue("@laboratorio_usuariocreacion", consulta.LaboratorioConsultaLaNavigation.UsuariocreacionLaboratorio ?? "sin especificar");
+                    command.Parameters.AddWithValue("@laboratorio_cantidad", consulta.LaboratorioConsultaLaNavigation.CantidadLaboratorio);
+                    command.Parameters.AddWithValue("@laboratorio_observacion", consulta.LaboratorioConsultaLaNavigation.ObservacionLaboratorio ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@laboratorio_id_laboratorios", consulta.LaboratorioConsultaLaNavigation.IdLaboratoriosLaboratorioL);
+
+                    // Diagnóstico
+                    command.Parameters.AddWithValue("@diagnostico_fechacreacion", consulta.DiagnosticoConsultaDiNavigation.FechacreacionDiagnostico);
+                    command.Parameters.AddWithValue("@diagnostico_usuariocreacion", consulta.DiagnosticoConsultaDiNavigation.UsuariocreacionDiagnostico ?? "sin especificar");
+                    command.Parameters.AddWithValue("@diagnostico_cantidad", consulta.DiagnosticoConsultaDiNavigation.CantidadDiagnostico);
+                    command.Parameters.AddWithValue("@diagnostico_observacion", consulta.DiagnosticoConsultaDiNavigation.ObservacionDiagnostico ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@diagnostico_presuntivo", consulta.DiagnosticoConsultaDiNavigation.PresuntivoDiagnosticos ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@diagnostico_definitivo", consulta.DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@diagnostico_id_diagnosticos", consulta.DiagnosticoConsultaDiNavigation.IdDiagnosticosDiagnosticoD);
+
+                    // Parámetro de salida para el ID de la consulta
+                    SqlParameter outputIdParam = new SqlParameter("@consulta_id", SqlDbType.Int)
                     {
                         Direction = ParameterDirection.Output
                     };
-                    command.Parameters.Add(idConsultaParam);
-
-                    //// Log de parámetros para depuración
-                    //foreach (SqlParameter param in command.Parameters)
-                    //{
-                    //    Console.WriteLine($"{param.ParameterName}: {param.Value}");
-                    //}
+                    command.Parameters.Add(outputIdParam);
 
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
 
-                    // Obtener el ID generado
-                    consulta.IdConsulta = (int)idConsultaParam.Value;
+                    // Obtener el ID de la consulta generada
+                    int consultaId = (int)outputIdParam.Value;
+                    return consultaId;
                 }
             }
-            
             catch (Exception ex)
             {
                 // Log del mensaje de excepción
                 Console.WriteLine($"An error occurred: {ex.Message}");
+                return 0;
             }
         }
+
 
 
 

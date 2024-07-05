@@ -17,8 +17,8 @@
 
     <div class="col-md-6">
         <label asp-for="HoradelacitaCitas" class="form-label">Hora de la Cita</label>
-        <button type="button" class="btn btn-secondary" id="openFormBtn">Seleccionar Hora</button>
-        <input type="hidden" asp-for="HoradelacitaCitas" id="horaCita" />
+   
+        <input type="text" asp-for="HoradelacitaCitas" id="horaCita" readonly/>
         <span asp-validation-for="HoradelacitaCitas" class="text-danger"></span>
     </div>
 
@@ -41,6 +41,7 @@
     </div>
 
     <div class="col-12">
+        <button type="button" class="btn btn-outline-secondary" id="openFormBtn">Seleccionar Hora</button>
         <button type="submit" class="btn btn-outline-primary">Guardar Cambios</button>
         <a asp-action="ListarCitas" class="btn btn-outline-secondary">Cancelar</a>
     </div>
@@ -112,6 +113,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<!-- Incluye SweetAlert2 desde un CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
         $('#medicoId').select2({
@@ -155,10 +158,19 @@
                 },
                 error: function (error) {
                     console.error('Error al obtener las horas disponibles:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error al obtener las horas disponibles.',
+                        icon: 'error'
+                    });
                 }
             });
         } else {
-            alert('Por favor, seleccione una fecha y un médico.');
+            Swal.fire({
+                title: 'Advertencia',
+                text: 'Por favor, seleccione una fecha y un médico.',
+                icon: 'warning'
+            });
         }
     }
 
@@ -183,11 +195,20 @@
 
                 // Puedes agregar un evento click para seleccionar la hora
                 card.addEventListener('click', function () {
-                    if (confirm(`¿Estás seguro de que deseas seleccionar la hora: ${hour}?`)) {
-                        document.getElementById('horaCita').value = hour; // Asigna el valor seleccionado al input hidden
-                        document.getElementById('formHorasDisponibles').style.display = 'none';
-                        validarCampos(); // Verificar campos después de seleccionar la hora
-                    }
+                    Swal.fire({
+                        title: 'Confirmar selección',
+                        text: `¿Estás seguro de que deseas seleccionar la hora: ${hour}?`,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('horaCita').value = hour; // Asigna el valor seleccionado al input hidden
+                            document.getElementById('formHorasDisponibles').style.display = 'none';
+                            validarCampos(); // Verificar campos después de seleccionar la hora
+                        }
+                    });
                 });
             });
         } else {

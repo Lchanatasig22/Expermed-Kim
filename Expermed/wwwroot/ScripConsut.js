@@ -11,9 +11,22 @@ $('#anadirFila').on('click', function () {
                                                                                 <td>
                                                                                     <div class="input-group">
                                                                                         <input type="text" class="form-control" placeholder="Buscar...">
-                                                                                            <div class="input-group-append">
-                                                                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                                                                            </div>
+                                                                                                 <div class="input-group">
+                                                <select asp-for="DiagnosticoConsultaDiNavigation.IdDiagnostico" class="form-control" id="DiagnosticoId">
+                                                    <option value="">Seleccione...</option>
+
+                                                    @if (ViewBag.TiposDiagnostico != null)
+                                                    {
+                                                        @foreach (var tiposDiagnostico in ViewBag.TiposDiagnostico)
+                                                        {
+                                                            <option value="@tiposDiagnostico.Value">@tiposDiagnostico.Text</option>
+                                                        }
+                                                    }
+                                                </select>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
@@ -45,7 +58,17 @@ $('#anadirFilaMedicamento').on('click', function () {
                                                                         <tr>
                                                                             <td>
                                                                                 <div class="input-group">
-                                                                                    <input type="text" class="form-control" placeholder="Buscar...">
+                                                                                     <select asp-for="MedicamentoConsultaMNavigation.IdMedicamentosMedicamentoM" class="form-control" id="MedicamentoId">
+                                                    <option value="">Seleccione...</option>
+
+                                                    @if (ViewBag.TiposMedicamento != null)
+                                                    {
+                                                        @foreach (var tiposMedicamento in ViewBag.TiposMedicamento)
+                                                        {
+                                                            <option value="@tiposMedicamento.Value">@tiposMedicamento.Text</option>
+                                                        }
+                                                    }
+                                                </select>
                                                                                     <div class="input-group-append">
                                                                                         <span class="input-group-text"><i class="fas fa-search"></i></span>
                                                                                     </div>
