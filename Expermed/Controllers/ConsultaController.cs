@@ -25,9 +25,36 @@ namespace Expermed.Controllers
             _consultaService = consultaService;
         }
 
-        public IActionResult ListarConsultas()
+        // GET: api/consultas
+        [HttpGet]
+        public async Task<ActionResult<List<Consultum>>> GetAllConsultas()
         {
-            return View();
+            try
+            {
+                var consultas = await _consultaService.GetAllConsultasAsync();
+                return Ok(consultas);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores, por ejemplo, si el nombre de usuario no está disponible en la sesión
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        // Acción para la vista
+        [HttpGet("/Consulta/ListarConsultas")]
+        public async Task<IActionResult> ListarConsultas()
+        {
+            try
+            {
+                var consultas = await _consultaService.GetAllConsultasAsync();
+                return View(consultas);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores, por ejemplo, si el nombre de usuario no está disponible en la sesión
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet]
@@ -122,7 +149,7 @@ namespace Expermed.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> InsertarConsulta(Consultum model)
+        public async Task<IActionResult> CrearConsultas(Consultum model)
         {
             if (ModelState.IsValid)
             {
@@ -155,10 +182,92 @@ namespace Expermed.Controllers
 
 
 
-
         [HttpGet]
-        public async Task<IActionResult> CrearConsultaDoc(int id)
+        public async Task<IActionResult> CrearConsultaDoc(int? id)
         {
+            var tiposDocumentos = await _catalogoService.ObtenerTiposDocumentosAsync();
+            var tiposSangre = await _catalogoService.ObtenerTiposDeSangreAsync();
+            var tiposFormacion = await _catalogoService.ObtenerTiposDeFormacionPAsync();
+            var tiposEstadoCivil = await _catalogoService.ObtenerTiposDeEstadoCivilAsync();
+            var tiposGenero = await _catalogoService.ObtenerTiposDeGeneroAsync();
+            var tiposNacionalidad = await _catalogoService.ObtenerTiposDeNacionalidadPAsync();
+            var tiposProvincia = await _catalogoService.ObtenerTiposDeProvinciaPAsync();
+            var tiposSeguro = await _catalogoService.ObtenerTiposDeSeguroAsync();
+            var tiposPariente = await _catalogoService.ObtenerParienteAsync();
+            var tiposLaboratorio = await _catalogoService.ObtenerLaboratoriosAsync();
+            var tiposImagen = await _catalogoService.ObtenerImagenAsync();
+            var tiposMedicamento = await _catalogoService.ObtenerMedicamentosAsync();
+            var tiposDiagnostico = await _catalogoService.ObtenerDiagnosticoAsync();
+
+            ViewBag.TiposDocumentos = tiposDocumentos.Select(d => new SelectListItem
+            {
+                Value = d.UuidCatalogo.ToString(),
+                Text = d.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposSangre = tiposSangre.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposFormacion = tiposFormacion.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposEstadoCivil = tiposEstadoCivil.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposGenero = tiposGenero.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposNacionalidad = tiposNacionalidad.Select(s => new SelectListItem
+            {
+                Value = s.IdLocalidad.ToString(),
+                Text = s.GentilicioLocalidad
+            }).ToList();
+            ViewBag.TiposProvincia = tiposProvincia.Select(s => new SelectListItem
+            {
+                Value = s.IdLocalidad.ToString(),
+                Text = s.PrefijoLocalidad
+            }).ToList();
+            ViewBag.TiposSeguro = tiposSeguro.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposPariente = tiposPariente.Select(s => new SelectListItem
+            {
+                Value = s.UuidCatalogo.ToString(),
+                Text = s.DescripcionCatalogo
+            }).ToList();
+            ViewBag.TiposLaboratorio = tiposLaboratorio.Select(s => new SelectListItem
+            {
+                Value = s.IdLaboratorios.ToString(),
+                Text = s.DescripcionLaboratorios
+            }).ToList();
+            ViewBag.TiposImagen = tiposImagen.Select(s => new SelectListItem
+            {
+                Value = s.IdImagenes.ToString(),
+                Text = s.DescripcionImagenes
+            }).ToList();
+            ViewBag.TiposMedicamento = tiposMedicamento.Select(s => new SelectListItem
+            {
+                Value = s.IdMedicamentos.ToString(),
+                Text = s.DescripcionMedicamentos
+            }).ToList();
+            ViewBag.TiposDiagnostico = tiposDiagnostico.Select(s => new SelectListItem
+            {
+                Value = s.IdDiagnosticos.ToString(),
+                Text = s.DescripcionDiagnosticos
+            }).ToList();
+
+            var usuarioId = _httpContextAccessor.HttpContext.Session.GetInt32("UsuarioId");
+            ViewBag.IdUsuario = usuarioId;
+
             Consultum model;
 
             if (TempData["ConsultaReciente"] != null)
@@ -168,22 +277,19 @@ namespace Expermed.Controllers
             }
             else
             {
-                // Asegúrate de que 'id' esté disponible y no sea nulo antes de usarlo
-                if (id != null)
+                if (id.HasValue)
                 {
                     // Obtener la consulta por ID si TempData["ConsultaReciente"] es nulo
-                    model = await _consultaService.ObtenerConsultaPorIdAsync(id);
+                    model = await _consultaService.ObtenerConsultaPorIdAsync(id.Value);
                 }
                 else
                 {
-                    // Manejar el caso cuando 'id' también es nulo
-                    // Puedes inicializar model con un valor predeterminado o lanzar una excepción, según sea necesario.
-                    model = new Consultum(); // o alguna otra acción apropiada.
+                    // Inicializar un modelo vacío si no hay un ID proporcionado
+                    model = new Consultum();
                 }
             }
 
-
-            var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("Usuario Nombre");
+            var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
             ViewBag.UsuarioNombre = usuarioNombre;
 
             return View(model);
@@ -231,14 +337,24 @@ namespace Expermed.Controllers
         [HttpPost]
         public async Task<IActionResult> ActualizarConsulta(Consultum consulta)
         {
-            if (ModelState.IsValid)
+            if (consulta == null)
             {
-                await _consultaService.ActualizarConsultaAsync(consulta);
-                return RedirectToAction("ListarConsultas"); // Redirigir a una vista que confirme la actualización
+                return BadRequest("La consulta no puede ser nula.");
             }
 
-            return View(consulta);
+            try
+            {
+                await _consultaService.ActualizarConsultaAsync(consulta);
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // Log del error
+                Console.WriteLine($"Error al actualizar la consulta: {ex.Message}");
+                return StatusCode(500, "Hubo un problema al actualizar la consulta.");
+            }
         }
+
 
     }
 }

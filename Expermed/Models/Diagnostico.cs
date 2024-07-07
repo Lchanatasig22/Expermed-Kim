@@ -8,6 +8,7 @@ namespace Expermed.Models
         public Diagnostico()
         {
             CDiagnosticos = new HashSet<CDiagnostico>();
+        
         }
 
         public int IdDiagnosticos { get; set; }

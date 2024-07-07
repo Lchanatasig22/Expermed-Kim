@@ -18,7 +18,7 @@ namespace Expermed.Models
         public string? ObservacionMedicamento { get; set; }
         public int? IdMedicamentosMedicamentoM { get; set; }
 
-        public virtual Medicamento IdMedicamentoNavigation { get; set; } = null!;
+        public virtual Medicamento? IdMedicamentosMedicamentoMNavigation { get; set; }
         public virtual ICollection<Consultum> Consulta { get; set; }
     }
 }

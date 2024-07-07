@@ -39,15 +39,13 @@ namespace Expermed.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=Base_Expermed;User Id=sa;Password=1717;");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("Server=localhost;Database=Base_Expermed;User Id=sa;Password=1717;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<CDetalle>(entity =>
             {
                 entity.HasKey(e => e.IdDetalle)
@@ -231,13 +229,11 @@ namespace Expermed.Models
             modelBuilder.Entity<CMedicamento>(entity =>
             {
                 entity.HasKey(e => e.IdMedicamento)
-                    .HasName("PK__C_Medica__2588C03297E8B52D");
+                    .HasName("PK__C_Medica__2588C0324537C097");
 
                 entity.ToTable("C_Medicamento");
 
-                entity.Property(e => e.IdMedicamento)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("id_medicamento");
+                entity.Property(e => e.IdMedicamento).HasColumnName("id_medicamento");
 
                 entity.Property(e => e.CantidadMedicamentoC).HasColumnName("cantidad_medicamento_c");
 
@@ -259,11 +255,10 @@ namespace Expermed.Models
                     .IsUnicode(false)
                     .HasColumnName("usuariocreacion_medicamento");
 
-                entity.HasOne(d => d.IdMedicamentoNavigation)
-                    .WithOne(p => p.CMedicamento)
-                    .HasForeignKey<CMedicamento>(d => d.IdMedicamento)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__C_Medicam__id_me__1EA48E88");
+                entity.HasOne(d => d.IdMedicamentosMedicamentoMNavigation)
+                    .WithMany(p => p.CMedicamentos)
+                    .HasForeignKey(d => d.IdMedicamentosMedicamentoM)
+                    .HasConstraintName("FK_C_Medicamento_Medicamentos");
             });
 
             modelBuilder.Entity<Catalogo>(entity =>
@@ -741,7 +736,7 @@ namespace Expermed.Models
                 entity.HasOne(d => d.MedicamentoConsultaMNavigation)
                     .WithMany(p => p.Consulta)
                     .HasForeignKey(d => d.MedicamentoConsultaM)
-                    .HasConstraintName("FK__Consulta__medica__5165187F");
+                    .HasConstraintName("FK_Consulta_C_Medicamento");
 
                 entity.HasOne(d => d.PacienteConsultaPNavigation)
                     .WithMany(p => p.Consulta)
@@ -988,7 +983,7 @@ namespace Expermed.Models
             modelBuilder.Entity<Medicamento>(entity =>
             {
                 entity.HasKey(e => e.IdMedicamentos)
-                    .HasName("PK__Medicame__25F30EEDE93DF93C");
+                    .HasName("PK__Medicame__25F30EEDF853FBD5");
 
                 entity.Property(e => e.IdMedicamentos).HasColumnName("id_medicamentos");
 
@@ -1001,6 +996,7 @@ namespace Expermed.Models
 
                 entity.Property(e => e.CodigoMedicamentos)
                     .HasMaxLength(500)
+                    .IsUnicode(false)
                     .HasColumnName("codigo_medicamentos");
 
                 entity.Property(e => e.ConcentracionMedicamentos)
@@ -1009,6 +1005,7 @@ namespace Expermed.Models
                     .HasColumnName("concentracion_medicamentos");
 
                 entity.Property(e => e.DescripcionMedicamentos)
+                    .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("descripcion_medicamentos");
 

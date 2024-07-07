@@ -168,10 +168,15 @@
         </div>
 
         <div class="form-group col-sm-3" hidden>
+            <label for="UsuarioCreacion" class="form-label">Usuario de Creación DIAGNOSTICO</label>
+            <input type="text" class="form-control" asp-for="DiagnosticoConsultaDiNavigation.UsuariocreacionDiagnostico" id="usuarioNombre" value="@ViewBag.UsuarioNombre" readonly />
+        </div>
+
+        <div class="form-group col-sm-3" hidden>
             <label for="UsuarioId" class="form-label">ID del Usuario</label>
             <input type="text" class="form-control" id="usuarioId" asp-for="MedicoConsultaD" value="@ViewBag.IdUsuario" readonly />
         </div>
-        
+
         <!--Inicia Primer formulario-->
         <div class="setup-content" id="step-1">
             <div class="hr-text">
@@ -361,7 +366,7 @@
             </div>
 
             <div class="text-end mt-3">
-                <a asp-action="Listar" asp-controller="Consulta" class="btn btn-outline-secondary"><i class="fa fa-close"></i> Salir</a>
+                <a asp-action="ListarConsultas" asp-controller="Consulta" class="btn btn-outline-secondary"><i class="fa fa-close"></i> Salir</a>
                 <button class="btn btn-primary nextBtn btn-lg ms-3" type="button" onclick="goToNextStep(2)">Siguiente <i class="fa fa-arrow-right"></i></button>
             </div>
         </div>
@@ -535,8 +540,9 @@
 
                 <div class="col-sm-3">
                     <label for="telefonoPariente">Telefono</label>
-                    <input type="number" class="form-control" asp-for="TelefonoConsulta" id="telefonoPariente" placeholder="Ingrese el telefono">
+                    <input type="tel" class="form-control" asp-for="TelefonoConsulta" id="telefonoPariente" placeholder="Ingrese el telefono" maxlength="10" pattern="\d{10}">
                 </div>
+
 
                 <div class="col-sm-4">
                     <label for="motivoConsulta">Motivo de consulta*</label>
@@ -690,6 +696,9 @@
                 </div>
             </div>
             <div class="text-end mt-3">
+             
+                <a asp-action="ListarConsultas" asp-controller="Consulta" class="btn btn-outline-secondary"><i class="fa fa-close"></i> Salir</a>
+
                 <button class="btn btn-primary previousBtn btn-lg" type="button" onclick="goToPreviousStep(1)"><i class="fa fa-arrow-left"></i> Regresar</button>
                 <button class="btn btn-primary nextBtn btn-lg ms-3" type="button" onclick="goToNextStep(3)">Siguiente <i class="fa fa-arrow-right"></i></button>
             </div>
@@ -1100,6 +1109,8 @@
             </div>
 
             <div class="text-end mt-3">
+                <a asp-action="ListarConsultas" asp-controller="Consulta" class="btn btn-outline-secondary"><i class="fa fa-close"></i> Salir</a>
+
                 <button class="btn btn-primary previousBtn btn-lg" type="button"><i class="fa fa-arrow-left"></i> Regresar</button>
                 <button class="btn btn-primary nextBtn btn-lg ms-3" type="button">Siguiente <i class="fa fa-arrow-right"></i></button>
             </div>
@@ -1120,7 +1131,7 @@
                                                 <i class="fas fa-user"></i>
                                                 <div class="content">
                                                     <div class="header">Paciente</div>
-                                                    <div class="description" id="pacienteNombreStep4">Sin especificar</div>
+                                                    <div class="description" id="pacienteNombreStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1131,7 +1142,7 @@
                                                 <i class="fas fa-id-card"></i>
                                                 <div class="content">
                                                     <div class="header">Número de documento</div>
-                                                    <div class="description" id="numeroDocumentoTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="numeroDocumentoTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1142,7 +1153,7 @@
                                                 <i class="fas fa-venus-mars"></i>
                                                 <div class="content">
                                                     <div class="header">Sexo</div>
-                                                    <div class="description" id="sexoTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="sexoTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1153,7 +1164,7 @@
                                                 <i class="fas fa-tint"></i>
                                                 <div class="content">
                                                     <div class="header">Tipo de sangre</div>
-                                                    <div class="description" id="tipoSangreTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="tipoSangreTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1164,7 +1175,7 @@
                                                 <i class="fas fa-calendar-alt"></i>
                                                 <div class="content">
                                                     <div class="header">Fecha de nacimiento</div>
-                                                    <div class="description" id="fechaNacimientoTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="fechaNacimientoTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1175,7 +1186,7 @@
                                                 <i class="fas fa-calendar"></i>
                                                 <div class="content">
                                                     <div class="header">Edad</div>
-                                                    <div class="description" id="edadTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="edadTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1188,7 +1199,7 @@
                                                 <i class="fas fa-id-badge"></i>
                                                 <div class="content">
                                                     <div class="header">Estado civil</div>
-                                                    <div class="description" id="estadoCivilTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="estadoCivilTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1199,7 +1210,7 @@
                                                 <i class="fas fa-bookmark"></i>
                                                 <div class="content">
                                                     <div class="header">Formación profesional</div>
-                                                    <div class="description" id="formacionProfesionalTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="formacionProfesionalTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1210,7 +1221,7 @@
                                                 <i class="fas fa-thumbtack"></i>
                                                 <div class="content">
                                                     <div class="header">Nacionalidad</div>
-                                                    <div class="description" id="nacionalidadTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="nacionalidadTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1221,7 +1232,7 @@
                                                 <i class="fas fa-phone-square"></i>
                                                 <div class="content">
                                                     <div class="header">Teléfono</div>
-                                                    <div class="description" id="telefonoTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="telefonoTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1232,7 +1243,7 @@
                                                 <i class="fas fa-mobile-alt"></i>
                                                 <div class="content">
                                                     <div class="header">Teléfono celular</div>
-                                                    <div class="description" id="telefonoCelularTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="telefonoCelularTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1243,7 +1254,7 @@
                                                 <i class="fas fa-envelope-square"></i>
                                                 <div class="content">
                                                     <div class="header">Email</div>
-                                                    <div class="description" id="emailTablaStep4">Sin especificar</div>
+                                                    <div class="description" id="emailTablaStep2">Sin especificar</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -1289,10 +1300,10 @@
                                         <td>
                                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-outline-secondary">
-                                                    <input type="checkbox" name="options0" asp-for="DiagnosticoConsultaDiNavigation.PresuntivoDiagnosticos" id="presuntivo0" autocomplete="off"> Presuntivo
+                                                    <input type="checkbox" name="options0" asp-for="DiagnosticoConsultaDiNavigation.PresuntivoDiagnosticos" id="diagnostico_presuntivo" autocomplete="off"> Presuntivo
                                                 </label>
                                                 <label class="btn btn-outline-secondary">
-                                                    <input type="checkbox" name="options0" id="definitivo0" asp-for="DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos" autocomplete="off"> Definitivo
+                                                    <input type="checkbox" name="options0" id="diagnostico_definitivo" asp-for="DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos" autocomplete="off"> Definitivo
                                                 </label>
                                             </div>
                                         </td>
@@ -1357,10 +1368,10 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="number" max="999" placeholder="0" class="form-control">
+                                            <input type="number" max="999" placeholder="0" class="form-control" asp-for="MedicamentoConsultaMNavigation.CantidadMedicamentoC">
                                         </td>
                                         <td>
-                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" asp-for="MedicamentoConsultaMNavigation.ObservacionMedicamento" class="form-control">
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-outline-secondary eliminar-fila-medicamento" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
@@ -1409,10 +1420,10 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="number" max="999" placeholder="0" class="form-control">
+                                            <input type="number" max="999" placeholder="0" class="form-control" asp-for="ImagenConsultaINavigation.CantidadImagen">
                                         </td>
                                         <td>
-                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control" asp-for="ImagenConsultaINavigation.ObservacionImagen">
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-outline-secondary eliminar-fila-imagen" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
@@ -1461,10 +1472,10 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="number" max="999" placeholder="0" class="form-control">
+                                            <input type="number" max="999" placeholder="0" class="form-control" asp-for="LaboratorioConsultaLaNavigation.CantidadLaboratorio">
                                         </td>
                                         <td>
-                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control">
+                                            <input type="text" maxlength="300" placeholder="Máximo 300 caracteres" class="form-control" asp-for="LaboratorioConsultaLaNavigation.ObservacionLaboratorio">
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-outline-secondary eliminar-fila-laboratorio" disabled><i class="fas fa-times-circle"></i> Eliminar</button>
@@ -1512,6 +1523,8 @@
 
 
             <div class="form-group">
+                <a asp-action="ListarConsultas" asp-controller="Consulta" class="btn btn-outline-secondary"><i class="fa fa-close"></i> Salir</a>
+
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         </div>

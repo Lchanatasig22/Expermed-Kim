@@ -9,7 +9,6 @@ namespace Expermed.Models
         {
             Cita = new HashSet<Citum>();
             Consulta = new HashSet<Consultum>();
-            ActivoPacientes = 1;
         }
 
         public int IdPacientes { get; set; }

@@ -8,6 +8,7 @@ namespace Expermed.Models
         public CDiagnostico()
         {
             Consulta = new HashSet<Consultum>();
+            CantidadDiagnostico = 0;
         }
 
         public int IdDiagnostico { get; set; }

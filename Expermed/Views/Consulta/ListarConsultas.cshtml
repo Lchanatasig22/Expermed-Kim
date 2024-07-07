@@ -1,102 +1,98 @@
 ﻿@model List<Consultum>
+
 @{
     ViewData["Title"] = "ListarConsultas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css" rel="stylesheet">
 
-
-
-
-
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <h3>Lista de consultas</h3>
 
-
-<div class="form-group">
-    <div class="row">
-        <div class="col-md-3">
-            <label for="opcion">Buscar por</label>
-            <select class="form-control" id="opcion" onchange="onSearchChanged()">
-                <option value="-2">Listar todo</option>
-                <option value="1">Nombre(s)</option>
-                <option value="2">Número de documento</option>
-                <option value="3">Email</option>
-                <option value="4">Nacionalidad</option>
-            </select>
-
-        </div>
-        <div class="col-md-5 d-none" id="buscarFields">
-            <label>&nbsp;</label>
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Ingresar criterio de búsqueda" id="buscarCriterio" />
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" onclick="onSearch()">Buscar</button>
+@if (Model != null && Model.Count > 0)
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="opcion">Buscar por</label>
+                <select class="form-control" id="opcion" onchange="onSearchChanged()">
+                    <option value="-2">Listar todo</option>
+                    <option value="1">Nombre(s)</option>
+                    <option value="2">Número de documento</option>
+                    <option value="3">Email</option>
+                    <option value="4">Nacionalidad</option>
+                </select>
+            </div>
+            <div class="col-md-5 d-none" id="buscarFields">
+                <label>&nbsp;</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ingresar criterio de búsqueda" id="buscarCriterio" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" onclick="onSearch()">Buscar</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<hr />
+    <hr />
 
-<div class="table-responsive">
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr class="table-primary">
-                <th>Acciones</th>
-                <th>Fecha de la consulta</th>
-
-                <th>Especialidad</th>
-                <th>Motivo</th>
-                <th>Enfermedad</th>
-                <th>Historial</th>
-                <th>Estado</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var consulta in Model)
-            {
-                <tr id="@consulta.IdConsulta">
-                    <!-- Añade un id único para cada fila -->
-                    <td>
-                        <a asp-action="Editarconsulta" asp-route-id="@consulta.IdConsulta" class="btn btn-outline-primary">
-                            <i class="fa-regular fa-pen-to-square"></i> Revisar
-                        </a>
-                    </td>
-                    <td>@consulta.FechacreacionConsulta</td>
-                    <td>@consulta.PacienteConsultaPNavigation.PrimernombrePacientes</td>
-                    <td>@consulta.EspecialidadConsultaC</td>
-                    <td>@consulta.MotivoConsulta)</td>
-                    <td>@consulta.EnfermedadConsulta</td>
-                    <td>@consulta.HistorialConsulta</td>
-                    <td>@consulta.ActivoConsulta</td>
-
-                    @* <td>
-                        <form asp-action="CambiarEstadoconsulta" method="post">
-                            <input type="hidden" name="id" value="@consulta.IdConsulta" />
-                            <input type="hidden" name="activo" value="@(consulta.ActivoConsulta == 1 ? 0 : 1)" />
-                            <button type="submit" class="btn btn-sm @(consulta.ActivoConsulta == 1 ? "btn-outline-success" : "btn-outline-danger")">
-                                @(consulta.ActivoConsulta == 1 ? "En Curso" : "Finalizado")
-                            </button>
-                        </form>
-                    </td> *@
-
-
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="table-primary">
+                    <th>Acciones</th>
+                    <th>Fecha de la consulta</th>
+                    <th>Nombre Paciente</th>
+                    <th>Especialidad</th>
+                    <th>Motivo</th>
+                    <th>Enfermedad</th>
+                    <th>Historial</th>
+                    <th>Estado</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <div id="noResults" class="no-results d-none">
-        No se encontraron resultados.<a asp-action="Crearconsulta" asp-controller="consulta" class="btn btn-outline-primary" style="margin-left:80%">
-            <i class="fa fa-plus"></i> Añadir nuevo consulta
-        </a>
+            </thead>
+            <tbody>
+                @foreach (var consulta in Model)
+                {
+                    <tr id="@consulta.IdConsulta">
+                        <td>
+                            <a asp-action="Editarconsulta" asp-route-id="@consulta.IdConsulta" class="btn btn-outline-primary">
+                                <i class="fa-regular fa-pen-to-square"></i> Revisar
+                            </a>
+                        </td>
+                        <td>@consulta.FechacreacionConsulta</td>
+                        <td>@consulta.PacienteConsultaPNavigation.PrimernombrePacientes @consulta.PacienteConsultaPNavigation.PrimerapellidoPacientes</td>
+                        <td>@consulta.EspecialidadConsultaC</td>
+                        <td>@consulta.MotivoConsulta</td>
+                        <td>@consulta.EnfermedadConsulta</td>
+                        <td>@consulta.HistorialConsulta</td>
+                        <td>@consulta.ActivoConsulta</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="noResults" class="no-results d-none">
+            No se encontraron resultados.
+            <a asp-action="Crearconsultas" asp-controller="Consulta" class="btn btn-outline-primary" style="margin-left:80%">
+                <i class="fa fa-plus"></i> Añadir nueva consulta
+            </a>
+        </div>
     </div>
+}
+else
+{
+    <p>No se encontraron consultas.</p>
+    <a asp-action="Crearconsultas" asp-controller="Consulta" class="btn btn-outline-primary" style="margin-left:80%">
+        <i class="fa fa-plus"></i> Añadir nueva consulta
+    </a>
+}
 
-</div>
-
-<a asp-action="Crearconsulta" asp-controller="consulta" class="btn btn-outline-primary" style="margin-left:80%">
-    <i class="fa fa-plus"></i> Añadir nuevo consulta
+<a asp-action="Crearconsultas" asp-controller="Consulta" class="btn btn-outline-primary" style="margin-left:80%">
+    <i class="fa fa-plus"></i> Añadir nueva consulta
 </a>
+
 <script>
     function onSearchChanged() {
         var selectElement = document.getElementById('opcion');
@@ -132,16 +128,16 @@
                 var cellValue = ''; // Valor de la celda que coincide con el criterio de búsqueda
                 switch (optionValue) {
                     case '1': // Nombre(s)
-                        cellValue = currentRow.getElementsByTagName('td')[1].innerText.toLowerCase(); // Ajusta el índice según tu modelo
-                        break;
-                    case '2': // Número de documento
                         cellValue = currentRow.getElementsByTagName('td')[2].innerText.toLowerCase(); // Ajusta el índice según tu modelo
                         break;
-                    case '3': // Email
+                    case '2': // Número de documento
                         cellValue = currentRow.getElementsByTagName('td')[3].innerText.toLowerCase(); // Ajusta el índice según tu modelo
                         break;
-                    case '4': // Nacionalidad
+                    case '3': // Email
                         cellValue = currentRow.getElementsByTagName('td')[4].innerText.toLowerCase(); // Ajusta el índice según tu modelo
+                        break;
+                    case '4': // Nacionalidad
+                        cellValue = currentRow.getElementsByTagName('td')[5].innerText.toLowerCase(); // Ajusta el índice según tu modelo
                         break;
                     default:
                         break;
@@ -160,27 +156,37 @@
         if (!found) {
             document.getElementById('noResults').classList.remove('d-none'); // Muestra el mensaje de "no resultados"
         } else {
-            document.getElementById('noResults').classList.add('d-none'); // Oculta el mensaje de "no resultados" sd
+            document.getElementById('noResults').classList.add('d-none'); // Oculta el mensaje de "no resultados"
         }
     }
 
     function cambiarEstadoUsuario(id, activo) {
         $.ajax({
-            url: '@Url.Action("CambiarEstadoconsultas", "consulta")',
+            url: '@Url.Action("CambiarEstadoconsultas", "Consulta")',
             type: 'POST',
             data: { id: id, activo: activo },
             success: function (response) {
                 if (response.success) {
-                    alert('Estado del consulta actualizado con éxito');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Estado actualizado',
+                        text: 'Estado del consulta actualizado con éxito',
+                    });
                 } else {
-                    alert('Error al actualizar el estado del consulta');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al actualizar el estado del consulta',
+                    });
                 }
             },
             error: function () {
-                alert('Error al enviar la solicitud');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al enviar la solicitud',
+                });
             }
         });
     }
 </script>
-
-
