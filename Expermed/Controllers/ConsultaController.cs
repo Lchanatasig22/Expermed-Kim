@@ -356,5 +356,16 @@ namespace Expermed.Controllers
         }
 
 
+        public async Task<IActionResult> ObtenerDatosConsulta(int id)
+        {
+            var consulta = await _consultaService.ObtenerDatosConsultaAsync(id);
+
+            if (consulta == null)
+            {
+                return NotFound();
+            }
+
+            return Json(consulta);
+        }
     }
 }

@@ -227,11 +227,13 @@ namespace Expermed.Controllers
         /// <param name="estado"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult ActualizarEstadoCita(int id, string estado)
+        public IActionResult EliminarCita(int id)
         {
-            _citaService.ActualizarEstadoCita(id, estado);
+            _citaService.EliminarCita(id);
             return RedirectToAction("ListarCitas"); // Redirige a la lista de citas
         }
+
+
 
 
 

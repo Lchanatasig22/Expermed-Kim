@@ -196,16 +196,17 @@ namespace Expermed.Servicios
         /// </summary>
         /// <param name="citaId"></param>
         /// <param name="estado"></param>
-        public void ActualizarEstadoCita(int citaId, string estado)
+        public void EliminarCita(int citaId)
         {
             using (SqlConnection connection = new SqlConnection(_context.Database.GetConnectionString()))
             {
                 var citaIdParam = new SqlParameter("@id_cita", citaId);
-                var estadoParam = new SqlParameter("@Estado", estado);
 
-                _context.Database.ExecuteSqlRaw("EXEC sp_UpdatStateCita @id_cita, @Estado", citaIdParam, estadoParam);
+                _context.Database.ExecuteSqlRaw("EXEC sp_DeleteCita @id_cita", citaIdParam);
             }
         }
+
+
 
     }
 }

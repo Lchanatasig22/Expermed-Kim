@@ -1,4 +1,5 @@
 ﻿using Expermed.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -63,7 +64,7 @@ namespace Expermed.Servicios
                     command.Parameters.AddWithValue("@diasincapacidad_consulta", consulta.DiasincapacidadConsulta ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@medico_consulta_d", consulta.MedicoConsultaD);
                     command.Parameters.AddWithValue("@especialidad_consulta_c", consulta.EspecialidadConsultaC ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@estado_consulta_c", consulta.EstadoConsultaC);
+                    command.Parameters.AddWithValue("@estado_consulta_c", 0);
                     command.Parameters.AddWithValue("@tipo_consulta_c", consulta.TipoConsultaC ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@notasevolucion_consulta", consulta.NotasevolucionConsulta ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@consultaprincipal_consulta", consulta.ConsultaprincipalConsulta ?? (object)DBNull.Value);
@@ -216,7 +217,7 @@ namespace Expermed.Servicios
                 new SqlParameter("@diasincapacidad_consulta", consulta.DiasincapacidadConsulta ?? (object)DBNull.Value),
                 new SqlParameter("@medico_consulta_d", consulta.MedicoConsultaD),
                 new SqlParameter("@especialidad_consulta_c", consulta.EspecialidadConsultaC ?? (object)DBNull.Value),
-                new SqlParameter("@estado_consulta_c", consulta.EstadoConsultaC = 0),
+                new SqlParameter("@estado_consulta_c", 1),
                 new SqlParameter("@tipo_consulta_c", consulta.TipoConsultaC ?? (object)DBNull.Value),
                 new SqlParameter("@notasevolucion_consulta", consulta.NotasevolucionConsulta ?? "sin especificar"),
                 new SqlParameter("@consultaprincipal_consulta", consulta.ConsultaprincipalConsulta ?? "sin especificar"),
@@ -315,7 +316,7 @@ namespace Expermed.Servicios
 
             // Filtrar las consultas por el usuario de creación y el estado igual a 0
             var consultas = await _context.Consulta
-                .Where(c => c.UsuariocreacionConsulta == loginUsuario && c.EstadoConsultaC == 0)
+                .Where(c => c.UsuariocreacionConsulta == loginUsuario && c.EstadoConsultaC == 1)
                 .Include(c => c.DiagnosticoConsultaDiNavigation)
                 .Include(c => c.ImagenConsultaINavigation)
                 .Include(c => c.LaboratorioConsultaLaNavigation)
@@ -326,6 +327,19 @@ namespace Expermed.Servicios
             return consultas;
         }
 
+
+        public async Task<Consultum> ObtenerDatosConsultaAsync(int id)
+        {
+            var consulta = await _context.Consulta
+                .Include(c => c.DiagnosticoConsultaDiNavigation)
+                .Include(c => c.ImagenConsultaINavigation)
+                .Include(c => c.LaboratorioConsultaLaNavigation)
+                .Include(c => c.MedicamentoConsultaMNavigation)
+                .Include(c => c.PacienteConsultaPNavigation)
+                .FirstOrDefaultAsync(c => c.IdConsulta == id);
+
+            return consulta;
+        }
 
     }
 }

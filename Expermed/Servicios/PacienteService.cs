@@ -54,7 +54,7 @@ namespace Expermed.Servicios
             var usuariocreacionPacientesParam = new SqlParameter("@UsuariocreacionPacientes", paciente.UsuariocreacionPacientes ?? (object)DBNull.Value);
             var fechamodificacionPacientesParam = new SqlParameter("@FechamodificacionPacientes", paciente.FechamodificacionPacientes ?? (object)DBNull.Value);
             var usuariomodificacionPacientesParam = new SqlParameter("@UsuariomodificacionPacientes", paciente.UsuariomodificacionPacientes ?? (object)DBNull.Value);
-            var activoPacientesParam = new SqlParameter("@ActivoPacientes", paciente.ActivoPacientes ?? (object)DBNull.Value);
+            var activoPacientesParam = new SqlParameter("@ActivoPacientes", 1);
             var tipodocumentoPacientesCParam = new SqlParameter("@TipodocumentoPacientesC", paciente.TipodocumentoPacientesC ?? (object)DBNull.Value);
             var ciPacientesParam = new SqlParameter("@CiPacientes", paciente.CiPacientes ?? (object)DBNull.Value);
             var primernombrePacientesParam = new SqlParameter("@PrimernombrePacientes", paciente.PrimernombrePacientes ?? (object)DBNull.Value);

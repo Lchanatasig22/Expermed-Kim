@@ -8,7 +8,7 @@ namespace Expermed.Models
         public Consultum()
         {
             Cita = new HashSet<Citum>();
-            EstadoConsultaC = 1;
+         
         }
 
         public int IdConsulta { get; set; }

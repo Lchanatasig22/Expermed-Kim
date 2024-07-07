@@ -4,9 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Crear Cita</h2>
+<h2 class="text-center mb-4">Crear Cita</h2>
 
-<form asp-action="CrearCita" class="row g-3" method="post">
+<form asp-action="CrearCita" class="row g-3" method="post" id="citaForm">
     <div class="col-md-6">
         <label asp-for="FechadelacitaCitas" class="form-label">Fecha de la Cita</label>
         <input asp-for="FechadelacitaCitas" id="fechaCita" class="form-control" type="date" required />
@@ -15,14 +15,13 @@
 
     <div class="col-md-6">
         <label asp-for="HoradelacitaCitas" class="form-label">Hora de la Cita</label>
-
-        <input type="text" asp-for="HoradelacitaCitas" id="horaCita"  readonly/>
+        <input type="text" class="form-control" asp-for="HoradelacitaCitas" id="horaCita" readonly />
         <span asp-validation-for="HoradelacitaCitas" class="text-danger"></span>
     </div>
 
     <div class="col-md-6">
         <label asp-for="MedicoCitasU" class="form-label">Médico</label>
-        <select asp-for="MedicoCitasU" id="medicoId" class="form-control" required>
+        <select asp-for="MedicoCitasU" id="medicoId" class="form-control select2" required>
             <option value="">Seleccione un médico</option>
             @if (ViewBag.TiposMedico != null)
             {
@@ -36,14 +35,11 @@
     </div>
 
     <input type="hidden" asp-for="PacienteCitasP" />
-
     <input type="hidden" asp-for="Estado" />
-
     <input type="hidden" asp-for="UsuariocreacionCitas" value="@ViewBag.UsuarioNombre" />
 
-
-    <div class="col-12">
-        <button type="button" onclick="consultarCita()" class="btn btn-secondary">Consultar Cita</button>
+    <div class="col-12 text-center">
+        <button type="button" onclick="consultarCita()" class="btn btn-secondary me-2">Consultar Cita</button>
         <button type="submit" id="crearCitaBtn" class="btn btn-primary" disabled>Crear Cita</button>
     </div>
 </form>
@@ -57,9 +53,11 @@
 
 <!-- Estilos y Scripts -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-
-
     /* Estilos para el formulario de horas disponibles */
     #formHorasDisponibles {
         margin-top: 30px; /* Separación superior para distinguirlo del formulario principal */
@@ -69,12 +67,12 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
     }
 
-        #formHorasDisponibles h2 {
-            font-size: 24px; /* Tamaño de fuente */
-            font-weight: bold; /* Peso de fuente */
-            margin-bottom: 20px; /* Separación inferior */
-            text-align: center; /* Centrar el texto */
-        }
+    #formHorasDisponibles h2 {
+        font-size: 24px; /* Tamaño de fuente */
+        font-weight: bold; /* Peso de fuente */
+        margin-bottom: 20px; /* Separación inferior */
+        text-align: center; /* Centrar el texto */
+    }
 
     /* Estilos para la cuadrícula de horas */
     .hours-grid {
@@ -100,24 +98,18 @@
         transition: transform 0.3s, background-color 0.3s;
     }
 
-        .hour-card:hover {
-            transform: scale(1.05);
-            background-color: #e0e0e0;
-        }
+    .hour-card:hover {
+        transform: scale(1.05);
+        background-color: #e0e0e0;
+    }
 
-        .hour-card img {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
-        }
-
+    .hour-card img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
 </style>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
-<!-- Incluye SweetAlert2 desde un CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function () {
@@ -239,4 +231,32 @@
     function cerrarFormularioHoras() {
         document.getElementById('formHorasDisponibles').style.display = 'none';
     }
+
+    // Agregar un manejador para el envío del formulario
+    $('#citaForm').submit(function (event) {
+        event.preventDefault(); // Prevenir el envío del formulario tradicional
+
+        // Realizar la llamada AJAX para enviar el formulario
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                Swal.fire({
+                    title: 'Cita creada',
+                    text: 'La cita ha sido creada con éxito.',
+                    icon: 'success',
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    willClose: () => {
+                        window.location.href = '/Cita/ListarCitas';
+                    }
+                });
+            },
+            error: function (error) {
+                Swal.fire('Error', 'Hubo un problema al crear la cita.', 'error');
+            }
+        });
+    });
 </script>

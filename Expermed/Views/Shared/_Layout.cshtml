@@ -65,7 +65,7 @@
                             <span>Usuario</span>
                         </a>
                     </li>
-                    
+
                     <li class="sidebar-item">
                         <a class="sidebar-link" asp-area="" asp-controller="Facturacion" asp-action="Facturacion">
                             <i class="fa fa-stethoscope"></i>
@@ -123,8 +123,9 @@
                 @RenderBody()
             </div>
 
-            
+
             <!-- Modal -->
+
             <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -135,23 +136,13 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="receta">
-                                <label class="form-check-label" for="receta">
-                                    Imprimir Receta
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="justificacion">
-                                <label class="form-check-label" for="justificacion">
-                                    Justificación Médica
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="formatoConsulta">
-                                <label class="form-check-label" for="formatoConsulta">
-                                    Formato de Consulta
-                                </label>
+                            <div class="form-group">
+                                <label for="pdfOptions">Seleccione el tipo de documento a generar:</label>
+                                <select class="form-control" id="pdfOptions">
+                                    <option value="receta">Imprimir Receta</option>
+                                    <option value="justificacion">Justificación Médica</option>
+                                    <option value="formatoConsulta">Formato de Consulta</option>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -161,11 +152,20 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="~/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Incluye jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Incluye Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Incluye Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 
 
 

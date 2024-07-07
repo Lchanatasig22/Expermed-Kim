@@ -4,9 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Editar Cita</h2>
+<h2 class="text-center mb-4">Editar Cita</h2>
 
-<form asp-action="EditarCita" method="post" class="row g-3">
+<form asp-action="EditarCita" method="post" class="row g-3" id="citaForm">
     <input type="hidden" asp-for="IdCitas" />
 
     <div class="col-md-6">
@@ -17,8 +17,7 @@
 
     <div class="col-md-6">
         <label asp-for="HoradelacitaCitas" class="form-label">Hora de la Cita</label>
-   
-        <input type="text" asp-for="HoradelacitaCitas" id="horaCita" readonly/>
+        <input type="text" class="form-control" asp-for="HoradelacitaCitas" id="horaCita" readonly />
         <span asp-validation-for="HoradelacitaCitas" class="text-danger"></span>
     </div>
 
@@ -36,11 +35,11 @@
 
     <div class="col-md-6" hidden>
         <label asp-for="PacienteCitasP" class="form-label">Paciente</label>
-        <input asp-for="PacienteCitasP"  class="form-control" readonly />
+        <input asp-for="PacienteCitasP" class="form-control" readonly />
         <span asp-validation-for="PacienteCitasP" class="text-danger"></span>
     </div>
 
-    <div class="col-12">
+    <div class="col-12 text-center">
         <button type="button" class="btn btn-outline-secondary" id="openFormBtn">Seleccionar Hora</button>
         <button type="submit" class="btn btn-outline-primary">Guardar Cambios</button>
         <a asp-action="ListarCitas" class="btn btn-outline-secondary">Cancelar</a>
@@ -54,10 +53,13 @@
     <div id="hoursContainer" class="hours-grid"></div>
 </div>
 
-
+<!-- Estilos y Scripts -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-
-
     /* Estilos para el formulario de horas disponibles */
     #formHorasDisponibles {
         margin-top: 30px; /* Separación superior para distinguirlo del formulario principal */
@@ -108,13 +110,7 @@
             height: 50px;
             margin-bottom: 10px;
         }
-
 </style>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<!-- Incluye SweetAlert2 desde un CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
         $('#medicoId').select2({
@@ -234,5 +230,33 @@
     function cerrarFormularioHoras() {
         document.getElementById('formHorasDisponibles').style.display = 'none';
     }
+
+    // Agregar un manejador para el envío del formulario
+    $('#citaForm').submit(function (event) {
+        event.preventDefault(); // Prevenir el envío del formulario tradicional
+
+        // Realizar la llamada AJAX para enviar el formulario
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                Swal.fire({
+                    title: 'Cita creada',
+                    text: 'La cita ha sido reagendada con éxito.',
+                    icon: 'success',
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    willClose: () => {
+                        window.location.href = '/Cita/ListarCitas';
+                    }
+                });
+            },
+            error: function (error) {
+                Swal.fire('Error', 'Hubo un problema al crear la cita.', 'error');
+            }
+        });
+    });
 </script>
 
