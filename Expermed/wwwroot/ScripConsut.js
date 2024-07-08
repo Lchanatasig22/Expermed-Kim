@@ -6,45 +6,50 @@ var imagenIndex = 1;
 
 // Añadir nueva fila
 $('#anadirFila').on('click', function () {
-    var nuevaFila = `
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="input-group">
-                                                                                        <input type="text" class="form-control" placeholder="Buscar...">
-                                                                                                 <div class="input-group">
-                                                <select asp-for="DiagnosticoConsultaDiNavigation.IdDiagnostico" class="form-control" id="DiagnosticoId">
-                                                    <option value="">Seleccione...</option>
+    var tiposDiagnosticoOptions = '@Html.Raw(Json.Encode(ViewBag.TiposDiagnostico))';
 
-                                                    @if (ViewBag.TiposDiagnostico != null)
-                                                    {
-                                                        @foreach (var tiposDiagnostico in ViewBag.TiposDiagnostico)
-                                                        {
-                                                            <option value="@tiposDiagnostico.Value">@tiposDiagnostico.Text</option>
-                                                        }
-                                                    }
-                                                </select>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                                                        <label class="btn btn-outline-secondary">
-                                                                                            <input type="radio" name="options${filaIndex}" id="presuntivo${filaIndex}" autocomplete="off"> Presuntivo
-                                                                                        </label>
-                                                                                        <label class="btn btn-outline-secondary">
-                                                                                            <input type="radio" name="options${filaIndex}" id="definitivo${filaIndex}" autocomplete="off"> Definitivo
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <button type="button" class="btn btn-outline-secondary eliminar-fila"><i class="fas fa-times-circle"></i> Eliminar</button>
-                                                                                </td>
-                                                                            </tr>`;
+    var nuevaFila = `
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            
+                            <div class="input-group">
+                                <select class="form-control" id="DiagnosticoId">
+                                    <option value="">Seleccione...</option>`;
+
+    var options = JSON.parse(tiposDiagnosticoOptions);
+    options.forEach(function (tiposDiagnostico) {
+        nuevaFila += `<option value="${tiposDiagnostico.Value}">${tiposDiagnostico.Text}</option>`;
+    });
+
+    nuevaFila += `</select>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-outline-secondary">
+                                <input type="radio" name="options${filaIndex}" id="presuntivo${filaIndex}" autocomplete="off"> Presuntivo
+                            </label>
+                            <label class="btn btn-outline-secondary">
+                                <input type="radio" name="options${filaIndex}" id="definitivo${filaIndex}" autocomplete="off"> Definitivo
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary eliminar-fila"><i class="fas fa-times-circle"></i> Eliminar</button>
+                    </td>
+                </tr>`;
+
     $('#diagnosticoTableBody').append(nuevaFila);
     filaIndex++;
+});
+
+$(document).on('click', '.eliminar-fila', function () {
+    $(this).closest('tr').remove();
 });
 
 // Eliminar fila

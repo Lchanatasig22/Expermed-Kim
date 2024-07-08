@@ -554,7 +554,7 @@
                     <hr>
                 </div>
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <textarea type="text" maxlength="8000" rows="2" class="form-control" asp-for="AntecedentespersonalesConsulta" id="segundoNombre" placeholder="Max 150 caracteres"></textarea>
                 </div>
 
@@ -691,7 +691,7 @@
                     <span><i class="fa fa-medkit"></i> Enfermedad o problema actual (*) </span>
                     <hr>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <textarea type="text" maxlength="8000" rows="2" class="form-control" asp-for="EnfermedadConsulta" id="enfermedadProblema" placeholder="Max 150 caracteres"></textarea>
                 </div>
             </div>
@@ -1300,10 +1300,10 @@
                                         <td>
                                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-outline-secondary">
-                                                    <input type="checkbox" name="options0" asp-for="DiagnosticoConsultaDiNavigation.PresuntivoDiagnosticos" id="diagnostico_presuntivo" autocomplete="off"> Presuntivo
+                                                    <input type="checkbox" name="DiagnosticoConsultaDiNavigation.PresuntivoDiagnosticos" asp-for="DiagnosticoConsultaDiNavigation.PresuntivoDiagnosticos" id="diagnostico_presuntivo" autocomplete="off"> Presuntivo
                                                 </label>
                                                 <label class="btn btn-outline-secondary">
-                                                    <input type="checkbox" name="options0" id="diagnostico_definitivo" asp-for="DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos" autocomplete="off"> Definitivo
+                                                    <input type="checkbox" name="DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos" id="diagnostico_definitivo" asp-for="DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos" autocomplete="off"> Definitivo
                                                 </label>
                                             </div>
                                         </td>

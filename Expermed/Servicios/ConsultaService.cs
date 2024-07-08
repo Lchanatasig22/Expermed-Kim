@@ -156,12 +156,12 @@ namespace Expermed.Servicios
 
                     // Diagnóstico
                     command.Parameters.AddWithValue("@diagnostico_fechacreacion", DateTime.Now);
-                    command.Parameters.AddWithValue("@diagnostico_usuariocreacion", consulta.DiagnosticoConsultaDiNavigation.UsuariocreacionDiagnostico ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@diagnostico_cantidad", consulta.DiagnosticoConsultaDiNavigation.CantidadDiagnostico);
-                    command.Parameters.AddWithValue("@diagnostico_observacion", consulta.DiagnosticoConsultaDiNavigation.ObservacionDiagnostico ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@diagnostico_presuntivo", consulta.DiagnosticoConsultaDiNavigation.PresuntivoDiagnosticos ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@diagnostico_definitivo", consulta.DiagnosticoConsultaDiNavigation.DefinitivoDiagnosticos ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@diagnostico_id_diagnosticos", consulta.DiagnosticoConsultaDiNavigation.IdDiagnosticosDiagnosticoD);
+                    command.Parameters.AddWithValue("@diagnostico_usuariocreacion", consulta.DiagnosticoConsultaDiNavigation?.UsuariocreacionDiagnostico ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@diagnostico_cantidad", consulta.DiagnosticoConsultaDiNavigation?.CantidadDiagnostico);
+                    command.Parameters.AddWithValue("@diagnostico_observacion", consulta.DiagnosticoConsultaDiNavigation?.ObservacionDiagnostico ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@diagnostico_presuntivo", consulta.DiagnosticoConsultaDiNavigation?.PresuntivoDiagnosticos ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@diagnostico_definitivo", consulta.DiagnosticoConsultaDiNavigation?.DefinitivoDiagnosticos ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@diagnostico_id_diagnosticos", consulta.DiagnosticoConsultaDiNavigation?.IdDiagnosticosDiagnosticoD);
 
                     connection.Open();
                     await command.ExecuteNonQueryAsync();

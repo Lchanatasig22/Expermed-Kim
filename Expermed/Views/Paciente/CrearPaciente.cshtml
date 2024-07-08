@@ -92,15 +92,15 @@
             <label for="donanteSelect" class="form-label">Es donante</label>
             <select class="form-select" asp-for="DonantePacientes" id="donanteSelect" required>
                 <option value="">Seleccione...</option>
-                <option value="true">Sí</option>
-                <option value="false">No</option>
+                <option value="Si">Sí</option>
+                <option value="No">No</option>
             </select>
         </div>
 
 
         <div class="form-group col-sm-3">
             <label for="fechaNacimientoInput" class="form-label">Fecha nacimiento</label>
-            <input asp-for="FechanacimientoPacientes" type="date" class="form-control" asp-format="{yyyy-MM-dd}" />
+            <input asp-for="FechanacimientoPacientes" class="form-control" asp-format="{0:yyyy-MM-dd}" />
         </div>
 
         <div class="form-group col-sm-2">
@@ -200,8 +200,8 @@
         <div class="form-group col-sm-3">
             <label for="provinciaSelect" class="form-label">Provincia / Cantón / Parroquia</label>
 
-            <input class="form-control" asp-for="ProvinciaPacientesL"/>
-           @*  <select class="form-select" asp-for="ProvinciaPacientesL" id="provinciaSelect" required>
+           
+            <select class="form-select" asp-for="ProvinciaPacientesL" id="provinciaSelect" required>
                 @if (ViewBag.TiposProvincia != null)
                 {
                     @foreach (var tiposProvincia in ViewBag.TiposProvincia)
@@ -209,7 +209,7 @@
                         <option value="@tiposProvincia.Value">@tiposProvincia.Text</option>
                     }                }
        
-            </select> *@
+            </select>
         </div>
 
         <div class="form-group col-sm-3">
