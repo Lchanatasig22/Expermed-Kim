@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Expermed.Models
+﻿namespace Expermed.Models
 {
-    public partial class Consultum
+    public class VerConsultaViewModel
     {
-        public Consultum()
-        {
-            Cita = new HashSet<Citum>();
-         
-        }
-
         public int IdConsulta { get; set; }
         public DateTime? FechacreacionConsulta { get; set; }
         public string? UsuariocreacionConsulta { get; set; }
@@ -103,17 +94,52 @@ namespace Expermed.Models
         public int? ActivoConsulta { get; set; }
         public int? MedicamentoConsultaM { get; set; }
 
-        public virtual CDetalle? DetalleConsultaDNavigation { get; set; }
-        public virtual CDiagnostico? DiagnosticoConsultaDiNavigation { get; set; }
-        public virtual CDocumento? DocumentoConsultaDNavigation { get; set; }
-        public virtual CImagen? ImagenConsultaINavigation { get; set; }
-        public virtual CLaboratorio? LaboratorioConsultaLaNavigation { get; set; }
-        public virtual CMedicamento? MedicamentoConsultaMNavigation { get; set; }
-        public virtual Paciente? PacienteConsultaPNavigation { get; set; }
-        public virtual ICollection<Citum> Cita { get; set; }
+        public string PacienteNombre { get; set; }
+        public string PacienteSegundoNombre { get; set; }
+        public string PacienteApellido { get; set; }
+        public string PacienteSegundoApellido { get; set; }
+        public string DiagnosticoDescripcion { get; set; }
+        public string TiposDocumentos { get; set; }
+        public int NumeroDocumento { get; set; }
 
+        public string TiposSangre { get; set; }
+        public string TipoDonante { get; set; }
+        public DateTime? FechaNacimiento { get; set; }  // Agregamos la propiedad como DateTime?
 
+        public int EdadPaciente { get; set; }
 
+        public string TipoSexo { get; set; }
+        public string TipoEstadoC { get; set; }
+        public string TipoFormacionP { get; set; }
+        public string TipoNacionalidadP { get; set; }
+        public string DireccionPa { get; set; }
+        public int TelefonoFiPa { get; set; }
+        public int TelefonoCePa { get; set; }
+
+        public string EmailPac { get; set; }
+
+        public string OcupaciónPac { get; set; }
+        public string EmpresaPac { get; set; }
+        public string SeguroSaludPa { get; set; }
+        public string MedicoConsulta { get; set; }
+        public string DiagnosticoConsulta { get; set; }
+
+        public string TipoDiagnostico { get; set; }
+        public string TipoDiagnosticod { get; set; }
+        public string MedicamentoConsulta { get; set; }
+
+        public int MedicamentoCantidad { get; set; }
+        public string MedicamentoObservacion { get; set; }
+
+        public string ImagenConsulta { get; set; }
+        public string ImagenObservacion { get; set; }
+        public int ImagenCantidad { get; set; }
+
+        public string LaboratorioConsulta { get; set; }
+        public string LaboratorioObservacion { get; set; }
+
+        public int LaboratorioCantidad { get;set; }
 
     }
+
 }

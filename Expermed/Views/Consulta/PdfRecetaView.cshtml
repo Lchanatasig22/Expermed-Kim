@@ -1,0 +1,116 @@
+﻿@model VerConsultaViewModel
+
+@{
+  
+    Layout = "~/Views/Shared/_pdf.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Receta Médica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .header, .footer {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+        }
+
+        .header {
+            top: 0px;
+        }
+
+        .footer {
+            bottom: 0px;
+        }
+
+        .content {
+            margin-top: 150px;
+            margin-bottom: 50px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+            .info div {
+                margin-bottom: 5px;
+            }
+
+            .info span {
+                font-weight: bold;
+            }
+
+        .highlight {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Dr. Kim Morales</h1>
+        <p>Especialista en Medicina general</p>
+        <p>e-mail: helpdesk@asersoat.com</p>
+        <p>Teléfonos:</p>
+    </div>
+
+    <div class="footer">
+        <p>Dirección: Av de la Prensa N49-180 y Juan Holguín Edifico Amafkar sexto piso, Chordeleg - Ecuador</p>
+    </div>
+
+    <div class="content">
+        <div class="highlight">
+            <h2>Receta No. 8</h2>
+            <div class="info">
+                <div><span>Fecha:</span> @DateTime.Now.ToString("yyyy-MM-dd")</div>
+                <div><span>Apellidos:</span> @Model.PacienteApellido</div>
+                <div><span>Nombres:</span> @Model.PacienteNombre</div>
+                <div><span>Edad:</span> @Model.EdadPaciente</div>
+                <div><span>Alergias:</span> @Model.Alergias</div>
+                <div><span>Diagnóstico:</span> @Model.DiagnosticoConsulta</div>
+            </div>
+        </div>
+
+        <h2>Prescripción</h2>
+        <table>
+            <tr>
+                <th>Medicamento</th>
+                <th>Indicaciones</th>
+            </tr>
+            <tr>
+                <td>@Model.MedicamentoConsulta</td>
+                <td>@Model.MedicamentoCantidad</td>
+            </tr>
+        </table>
+
+        <h2>Recomendaciones No Farmacológicas</h2>
+        <p>@Model.ObservacionConsulta</p>
+
+        
+    </div>
+</body>
+</html>

@@ -187,6 +187,12 @@ namespace Expermed.Servicios
         {
             return await _context.Consulta
                 .Include(c => c.PacienteConsultaPNavigation) // Incluye la navegación al paciente
+                .Include(c => c.DiagnosticoConsultaDiNavigation) // Reemplaza 'OtraNavegacion1' con la propiedad de navegación real
+                .Include(c => c.ImagenConsultaINavigation) // Reemplaza 'OtraNavegacion2' con la propiedad de navegación real
+                .Include(c => c.ImagenConsultaINavigation) // Reemplaza 'OtraNavegacion3' con la propiedad de navegación real
+                .Include(c => c.LaboratorioConsultaLaNavigation) // Reemplaza 'OtraNavegacion3' con la propiedad de navegación real
+                .Include(c => c.MedicamentoConsultaMNavigation)
+                                                 // Añade más 'Include' según sea necesario
                 .FirstOrDefaultAsync(c => c.IdConsulta == idConsulta);
         }
 
@@ -217,7 +223,7 @@ namespace Expermed.Servicios
                 new SqlParameter("@diasincapacidad_consulta", consulta.DiasincapacidadConsulta ?? (object)DBNull.Value),
                 new SqlParameter("@medico_consulta_d", consulta.MedicoConsultaD),
                 new SqlParameter("@especialidad_consulta_c", consulta.EspecialidadConsultaC ?? (object)DBNull.Value),
-                new SqlParameter("@estado_consulta_c", 1),
+                new SqlParameter("@estado_consulta_c", consulta.EstadoConsultaC ?? 1),
                 new SqlParameter("@tipo_consulta_c", consulta.TipoConsultaC ?? (object)DBNull.Value),
                 new SqlParameter("@notasevolucion_consulta", consulta.NotasevolucionConsulta ?? "sin especificar"),
                 new SqlParameter("@consultaprincipal_consulta", consulta.ConsultaprincipalConsulta ?? "sin especificar"),
@@ -316,7 +322,7 @@ namespace Expermed.Servicios
 
             // Filtrar las consultas por el usuario de creación y el estado igual a 0
             var consultas = await _context.Consulta
-                .Where(c => c.UsuariocreacionConsulta == loginUsuario && c.EstadoConsultaC == 1)
+                .Where(c => c.UsuariocreacionConsulta == loginUsuario && c.EstadoConsultaC == 0)
                 .Include(c => c.DiagnosticoConsultaDiNavigation)
                 .Include(c => c.ImagenConsultaINavigation)
                 .Include(c => c.LaboratorioConsultaLaNavigation)

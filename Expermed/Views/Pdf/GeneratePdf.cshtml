@@ -1,256 +1,129 @@
-﻿@{
+﻿@model VerConsultaViewModel
+@{
     ViewData["Title"] = "GeneratePdf";
     Layout = "~/Views/Shared/_pdf.cshtml";
 }
 
-<div class="container">
-    @if (Model.Receta)
-    {
-        <div class="section">
-            <h2>Receta Médica</h2>
-            <p>
-                <strong>Nombre del Paciente:</strong> <br>
-                <strong>Fecha:</strong> <br>
-            </p>
-            <p><strong>Medicamentos:</strong></p>
-            <div class="highlight">
-            </div>
-            <p><strong>Instrucciones adicionales:</strong></p>
-            <div class="highlight">
-            </div>
-        </div>
-    }
 
-    @if (Model.Justificacion)
-    {
-        <div class="section">
-            <h2>Justificación Médica</h2>
-            <p>
-                <strong>Nombre del Paciente:</strong> <br>
-                <strong>Fecha:</strong> <br>
-            </p>
-            <p><strong>Motivo de la justificación:</strong></p>
-            <div class="highlight">
-            </div>
-            <p><strong>Recomendaciones:</strong></p>
-            <div class="highlight">
-            </div>
-        </div>
-    }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Documento de Consulta</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Consulta Médica</h1>
+    <h2>Datos del Paciente</h2>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <td>@Model.PacienteNombre</td>
+        </tr>
+        <tr>
+            <th>Apellido</th>
+            <td>@Model.PacienteApellido</td>
+        </tr>
+        <tr>
+            <th>Segundo Apellido</th>
+            <td>@Model.PacienteSegundoApellido</td>
+        </tr>
+        <tr>
+            <th>Segundo Nombre</th>
+            <td>@Model.PacienteSegundoNombre</td>
+        </tr>
+        <tr>
+            <th>Tipo de Documento</th>
+            <td>@Model.TiposDocumentos</td>
+        </tr>
+        <tr>
+            <th>Número de Documento</th>
+            <td>@Model.NumeroDocumento</td>
+        </tr>
+        <tr>
+            <th>Tipo de Sangre</th>
+            <td>@Model.TiposSangre</td>
+        </tr>
+        <tr>
+            <th>Es Donante</th>
+            <td>@Model.TipoDonante</td>
+        </tr>
+        <tr>
+            <th>Fecha de Nacimiento</th>
+            <td>@Model.FechaNacimiento?.ToString("yyyy-MM-dd")</td>
+        </tr>
+        <tr>
+            <th>Edad</th>
+            <td>@Model.EdadPaciente</td>
+        </tr>
+        <tr>
+            <th>Sexo</th>
+            <td>@Model.TipoSexo</td>
+        </tr>
+        <tr>
+            <th>Estado Civil</th>
+            <td>@Model.TipoEstadoC</td>
+        </tr>
+        <tr>
+            <th>Formación Profesional</th>
+            <td>@Model.TipoFormacionP</td>
+        </tr>
+        <tr>
+            <th>Nacionalidad</th>
+            <td>@Model.TipoNacionalidadP</td>
+        </tr>
+        <tr>
+            <th>Dirección</th>
+            <td>@Model.DireccionPa</td>
+        </tr>
+        <tr>
+            <th>Teléfono Fijo</th>
+            <td>@Model.TelefonoFiPa</td>
+        </tr>
+        <tr>
+            <th>Teléfono Celular</th>
+            <td>@Model.TelefonoCePa</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@Model.EmailPac</td>
+        </tr>
+        <tr>
+            <th>Ocupación</th>
+            <td>@Model.OcupaciónPac</td>
+        </tr>
+        <tr>
+            <th>Empresa</th>
+            <td>@Model.EmpresaPac</td>
+        </tr>
+        <tr>
+            <th>Seguro de Salud</th>
+            <td>@Model.SeguroSaludPa</td>
+        </tr>
+        <tr>
+            <th>Historial de Consulta</th>
+            <td>@Model.HistorialConsulta</td>
+        </tr>
+    </table>
 
-    @if (Model.FormatoConsulta)
-    {
-        <div class="section">
-            <div class="consulta">
-                <h2>Formato de Consulta</h2>
-                <p>
-                    <strong>Nombre del Paciente:</strong> <br>
-                    <strong>Fecha:</strong> <br>
-                </p>
-                <section>
-                    <h2>1 MOTIVO DE CONSULTA</h2>
-                    <div class="highlight">
-                    </div>
-                </section>
-                <section>
-                    <h2>2 ANTECEDENTES PERSONALES</h2>
-                    <p class="subheading">DATOS CLÍNICO - QUIRURGICOS RELEVANTES Y GINECO OBSTÉTRICOS</p>
-                    <div class="highlight">
-                    </div>
-                </section>
-                <section>
-                    <h2>3 ANTECEDENTES FAMILIARES</h2>
-                    <table class="familiares">
-                        <tr>
-                            <td>1. CARDIOPATÍA</td>
-                            <td></td>
-                            <td>2. DIABETES</td>
-                            <td></td>
-                            <td>3. ENF. C. VASCULAR</td>
-                            <td></td>
-                            <td>4. HIPERTENSIÓN</td>
-                            <td></td>
-                            <td>5. CÁNCER</td>
-                            <td></td>
-                            <td>6. TUBERCULOSIS</td>
-                            <td></td>
-                            <td>7. ENF. MENTAL</td>
-                            <td></td>
-                            <td>8. ENF. INFECCIOSA</td>
-                            <td></td>
-                            <td>9. MALFORMACIÓN</td>
-                            <td></td>
-                            <td>10. OTRO</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </section>
-                <section>
-                    <h2>4 ENFERMEDAD O PROBLEMA ACTUAL</h2>
-                    <div class="highlight">
-                    </div>
-                </section>
-                <section>
-                    <h2>5 REVISIÓN ACTUAL DE ÓRGANOS Y SISTEMAS</h2>
-                    <p>CP = CON EVIDENCIA DE PATOLOGÍA: MARCAR "X" Y DESCRIBIR ABAJO ANOTANDO EL NÚMERO Y LETRA CORRESPONDIENTES</p>
-                    <p>SP = SIN EVIDENCIA DE PATOLOGÍA: MARCAR "X" Y NO DESCRIBIR</p>
-                    <table class="revision">
-                        <tr>
-                            <td>CP</td>
-                            <td>SP</td>
-                            <td>ÓRGANO</td>
-                            <td>CP</td>
-                            <td>SP</td>
-                            <td>ÓRGANO</td>
-                            <td>CP</td>
-                            <td>SP</td>
-                            <td>ÓRGANO</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Órgano de los Sentidos</td>
-                            <td></td>
-                            <td></td>
-                            <td>Cardiovascular</td>
-                            <td></td>
-                            <td></td>
-                            <td>Genital</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Respiratorio</td>
-                            <td></td>
-                            <td></td>
-                            <td>Digestivo</td>
-                            <td></td>
-                            <td></td>
-                            <td>Urinario</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Músculo Esquelético</td>
-                            <td></td>
-                            <td></td>
-                            <td>Endocrino</td>
-                            <td></td>
-                            <td></td>
-                            <td>Hemo Linfático</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Nervioso</td>
-                        </tr>
-                    </table>
-                </section>
-                <section>
-                    <h2>6 SIGNOS VITALES Y ANTROPOMETRÍA</h2>
-                    <table class="signos">
-                        <tr>
-                            <td>FECHA DE MEDICIÓN</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>TEMPERATURA °C</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>PRESIÓN ARTERIAL</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>PULSO / min</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>FRECUENCIA RESPIRATORIA</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>PESO / Kg</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>TALLA / cm</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </section>
-                <section>
-                    <h2>7 EXAMEN FÍSICO REGIONAL</h2>
-                    <p>CP = CON EVIDENCIA DE PATOLOGÍA: MARCAR "X" Y DESCRIBIR ABAJO ANOTANDO EL NÚMERO Y LETRA CORRESPONDIENTES</p>
-                    <p>SP = SIN EVIDENCIA DE PATOLOGÍA: MARCAR "X" Y NO DESCRIBIR</p>
-                    <table class="examen">
-                        <tr>
-                            <td>CP</td>
-                            <td>SP</td>
-                            <td>REGIÓN</td>
-                            <td>CP</td>
-                            <td>SP</td>
-                            <td>REGIÓN</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Cabeza</td>
-                            <td></td>
-                            <td></td>
-                            <td>Cuello</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Tórax</td>
-                            <td></td>
-                            <td></td>
-                            <td>Abdomen</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Pelvis</td>
-                            <td></td>
-                            <td></td>
-                            <td>Extremidades</td>
-                        </tr>
-                    </table>
-                </section>
-                <section>
-                    <h2>8 DIAGNÓSTICO</h2>
-                    <table class="diagnostico">
-                        <tr>
-                            <td>PRE</td>
-                            <td>DEF</td>
-                            <td>DIAGNÓSTICO</td>
-                            <td>CIE</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </section>
-                <section>
-                    <h2>9 PLANES DE TRATAMIENTO</h2>
-                    <div class="highlight">
-                    </div>
-                    <p><strong>Fecha:</strong></p>
-                    <p><strong>Hora:</strong></p>
-                    <p><strong>Nombre del Profesional:</strong></p>
-                    <p><strong>Código:</strong></p>
-                </section>
-                <footer>
-                    <p>SNS-MSP / HCU-form.002 / 2008 CONSULTA EXTERNA - ANAMNESIS Y EXAMEN FÍSICO</p>
-                </footer>
-            </div>
-        </div>
-    }
-</div>
-<div class="footer">
-    <p>Este es un documento generado automáticamente. Por favor, no lo firme ni lo modifique manualmente.</p>
-</div>
+    <h2>Datos de la Consulta</h2>
+    <table>
+        <tr>
+            <th>Motivo de Consulta</th>
+            <td>@Model.MotivoConsulta</td>
+        </tr>
+        <tr>
+            <th>Diagnóstico</th>
+            <td>@Model.DiagnosticoConsulta</td>
+        </tr>
+        <!-- Añade aquí más filas con los datos necesarios -->
+    </table>
+
+    <!-- Incluye más secciones si es necesario -->
+</body>
+</html>

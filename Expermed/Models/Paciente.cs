@@ -41,6 +41,7 @@ namespace Expermed.Models
         public string? SegurosaludPacientesC { get; set; }
 
         public virtual Catalogo? EstadocivilPacientesCNavigation { get; set; }
+ 
         public virtual Catalogo? FormacionprofesionalPacientesCNavigation { get; set; }
         public virtual Localidad? NacionalidadPacientesLNavigation { get; set; }
         public virtual Localidad? ProvinciaPacientesLNavigation { get; set; }

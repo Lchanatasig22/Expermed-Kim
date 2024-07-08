@@ -1,28 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Expermed.Models;
+using Expermed.Servicios;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Rotativa.AspNetCore;
-using Expermed.Models;
+using System.Threading.Tasks;
 
-namespace Expermed.Controllers
+public class PdfController : Controller
 {
-    public class PdfController : Controller
-    {
-        public IActionResult GeneratePdf(bool receta, bool justificacion, bool formatoConsulta)
-        {
-            var model = new PdfViewModel
-            {
-                //Receta = receta,
-                //Justificacion = justificacion,
-                //FormatoConsulta = formatoConsulta
-            };
+    private readonly CatalogService _catalogoService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly PacienteService _pacienteService;
+    private readonly ConsultaService _consultaService;
 
-            return new ViewAsPdf("GeneratePdf", model)
-            {
-                FileName = "Reporte.pdf",
-                PageSize = Rotativa.AspNetCore.Options.Size.A4
-            };
-        }
-
-
-       
-    }
+    
+   
 }

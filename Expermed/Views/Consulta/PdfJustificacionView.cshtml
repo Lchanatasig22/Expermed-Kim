@@ -1,0 +1,77 @@
+﻿@model VerConsultaViewModel
+@{
+
+    Layout = "~/Views/Shared/_pdf.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Justificación Médica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .header, .footer {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+        }
+
+        .header {
+            top: 0px;
+        }
+
+        .footer {
+            bottom: 0px;
+        }
+
+        .content {
+            margin-top: 150px;
+            margin-bottom: 50px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+            .info div {
+                margin-bottom: 5px;
+            }
+
+            .info span {
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Justificación Médica</h1>
+    </div>
+
+    <div class="footer">
+        <p>Emitida por: Dr. Kim Morales</p>
+        <p>Especialista en Medicina general</p>
+        <p>e-mail: helpdesk@asersoat.com</p>
+        <p>Dirección: Av de la Prensa N49-180 y Juan Holguín Edifico Amafkar sexto piso, Chordeleg - Ecuador</p>
+    </div>
+
+    <div class="content">
+        <div class="info">
+            <div><span>Fecha:</span> @DateTime.Now.ToString("yyyy-MM-dd")</div>
+            <div><span>Apellidos:</span> @Model.PacienteApellido</div>
+            <div><span>Nombres:</span> @Model.PacienteNombre</div>
+            <div><span>Edad:</span> @Model.EdadPaciente</div>
+            <div><span>Diagnóstico:</span> @Model.DiagnosticoConsulta</div>
+        </div>
+
+        <h2>Justificación</h2>
+        <p>Por medio de la presente, se justifica la ausencia del paciente @Model.PacienteNombre @Model.PacienteApellido de sus actividades laborales/educativas  @Model.DiasincapacidadConsulta debido a @Model.DiagnosticoConsulta.</p>
+
+        <h2>Recomendaciones</h2>
+        <p>@Model.ObservacionConsulta</p>
+    </div>
+</body>
+</html>

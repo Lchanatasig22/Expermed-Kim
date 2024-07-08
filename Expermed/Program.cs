@@ -1,3 +1,4 @@
+using DinkToPdf;
 using Expermed.Models; // Importa los modelos de datos del proyecto.
 using Expermed.Servicios; // Importa los servicios del proyecto.
 using Microsoft.EntityFrameworkCore; // Importa Entity Framework Core para trabajar con la base de datos.
@@ -14,6 +15,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true; // Configura la cookie de sesión como HttpOnly.
     options.Cookie.IsEssential = true; // Marca la cookie de sesión como esencial.
 });
+builder.Services.AddSingleton(typeof(DinkToPdf.Contracts.IConverter), new SynchronizedConverter(new PdfTools()));
+builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation(); // Agrega soporte para Razor Pages con compilación en tiempo de ejecución.
 builder.Services.AddDbContext<Base_ExpermedContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CadenaSQL"))); // Configura el contexto de la base de datos utilizando SQL Server.
