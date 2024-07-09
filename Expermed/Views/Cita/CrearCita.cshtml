@@ -39,7 +39,7 @@
     <input type="hidden" asp-for="UsuariocreacionCitas" value="@ViewBag.UsuarioNombre" />
 
     <div class="col-12 text-center">
-        <button type="button" onclick="consultarCita()" class="btn btn-secondary me-2">Consultar Cita</button>
+        <button type="button" onclick="consultarCita()" class="btn btn-success me-2"><i class="fa fa-search"></i> Consultar Disponibilidad Cita</button>
         <button type="submit" id="crearCitaBtn" class="btn btn-primary" disabled>Crear Cita</button>
     </div>
 </form>
@@ -100,7 +100,7 @@
 
     .hour-card:hover {
         transform: scale(1.05);
-        background-color: #e0e0e0;
+            background-color: #9bff7e;
     }
 
     .hour-card img {

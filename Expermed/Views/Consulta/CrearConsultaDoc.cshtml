@@ -1663,42 +1663,33 @@
     function showModal() {
         $('#pdfModal').modal('show');
     }
+
     function generatePdf() {
         const consultaId = $('#consultaId').val(); // Asegúrate de tener un campo hidden con el ID de la consulta
+        const selectedOption = $('#pdfOptions').val();
 
-        $.ajax({
-            url: '/Consulta/ObtenerDatosConsulta',
-            type: 'GET',
-            data: { id: consultaId },
-            success: function (data) {
-                console.log(data); // Depuración: verifica la estructura de 'data'
+        if (!selectedOption) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Por favor, seleccione un tipo de documento.'
+            });
+            return;
+        }
 
-                // Lógica para generar el PDF usando los datos obtenidos
-                const selectedOption = document.getElementById('pdfOptions').value;
+        const url = `/Consulta/GeneratePdf?id=${consultaId}&tipoDocumento=${selectedOption}`;
 
-                let receta = false;
-                let justificacion = false;
-                let formatoConsulta = false;
+        window.open(url, '_blank');
 
-                if (selectedOption === 'receta') receta = true;
-                if (selectedOption === 'justificacion') justificacion = true;
-                if (selectedOption === 'formatoConsulta') formatoConsulta = true;
-
-                const url = `/Pdf/GeneratePdf?receta=${receta}&justificacion=${justificacion}&formatoConsulta=${formatoConsulta}&consultaId=${consultaId}`;
-
-                window.open(url, '_blank');
-
-                // Cerrar el modal después de generar el PDF
-                $('#pdfModal').modal('hide');
-            },
-            error: function () {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'No se pudo obtener los datos de la consulta.',
-                });
-            }
+        // Mostrar mensaje con SweetAlert después de generar el PDF
+        Swal.fire({
+            icon: 'success',
+            title: 'Documento generado',
+            text: 'El documento PDF ha sido generado exitosamente.'
         });
+
+        // Cerrar el modal después de generar el PDF
+        $('#pdfModal').modal('hide');
     }
 
 

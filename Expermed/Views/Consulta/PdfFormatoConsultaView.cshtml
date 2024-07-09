@@ -3,12 +3,18 @@
 
     Layout = "~/Views/Shared/_pdf.cshtml";
 }
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <title>Formato de Consulta</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta Médica</title>
+
+</head>
+<body>
     <style>
+        /* styles.css */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -16,315 +22,288 @@
             background-color: #f4f4f4;
         }
 
-        .consulta {
-            max-width: 1000px;
-            margin: 20px auto;
+        .container {
+            width: 97%;
+            margin: 0 auto;
+            background-color: #fff;
             padding: 20px;
-            background: #fff;
-            border: 1px solid #ddd;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .header-table {
+        .page {
+            margin-bottom: 40px;
+        }
+
+        .consulta-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            table-layout: fixed;
         }
 
-            .header-table td {
-                border: 1px solid #000;
-                padding: 8px;
-                text-align: center;
-                background-color: #e0f7e0;
-            }
-
-        section {
-            margin-bottom: 20px;
-        }
-
-            section h2 {
-                font-size: 18px;
-                margin-bottom: 10px;
-                background-color: #c0c0ff;
+            .consulta-table th,
+            .consulta-table td {
+                border: 1px solid #ddd;
                 padding: 5px;
-                border: 1px solid #000;
                 text-align: left;
+                word-wrap: break-word;
+                font-size: 11px;
             }
 
-            section .subheading {
-                font-size: 14px;
-                background-color: #f4f4f4;
-                padding: 5px;
-                margin-bottom: 10px;
-                border: 1px solid #000;
-            }
-
-            section p {
-                border: 1px solid #000;
-                padding: 8px;
-                background-color: #f9f9f9;
-                margin: 0;
-                margin-bottom: 10px;
-            }
-
-            section table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 20px;
-            }
-
-            section table, section th, section td {
-                border: 1px solid #000;
-                padding: 8px;
-                text-align: center;
-            }
-
-            section th {
-                background-color: #c0c0ff;
-            }
-
-            section td:nth-child(odd) {
-                background-color: #ffffcc;
-            }
-
-            section td:nth-child(even) {
-                background-color: #e0f7e0;
-            }
-
-        .familiares td {
-            background-color: #ffffcc;
-        }
-
-        .signos td {
-            background-color: #e0f7e0;
-        }
-
-        footer {
+        /* Estilos específicos para cada tabla */
+        #table-establecimiento th {
+            background-color: #ccffcc;
+            color: #333;
+            font-weight: bold;
             text-align: center;
-            font-size: 12px;
-            color: #666;
-            margin-top: 20px;
         }
 
-    </style>
-</head>
-<body>
-    <div class="section">
-        <div class="consulta">
-            <h2>Formato de Consulta</h2>
-            <p>
-                <strong>Nombre del Paciente: @Model.PacienteNombre @Model.PacienteApellido</strong> <br>
-                <strong>Fecha:</strong> <br>
-            </p>
-            <section>
-                <h2>1 MOTIVO DE CONSULTA</h2>
-                <div class="highlight">
-                    @Model.EnfermedadConsulta
-                </div>
-            </section>
-            <section>
-                <h2>2 ANTECEDENTES PERSONALES</h2>
-                <p class="subheading">DATOS CLÍNICO - QUIRURGICOS RELEVANTES Y GINECO OBSTÉTRICOS</p>
-                <div class="highlight">
-                </div>
-            </section>
-            <section>
-                <h2>3 ANTECEDENTES FAMILIARES</h2>
-                <table class="familiares">
-                    <tr>
-                        <td>1. CARDIOPATÍA</td>
-                        <td>
-                            @(Model.Cardiopatia == "Sí" ? "X" : " ")
+        th#establecimiento {
+            font-size: 12px;
+        }
 
-                        </td>
-                        <td>2. DIABETES</td>
-                        <td>  @(Model.Diabetes == "Sí" ? "X" : " ")</td>
-                        <td>3. ENF. C. VASCULAR</td>
-                        <td></td>
-                        <td>4. HIPERTENSIÓN</td>
-                        <td> @(Model.Hipertension == "Sí" ? "X" : " ")</td>
-                        <td>5. CÁNCER</td>
-                        <td></td>
-                        <td>6. TUBERCULOSIS</td>
-                        <td>  @(Model.Tuberculosis == "Sí" ? "X" : " ")</td>
-                        <td>7. ENF. MENTAL</td>
-                        <td>  @(Model.EnfMental == "Sí" ? "X" : " ")</td>
-                        <td>8. ENF. INFECCIOSA</td>
-                        <td> @(Model.EnfInfecciosa == "Sí" ? "X" : " ")</td>
-                        <td>9. MALFORMACIÓN</td>
-                        <td></td>
-                        <td>10. OTRO</td>
-                        <td> @(Model.Otro == "Sí" ? "X" : " ")</td>
-                    </tr>
-                </table>
-            </section>
-            <section>
-                <h2>4 ENFERMEDAD O PROBLEMA ACTUAL</h2>
-                <div class="highlight">
-                    @Model.DiagnosticoDescripcion
-                </div>
-            </section>
-            <section>
-                <h2>5 REVISIÓN ACTUAL DE ÓRGANOS Y SISTEMAS</h2>
-                <p>CP = CON EVIDENCIA DE PATOLOGÍA: MARCAR "X" Y DESCRIBIR ABAJO ANOTANDO EL NÚMERO Y LETRA CORRESPONDIENTES</p>
-                <p>SP = SIN EVIDENCIA DE PATOLOGÍA: MARCAR "X" Y NO DESCRIBIR</p>
-                <table class="revision">
+        #table-motivo th {
+            background-color: #ccccff;
+            color: #333;
+            font-weight: bold;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        #table-antecedentes .table-header-multi {
+            background-color: #ccccff;
+            color: #333;
+            font-weight: bold;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        #table-antecedentes .table-header-multi-right {
+            background-color: #ccccff;
+            color: #333;
+            font-weight: bold;
+            text-align: right;
+            font-size: 5px;
+        }
+
+        /* Estilos para la nueva tabla */
+        #table-antecedentes-familiares th {
+            background-color: #d9e1f2;
+            color: #333;
+            font-weight: bold;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        #table-antecedentes-familiares .highlight {
+            background-color: #ffff99;
+        }
+
+        #table-antecedentes-familiares td {
+            background-color: #fff;
+        }
+
+        #table-antecedentes-familiares tbody tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        #table-antecedentes-familiares tbody tr:nth-child(odd) td {
+            background-color: #fff;
+        }
+
+        /* Ejemplo de estilos individuales */
+        th#cardiopatia, #cardiopatia-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#diabetes, #diabetes-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#enf-vascular, #enf-vascular-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#hipertension, #hipertension-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#cancer, #cancer-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#tuberculosis, #tuberculosis-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#enf-mental, #enf-mental-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#enf-infecciosa, #enf-infecciosa-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#malformacion, #malformacion-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        th#otro, #otro-value {
+            background-color: #ccffcc;
+            font-size: 5px;
+            text-align: center;
+            height: 5%;
+        }
+
+        .consulta-table td {
+            background-color: #fff;
+        }
+
+        .consulta-table tbody tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        .consulta-table tbody tr:nth-child(odd) td {
+            background-color: #fff;
+        }
+    </style>
+    <div class="container">
+        <div class="page">
+            <table id="table-establecimiento" class="consulta-table">
+                <thead>
                     <tr>
-                        <td>CP</td>
-                        <td>SP</td>
-                        <td>ÓRGANO</td>
-                        <td>CP</td>
-                        <td>SP</td>
-                        <td>ÓRGANO</td>
-                        <td>CP</td>
-                        <td>SP</td>
-                        <td>ÓRGANO</td>
+                        <th id="establecimientos">ESTABLECIMIENTO</th>
+                        <th id="nombre">NOMBRE</th>
+                        <th id="apellido">APELLIDO</th>
+                        <th id="sexo">SEXO</th>
+                        <th id="edad">EDAD</th>
+                        <th id="numeroH">Nº HISTORIA CLÍNICA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Expermed</td>
+                        <td>KIM</td>
+                        <td>VASQUEZ</td>
+                        <td>F</td>
+                        <td>28</td>
+                        <td>1725906414</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="table-motivo" class="consulta-table">
+                <thead>
+                    <tr>
+                        <th>1 MOTIVO DE CONSULTA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gripe</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="table-antecedentes" class="consulta-table">
+                <thead>
+                    <tr>
+                        <th colspan="4" class="table-header-multi">
+                            2 ANTECEDENTES PERSONALES
+                        </th>
+                        <th colspan="2" class="table-header-multi-right">
+                            DATOS CLÍNICO - QUIRÚRGICOS RELEVANTES Y GINECO OBSTÉTRICOS
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6">Fiebre alta, ya se trató anteriormente</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Órgano de los Sentidos</td>
-                        <td></td>
-                        <td></td>
-                        <td>Cardiovascular</td>
-                        <td></td>
-                        <td></td>
-                        <td>Genital</td>
+                        <td colspan="6"></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Respiratorio</td>
-                        <td></td>
-                        <td></td>
-                        <td>Digestivo</td>
-                        <td></td>
-                        <td></td>
-                        <td>Urinario</td>
+                        <td colspan="6"></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Músculo Esquelético</td>
-                        <td></td>
-                        <td></td>
-                        <td>Endocrino</td>
-                        <td></td>
-                        <td></td>
-                        <td>Hemo Linfático</td>
+                        <td colspan="6"></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Nervioso</td>
+                        <td colspan="6"></td>
                     </tr>
-                </table>
-            </section>
-            <section>
-                <h2>6 SIGNOS VITALES Y ANTROPOMETRÍA</h2>
-                <table class="signos">
+                </tbody>
+            </table>
+
+            <!-- Nueva tabla: 3 Antecedentes Familiares -->
+            <!-- Nueva tabla: 3 Antecedentes Familiares -->
+            <table id="table-antecedentes-familiares" class="consulta-table">
+                <thead>
                     <tr>
-                        <td>FECHA DE MEDICIÓN</td>
-                        <td> @Model.FechacreacionConsulta</td>
-                    </tr>
-                    <tr>
-                        <td>TEMPERATURA °C</td>
-                        <td>@Model.TemperaturaConsulta</td>
+                        <th colspan="20" class="table-header-multi">
+                            3 ANTECEDENTES FAMILIARES
+                        </th>
                     </tr>
                     <tr>
-                        <td>PRESIÓN ARTERIAL</td>
-                        <td>@Model.PresionarterialdiastolicaConsulta</td>
-                        <td>@Model.PresionarterialsistolicaConsulta</td>
+                        <th id="cardiopatia">1. CARDIOPATÍA
+                        <td class="highlight" id="cardiopatia-value">X</td></th>
+                        <th id="diabetes">2. DIABETES
+                        <td id="diabetes-value"></td></th>
+                        <th id="enf-vascular">3. ENF. C. VASCULAR
+                        <td id="enf-vascular-value"></td></th>
+                        <th id="hipertension">4. HIPERTENSIÓN
+                        <td id="hipertension-value"></td></th>
+                        <th id="cancer">5. CÁNCER
+                        <td id="cancer-value"></td> </th>
+                        <th id="tuberculosis">6. TUBERCULOSIS
+                        <td id="tuberculosis-value"></td></th>
+                        <th id="enf-mental">7. ENF. MENTAL
+                        <td id="enf-mental-value"></td></th>
+                        <th id="enf-infecciosa">8. ENF. INFECCIOSA
+                        <td id="enf-infecciosa-value"></td></th>
+                        <th id="malformacion">9. MALFORMACIÓN
+                        <td id="malformacion-value"></td> </th>
+                        <th id="otro">10. OTRO
+                        <td id="otro-value"></td></th>
                     </tr>
+                </thead>
+                <tbody>
                     <tr>
-                        <td>PULSO / min</td>
-                        <td>@Model.PulsoConsulta</td>
+                        <td colspan="20" id="comentarios">no se</td>
                     </tr>
-                    <tr>
-                        <td>FRECUENCIA RESPIRATORIA</td>
-                        <td>@Model.FrecuenciarespiratoriaConsulta</td>
-                    </tr>
-                    <tr>
-                        <td>PESO / Kg</td>
-                        <td>@Model.PesoConsulta</td>
-                    </tr>
-                    <tr>
-                        <td>TALLA / cm</td>
-                        <td>@Model.TallaConsulta</td>
-                    </tr>
-                </table>
-            </section>
-            <section>
-                <h2>7 EXAMEN FÍSICO REGIONAL</h2>
-                <p>CP = CON EVIDENCIA DE PATOLOGÍA: MARCAR "X" Y DESCRIBIR ABAJO ANOTANDO EL NÚMERO Y LETRA CORRESPONDIENTES</p>
-                <p>SP = SIN EVIDENCIA DE PATOLOGÍA: MARCAR "X" Y NO DESCRIBIR</p>
-                <table class="examen">
-                    <tr>
-                        <td>CP</td>
-                        <td>SP</td>
-                        <td>REGIÓN</td>
-                        <td>CP</td>
-                        <td>SP</td>
-                        <td>REGIÓN</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Cabeza</td>
-                        <td>
-                            @(Model.Cabeza == "Sí" ? "X" : " ")
-                        </td>
-                        <td></td>
-                        <td>Cuello</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Tórax</td>
-                        <td></td>
-                        <td></td>
-                        <td>Abdomen</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Pelvis</td>
-                        <td></td>
-                        <td></td>
-                        <td>Extremidades</td>
-                    </tr>
-                </table>
-            </section>
-            <section>
-                <h2>8 DIAGNÓSTICO</h2>
-                <table class="diagnostico">
-                    <tr>
-                        <td>PRE</td>
-                        <td>DEF</td>
-                        <td>DIAGNÓSTICO</td>
-                        <td>CIE</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>@Model.DiagnosticoConsulta</td>
-                        <td></td>
-                    </tr>
-                </table>
-            </section>
-            <section>
-                <h2>9 PLANES DE TRATAMIENTO</h2>
-                <div class="highlight">
-                </div>
-                <p><strong>Fecha:</strong></p>
-                <p><strong>Hora:</strong></p>
-                <p><strong>Nombre del Profesional:</strong></p>
-                <p><strong>Código:</strong></p>
-            </section>
-            <footer>
-                <p>SNS-MSP / HCU-form.002 / 2008 CONSULTA EXTERNA - ANAMNESIS Y EXAMEN FÍSICO</p>
-            </footer>
+                </tbody>
+            </table>
+            <!-- Resto del contenido del PDF -->
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
+

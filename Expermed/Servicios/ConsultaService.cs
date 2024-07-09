@@ -192,7 +192,7 @@ namespace Expermed.Servicios
                 .Include(c => c.ImagenConsultaINavigation) // Reemplaza 'OtraNavegacion3' con la propiedad de navegación real
                 .Include(c => c.LaboratorioConsultaLaNavigation) // Reemplaza 'OtraNavegacion3' con la propiedad de navegación real
                 .Include(c => c.MedicamentoConsultaMNavigation)
-                                                 // Añade más 'Include' según sea necesario
+                // Añade más 'Include' según sea necesario
                 .FirstOrDefaultAsync(c => c.IdConsulta == idConsulta);
         }
 
@@ -328,6 +328,8 @@ namespace Expermed.Servicios
                 .Include(c => c.LaboratorioConsultaLaNavigation)
                 .Include(c => c.MedicamentoConsultaMNavigation)
                 .Include(c => c.PacienteConsultaPNavigation)
+                .OrderBy(c => c.FechacreacionConsulta) // Ordenar por fecha de la consulta Ocupar esto mismo para cualquier tabla 
+
                 .ToListAsync();
 
             return consultas;

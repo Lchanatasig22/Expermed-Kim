@@ -72,20 +72,18 @@ namespace Expermed.Servicios
                 throw new Exception("El nombre de usuario no está disponible en la sesión.");
             }
 
-
-            // Filtrar las citas por el usuario de creación
-         
-         
-
+            // Filtrar las citas por el usuario de creación y ordenarlas por fecha
             var citas = await _context.Cita
                 .Where(c => c.UsuariocreacionCitas == loginUsuario)
                 .Include(c => c.MedicoCitasUNavigation)
                 .Include(c => c.PacienteCitasPNavigation)
                 .Include(c => c.ConsultaCitaCNavigation)
+                .OrderBy(c => c.FechadelacitaCitas) // Ordenar por fecha de la cita Ocupar esto mismo para cualquier tabla 
                 .ToListAsync();
 
             return citas;
         }
+
 
 
 
