@@ -147,10 +147,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="20" id="comentarios">
-                            @(Model.Cardiopatia = true ? Model.ObserCardiopatia : "")
-
-                        </td>
+                     
+                        @if (Model.Cardiopatia == "true")
+                        {
+                            <td colspan="20" id="comentarios">@Model.ObserCardiopatia</td>
+                        }
+                        @if (Model.Diabetes == "true")
+                        {
+                            <td colspan="20" id="comentarios">@Model.ObserDiabetes</td>
+                        }
+                        @if (Model.EnfCardiovascular == "true")
+                        {
+                            <td class="highlight" id="enfCardiovascular-value">@Model.ObserEnfCardiovascular</td>
+                        }
                     </tr>
                 </tbody>
             </table>
