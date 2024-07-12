@@ -26,6 +26,7 @@ namespace Expermed.Controllers
         public async Task<IActionResult> ListarPacientes()
         {
             var pacientes = await _pacienteService.GetAllPacientesAsync();
+
             return View(pacientes);
         }
 

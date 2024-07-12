@@ -19,18 +19,9 @@
         <span asp-validation-for="HoradelacitaCitas" class="text-danger"></span>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6" hidden>
         <label asp-for="MedicoCitasU" class="form-label">Médico</label>
-        <select asp-for="MedicoCitasU" id="medicoId" class="form-control select2" required>
-            <option value="">Seleccione un médico</option>
-            @if (ViewBag.TiposMedico != null)
-            {
-                foreach (var medico in ViewBag.TiposMedico)
-                {
-                    <option value="@medico.Value">@medico.Text</option>
-                }
-            }
-        </select>
+        <input type="hidden" asp-for="MedicoCitasU" id="medicoId" value="@ViewBag.IdUsuario" />
         <span asp-validation-for="MedicoCitasU" class="text-danger"></span>
     </div>
 
@@ -112,13 +103,8 @@
 
 
 <script>
-    $(document).ready(function () {
-        // Inicializar Select2 en el select de médicos
-        $('#medicoId').select2({
-            placeholder: 'Seleccione un médico',
-            allowClear: true
-        });
 
+    $(document).ready(function () {
         // Configurar la fecha mínima para el campo de fecha
         var today = new Date().toISOString().split('T')[0];
         document.getElementById("fechaCita").setAttribute('min', today);
@@ -126,7 +112,6 @@
         // Agregar eventos de cambio a los campos necesarios
         document.getElementById('fechaCita').addEventListener('change', validarFecha);
         document.getElementById('fechaCita').addEventListener('change', validarCampos);
-        document.getElementById('medicoId').addEventListener('change', validarCampos);
         document.getElementById('horaCita').addEventListener('change', validarCampos);
     });
 
@@ -135,7 +120,7 @@
         const today = new Date().toISOString().split('T')[0];
         const fechaError = document.getElementById('fechaError');
 
-        if (fechaCita <= today) {
+        if (fechaCita < today) {
             fechaError.textContent = "La fecha de la cita debe ser posterior al día actual.";
             document.getElementById('crearCitaBtn').setAttribute('disabled', true);
             Swal.fire('Error', 'La fecha de la cita debe ser posterior al día actual.', 'error');
@@ -167,7 +152,7 @@
                 }
             });
         } else {
-            Swal.fire('Advertencia', 'Por favor, seleccione una fecha y un médico.', 'warning');
+            Swal.fire('Advertencia', 'Por favor, seleccione una fecha.', 'warning');
         }
     }
 
@@ -215,13 +200,12 @@
 
     function validarCampos() {
         const fecha = document.getElementById('fechaCita').value;
-        const medico = document.getElementById('medicoId').value;
         const hora = document.getElementById('horaCita').value;
 
         const crearCitaBtn = document.getElementById('crearCitaBtn');
         const fechaError = document.getElementById('fechaError').textContent;
 
-        if (fecha && medico && hora && !fechaError) {
+        if (fecha && hora && !fechaError) {
             crearCitaBtn.removeAttribute('disabled');
         } else {
             crearCitaBtn.setAttribute('disabled', true);
@@ -259,4 +243,7 @@
             }
         });
     });
+</script>
+
+
 </script>

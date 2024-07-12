@@ -30,6 +30,12 @@ namespace Expermed.Controllers
         public async Task<IActionResult> ListarCitas()
         {
             var citas = await _citaService.GetAllCitasAsync();
+
+            // Obtener el nombre de usuario de la sesión
+            var usuarioDescripcion = _httpContextAccessor.HttpContext.Session.GetString("UsuarioDescripcion");
+
+            // Pasar el nombre de usuario a la vista
+            ViewBag.DescripcionUsuario = usuarioDescripcion ?? "No disponible";
             return View(citas);
         }
 
@@ -42,21 +48,26 @@ namespace Expermed.Controllers
         {
             try
             {
-                // Obtiene la lista de médicos desde el servicio del catalogo
-                var medicos = await _catalogService.ObtenerMedicoAsync();
-
-                var tiposMedicoSelectList = medicos.Select(d => new SelectListItem
+                // Obtén el IdUsuario del usuario autenticado desde la sesión
+                var idUsuario = _httpContextAccessor.HttpContext.Session.GetInt32("UsuarioId");
+                if (idUsuario == null)
                 {
-                    Value = d.IdUsuario.ToString(), // Asumiendo que IdUsuario es el campo adecuado para el valor
-                    Text = $"{d.NombresUsuario} {d.ApellidosUsuario} {d.DescripcionUsuario}" // Asumiendo que NombresUsuario y ApellidosUsuario son los campos adecuados para el texto
+                    return RedirectToAction("Login", "Account"); // Redirige al login si el usuario no está autenticado
+                }
 
-                }).ToList();
-
-                // los datos que se capturen en el Login se pueden usar en cualquier parte del codigo  si se necesita
+                // Obtén el nombre del usuario desde la sesión
                 var usuarioNombre = _httpContextAccessor.HttpContext.Session.GetString("UsuarioNombre");
                 ViewBag.UsuarioNombre = usuarioNombre;
+                ViewBag.IdUsuario = idUsuario.Value;
 
-                ViewBag.TiposMedico = tiposMedicoSelectList; // Pasa la lista de médicos a la vista
+                // Obtén la lista de médicos desde el servicio del catálogo (si es necesario)
+                var medicos = await _catalogService.ObtenerMedicoAsync();
+                var tiposMedicoSelectList = medicos.Select(d => new SelectListItem
+                {
+                    Value = d.IdUsuario.ToString(),
+                    Text = $"{d.NombresUsuario} {d.ApellidosUsuario} {d.DescripcionUsuario}"
+                }).ToList();
+                ViewBag.TiposMedico = tiposMedicoSelectList;
 
                 // Crea un objeto Cita con el id del paciente preseleccionado
                 var cita = new Cita { PacienteCitasP = idPaciente };
@@ -65,10 +76,9 @@ namespace Expermed.Controllers
             }
             catch (Exception ex)
             {
-                // Manejo de errores: puedes implementar tu lógica para manejar excepciones según tu requerimiento
-                // Por ejemplo, loguear el error y mostrar un mensaje al usuario
+                // Manejo de errores
                 ModelState.AddModelError("", "Error al cargar la página de creación de cita.");
-                return RedirectToAction(nameof(Index)); // Redirecciona a una acción adecuada en caso de error
+                return RedirectToAction(nameof(Index)); // Redirige a una acción adecuada en caso de error
             }
         }
 

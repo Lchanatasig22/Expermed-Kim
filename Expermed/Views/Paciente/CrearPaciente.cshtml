@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <h3>Registrar datos del paciente</h3>
 
 <div id="messageContainer"></div>
@@ -16,7 +15,6 @@
     </div>
     <div class="form-group row g-3">
 
-
         <div class="form-group col-sm-3" hidden>
             <label for="UsuarioCreacion" class="form-label">Usuario de Creación</label>
             <input type="text" asp-for="UsuariocreacionPacientes" class="form-control" id="usuariocreacion" value="@ViewBag.UsuarioNombre" readonly />
@@ -27,8 +25,6 @@
             <input type="text" asp-for="FechacreacionPacientes" class="form-control" id="fechaCreacionInput" readonly />
         </div>
 
-
-
         <div class="form-group col-sm-3">
             <label for="primerApellidoInput" class="form-label">Primer apellido *</label>
             <input type="text" asp-for="PrimerapellidoPacientes" class="form-control" id="primerApellidoInput" placeholder="Ej:Ortega" required>
@@ -38,7 +34,6 @@
             <input type="text" asp-for="SegundoapellidoPacientes" class="form-control" id="segundoApellidoInput" placeholder="Ej:Díaz">
         </div>
 
-
         <div class="form-group col-sm-3">
             <label for="primerNombreInput" class="form-label">Primer nombre *</label>
             <input type="text" asp-for="PrimernombrePacientes" class="form-control" id="primerNombreInput" placeholder="Ej:Juan" required>
@@ -47,7 +42,6 @@
             <label for="segundoNombreInput" class="form-label">Segundo nombre</label>
             <input type="text" asp-for="SegundonombrePacientes" class="form-control" id="segundoNombreInput" placeholder="Ej:Manuel">
         </div>
-
 
         <div class="form-group col-sm-3">
             <label for="tipoDocumentoSelect" class="form-label">Tipo documento *</label>
@@ -65,12 +59,7 @@
         <div class="form-group col-sm-3">
             <label for="numeroDocumentoInput" class="form-label">Número de documento *</label>
             <input type="text" asp-for="CiPacientes" class="form-control" id="numeroDocumentoInput" placeholder="Ej:1819912335" required>
-            @*                 <span asp-validation-for="CiPacientes" class="text-danger"></span> <!--//Validacion de campo obligatorio -->
-            *@
         </div>
-
-
-
 
         <div class="form-group col-sm-3">
             <label for="tipoSangreSelect" class="form-label">Tipo de sangre</label>
@@ -82,9 +71,7 @@
                     {
                         <option value="@tipoSangre.Value">@tipoSangre.Text</option>
                     }
-                
-                    }
-              
+                }
             </select>
         </div>
 
@@ -97,17 +84,15 @@
             </select>
         </div>
 
-
         <div class="form-group col-sm-3">
             <label for="fechaNacimientoInput" class="form-label">Fecha nacimiento</label>
-            <input asp-for="FechanacimientoPacientes" class="form-control" asp-format="{0:yyyy-MM-dd}" />
+            <input asp-for="FechanacimientoPacientes" class="form-control" asp-format="{0:yyyy-MM-dd}" id="fechaNacimientoInput" type="date" />
         </div>
 
         <div class="form-group col-sm-2">
             <label for="edadInput" class="form-label">Edad</label>
-            <input type="number" class="form-control" id="edadInput" asp-for="Edad" placeholder="Ej:23">
+            <input type="number" class="form-control" id="edadInput" asp-for="Edad" placeholder="Ej:23" readonly />
         </div>
-
 
         <div class="form-group col-sm-2">
             <label for="sexoSelect" class="form-label">Sexo</label>
@@ -115,19 +100,16 @@
                 <option value="">Seleccione...</option>
                 @if (ViewBag.TiposGenero != null)
                 {
-
                     @foreach (var tipoGenero in ViewBag.TiposGenero)
                     {
                         <option value="@tipoGenero.Value">@tipoGenero.Text</option>
                     }
                 }
-              
             </select>
         </div>
         <div class="form-group col-sm-3">
             <label for="estadoCivilSelect" class="form-label">Estado civil</label>
             <select class="form-select" asp-for="EstadocivilPacientesC" id="estadoCivilSelect">
-                
                 <option value="">Seleccione...</option>
                 @if (ViewBag.TiposEstadoCivil != null)
                 {
@@ -136,9 +118,7 @@
                         <option value="@tipoEstadoCivil.Value">@tipoEstadoCivil.Text</option>
                     }
                 }
-               
             </select>
-            
         </div>
 
         <style>
@@ -169,7 +149,6 @@
                         <option value="@tiposFormacion.Value">@tiposFormacion.Text</option>
                     }
                 }
-            
             </select>
         </div>
     </div>
@@ -178,7 +157,6 @@
         <span><i class="fas fa-address-book"></i> Datos de Contacto</span>
         <hr>
     </div>
-
 
     <div class="form-group row g-3">
         <div class="form-group col-sm-3">
@@ -190,25 +168,20 @@
                     {
                         <option value="@tiposNacionalidad.Value">@tiposNacionalidad.Text</option>
                     }
-
                 }
             </select>
         </div>
 
-
-
         <div class="form-group col-sm-3">
             <label for="provinciaSelect" class="form-label">Provincia / Cantón / Parroquia</label>
-
-           
             <select class="form-select" asp-for="ProvinciaPacientesL" id="provinciaSelect" required>
                 @if (ViewBag.TiposProvincia != null)
                 {
                     @foreach (var tiposProvincia in ViewBag.TiposProvincia)
                     {
                         <option value="@tiposProvincia.Value">@tiposProvincia.Text</option>
-                    }                }
-       
+                    }
+                }
             </select>
         </div>
 
@@ -216,7 +189,6 @@
             <label for="direccionInput" class="form-label">Dirección</label>
             <input type="text" class="form-control" asp-for="DireccionPacientes" id="direccionInput" placeholder="Ej:Calle A">
         </div>
-
 
         <div class="form-group col-sm-3">
             <label for="telefonoInput" class="form-label">Teléfono</label>
@@ -227,12 +199,10 @@
             <input type="text" class="form-control" asp-for="TelefonocelularPacientes" id="celularInput" placeholder="Ej:9888888888">
         </div>
 
-
         <div class="form-group col-sm-3">
             <label for="emailInput" class="form-label">Email *</label>
             <input type="email" class="form-control" id="emailInput" asp-for="EmailPacientes" placeholder="Ej:juanmanuel@gmail.com" required>
         </div>
-
 
         <div class="form-group col-sm-3">
             <label for="ocupacionInput" class="form-label">Ocupación</label>
@@ -253,33 +223,32 @@
                         <option value="@tiposSeguro.Value">@tiposSeguro.Text</option>
                     }
                 }
-              
             </select>
         </div>
-
-
-
-
     </div>
-
-
 
     <br />
     <div class="container">
         <div class="form-row g-3">
-
             <a asp-action="ListarPacientes" asp-controller="Paciente" class="btn btn-warning"><i class="fa fa-undo"></i> Volver a la lista</a>
-
-
-            <a asp-action="Guardar" asp-controller="Cita" class="btn btn-outline-primary"><i class="fas fa-calendar-plus me-1"></i>Generar cita</a>
-
-
-
-
-
             <button type="submit" class="btn btn-success"><i class="fas fa-save me-1"></i>Guardar</button>
-
         </div>
     </div>
-
 </form>
+
+<!-- Añade jQuery si no está ya incluido en tu proyecto -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#fechaNacimientoInput').on('change', function () {
+            var fechaNacimiento = new Date($(this).val());
+            var hoy = new Date();
+            var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+            var mes = hoy.getMonth() - fechaNacimiento.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+                edad--;
+            }
+            $('#edadInput').val(edad);
+        });
+    });
+</script>

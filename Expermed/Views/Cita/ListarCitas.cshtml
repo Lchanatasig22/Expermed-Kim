@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "ListarCitas";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var descripcionUsuario = ViewBag.DescripcionUsuario ?? "No disponible";
+
 }
 
 <h3>Lista de Citas</h3>
@@ -57,7 +59,7 @@
                     <td>@cita.PacienteCitasPNavigation.PrimernombrePacientes @cita.PacienteCitasPNavigation.PrimerapellidoPacientes</td>
                     <td>@(cita.ConsultaCitaCNavigation?.MotivoConsulta ?? "No disponible")</td>
 
-                    <td>@cita.MedicoCitasUNavigation.DescripcionUsuario</td>
+                    <td>@descripcionUsuario</td>
                     <td>@cita.Estado</td>
 
                     <td>

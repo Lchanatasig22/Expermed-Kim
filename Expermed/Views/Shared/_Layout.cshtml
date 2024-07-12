@@ -187,10 +187,10 @@
             function timerIncrement() {
                 idleTime++;
                 // Aquí puedes definir qué hacer después de un cierto período de inactividad
-                if (idleTime > 10) { // 10 minutos de inactividad
+                if (idleTime > 3) { // 10 minutos de inactividad
                     alert("Estás inactivo desde hace 10 minutos.");
                     // Realiza alguna acción, como redirigir o cerrar sesión
-                    window.location.href = '/Access/Login'; // Redirige a la página de inicio de sesión
+                    window.location.href = 'Access/Login'; // Redirige a la página de inicio de sesión
                 }
 
                 function resetTimer() {

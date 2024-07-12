@@ -1,0 +1,324 @@
+﻿/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 98%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.page {
+    margin-bottom: 20px;
+}
+
+.consulta-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px; /* Aumentar el espaciado entre las tablas */
+    table-layout: fixed;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+    .consulta-table th,
+    .consulta-table td {
+        border: 1px solid gray; /* Borde de 1px color gris */
+        padding: 2px;
+        text-align: left;
+        word-wrap: break-word;
+        font-size: 9px;
+    }
+
+/* Estilos específicos para cada tabla */
+#table-establecimiento th {
+    background-color: #ccffcc;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid gray; /* Borde de 1px color gris */
+    width: 5%;
+    height: 1%;
+    font-size: 9px;
+}
+
+#table-motivo th {
+    background-color: #ccccff;
+    color: #333;
+    font-weight: bold;
+    text-align: left;
+    font-size: 12px;
+}
+
+td#CIE {
+    font-size: 8px;
+}
+
+#table-antecedentes .table-header-multi {
+    background-color: #ccccff;
+    color: #333;
+    border: transparent;
+    font-weight: bold;
+    text-align: left;
+    font-size: 12px;
+}
+
+#table-antecedentes .table-header-multi-right {
+    background-color: #ccccff;
+    color: #333;
+    border: transparent;
+    font-weight: bold;
+    text-align: right;
+    font-size: 5px;
+}
+
+/* Estilos para la nueva tabla */
+#table-antecedentes-familiares th {
+    background-color: #d9e1f2;
+    color: #333;
+    font-weight: bold;
+    text-align: left;
+    font-size: 12px;
+}
+
+th#organosSistemas {
+    border: transparent;
+    background-color: #99ccff;
+    font-size: 5px;
+}
+
+td#organosSentidosv {
+    background-color: #ffff99;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+#table-antecedentes-familiares .highlight {
+    background-color: #ffff99;
+}
+
+#table-antecedentes-familiares td {
+    background-color: #fff;
+}
+
+#table-antecedentes-familiares tbody tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+#table-antecedentes-familiares tbody tr:nth-child(odd) td {
+    background-color: #fff;
+}
+
+th#establecimiento,
+th#nombre,
+th#apellido,
+th#edad,
+th#sexo,
+th#numeroH,
+td#establecimiento-value,
+td#nombre-value,
+td#apellido-value,
+td#edad-value,
+td#sexo-value,
+td#numeroH-value {
+    font-size: 8px;
+    text-align: center;
+    width: 3%;
+    height: 2%;
+    border: 1px solid gray; /* Borde de 1px color gris */
+    padding: 2px;
+}
+
+/* Ejemplo de estilos individuales */
+th#cardiopatia,
+#cardiopatia-value,
+th#diabetes,
+#diabetes-value,
+th#enf-vascular,
+#enf-vascular-value,
+th#hipertension,
+#hipertension-value,
+th#cancer,
+#cancer-value,
+th#tuberculosis,
+#tuberculosis-value,
+th#enf-mental,
+#enf-mental-value,
+th#enf-infecciosa,
+#enf-infecciosa-value,
+th#malformacion,
+#malformacion-value,
+th#otro,
+#otro-value {
+    background-color: #ccffcc;
+    font-size: 6px;
+    text-align: center;
+    height: 4%;
+    border: 1px solid gray; /* Borde de 1px color gris */
+    padding: 2px;
+}
+
+#table-organos-sentidos .table-header-multi,
+#table-organos-sentidos .table-header-multi-right {
+    background-color: #ccccff;
+    color: #333;
+    font-weight: bold;
+    font-size: 12px;
+    border: transparent;
+    padding: 2px;
+}
+
+td#comentarios {
+    border: 1px solid gray; /* Borde de 1px color gris */
+    padding: 2px;
+}
+
+#organoSentidos {
+    background-color: #ccffcc;
+    width: 26%;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+.header {
+    font-size: 10px;
+    background-color: #ccffcc;
+}
+
+.header-note {
+    font-size: 7px;
+    text-align: center;
+    background-color: #ccccff;
+    margin: 0;
+    padding-right: 10px;
+}
+
+td#signosVitales {
+    background-color: #ccffcc;
+    font-size: 8px;
+    text-align: left;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+.consulta-table td {
+    background-color: #fff;
+}
+
+.consulta-table tbody tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+.consulta-table tbody tr:nth-child(odd) td {
+    background-color: #fff;
+}
+
+#comentarios2 {
+    position: relative;
+    padding: 5px;
+    border: 1px solid gray; /* Borde de 1px color gris */
+    border-left: none;
+}
+
+#comentarios3 {
+    border: 1px solid gray; /* Borde de 1px color gris */
+    border-right: none;
+}
+
+td#diagnostico {
+    background-color: #ccffcc;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+#comentarios2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background-color: gray;
+    transform: skewX(-20deg);
+    margin-left: 5px;
+    transform-origin: top right;
+}
+
+th#cieDef.table-header-multi {
+    font-size: 7px;
+}
+
+.highlight {
+    background-color: #ffff99;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header {
+    text-align: right;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.small-text {
+    font-size: 10px;
+}
+
+.container2 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.section2 {
+    width: 48%;
+}
+
+.consulta-table2 {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5px;
+}
+
+.header {
+    font-size: 14px;
+}
+
+.section-header {
+    background-color: #dcd9f7;
+    padding: 5px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .section-header span {
+        font-size: 10px;
+    }
+
+.notes-header {
+    background-color: #fffdba;
+    font-size: 7px;
+}
+
+th.header {
+    font-size: 7px;
+}
+/* Estilos de impresión */
+@media print {
+    body {
+        background-color: #fff;
+    }
+
+    .container {
+        box-shadow: none;
+    }
+}

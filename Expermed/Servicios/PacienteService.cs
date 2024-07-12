@@ -37,6 +37,7 @@ namespace Expermed.Servicios
             var pacientes = await _context.Pacientes
                 .Where(p => p.UsuariocreacionPacientes == loginUsuario)
                 .Include(p => p.NacionalidadPacientesLNavigation)
+
                 .ToListAsync();
 
             return pacientes;

@@ -76,14 +76,14 @@ namespace Expermed.Servicios
             var citas = await _context.Cita
                 .Where(c => c.UsuariocreacionCitas == loginUsuario)
                 .Include(c => c.MedicoCitasUNavigation)
+                .ThenInclude(m => m.PerfilUsuarioPNavigation) // Incluye el perfil del usuario si es necesario
                 .Include(c => c.PacienteCitasPNavigation)
                 .Include(c => c.ConsultaCitaCNavigation)
-                .OrderBy(c => c.FechadelacitaCitas) // Ordenar por fecha de la cita Ocupar esto mismo para cualquier tabla 
+                .OrderBy(c => c.FechadelacitaCitas) // Ordenar por fecha de la cita
                 .ToListAsync();
 
             return citas;
         }
-
 
 
 

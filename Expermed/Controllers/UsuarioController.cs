@@ -31,8 +31,6 @@ namespace Expermed.Controllers
         {
             var perfiles = await _perfilService.GetAllPerfilesAsync();
             ViewBag.Perfiles = perfiles;
-            //var tipodocumento = await _catalogService.GetAllCatalogosAsync();
-            //ViewBag.Perfiles = tipodocumento;
 
             return View();
         }

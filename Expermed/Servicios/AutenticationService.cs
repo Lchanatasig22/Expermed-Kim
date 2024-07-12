@@ -4,35 +4,18 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace Expermed.Servicios
-{ /// <summary>
-/// Servicio para la autenticacion del usuario
-/// </summary>
+{
     public class AutenticationService
-    {/// <summary>
-     /// llamamod al db context que tiene los mapeos de la base de datos
-     /// </summary>
+    {
         private readonly Base_ExpermedContext _context;
-        /// <summary>
-        /// mediante esto nos deja  acceder a la captura de los datos
-        /// </summary>
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        /// <summary>
-        /// Controlador tanto para el uso de ambos servicios
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="httpContextAccessor"></param>
         public AutenticationService(Base_ExpermedContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
-        /// <summary>
-        /// Servicio que permite la validacion de usuarios en base a dos variables, el loginname que sustituye al email y la clave
-        /// </summary>
-        /// <param name="loginUsuario"></param>
-        /// <param name="claveUsuario"></param>
-        /// <returns></returns>
+
         public async Task<Usuario> ValidateUser(string loginUsuario, string claveUsuario)
         {
             var parameterLoginUsuario = new SqlParameter("@login_usuario", loginUsuario);
@@ -71,10 +54,26 @@ namespace Expermed.Servicios
                                 user.LoginUsuario = reader.GetString(reader.GetOrdinal("login_usuario"));
                             }
 
+                            // Obtener la descripción del usuario
+                            if (!reader.IsDBNull(reader.GetOrdinal("descripcion_usuario")))
+                            {
+                                user.DescripcionUsuario = reader.GetString(reader.GetOrdinal("descripcion_usuario"));
+                            }
+
                             // Almacenar el nombre de usuario y el ID en la sesión
                             _httpContextAccessor.HttpContext.Session.SetString("UsuarioNombre", user.LoginUsuario);
-
                             _httpContextAccessor.HttpContext.Session.SetInt32("UsuarioId", user.IdUsuario);
+
+                            // Check if DescripcionUsuario is not null before setting it in the session
+                            if (!string.IsNullOrEmpty(user.DescripcionUsuario))
+                            {
+                                _httpContextAccessor.HttpContext.Session.SetString("UsuarioDescripcion", user.DescripcionUsuario);
+                            }
+                            else
+                            {
+                                // Optionally, handle the case where DescripcionUsuario is null or empty
+                                _httpContextAccessor.HttpContext.Session.SetString("UsuarioDescripcion", "Default Description");
+                            }
                         }
                     }
                 }
@@ -82,7 +81,5 @@ namespace Expermed.Servicios
 
             return user;
         }
-
-
     }
 }
