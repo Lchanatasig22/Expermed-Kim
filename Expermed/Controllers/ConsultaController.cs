@@ -628,15 +628,21 @@ namespace Expermed.Controllers
 
                 LaboratorioConsulta = consulta.LaboratorioConsultaLaNavigation?.IdLaboratoriosLaboratorioLNavigation?.DescripcionLaboratorios ?? "No asignado",
                 LaboratorioCantidad = consulta.LaboratorioConsultaLaNavigation?.CantidadLaboratorio ?? 0,
-                LaboratorioObservacion = consulta.LaboratorioConsultaLaNavigation?.ObservacionLaboratorio ?? "No asignado"
+                LaboratorioObservacion = consulta.LaboratorioConsultaLaNavigation?.ObservacionLaboratorio ?? "No asignado",
+                ProfesionalNombre = consulta.PacienteConsultaPNavigation?.UsuariocreacionPacientes ?? "No asignado"
+
+
             };
             string viewName = tipoDocumento switch
             {
                 "receta" => "PdfRecetaView",
                 "justificacion" => "PdfJustificacionView",
                 "formatoConsulta" => "PdfFormatoConsultaView",
+                "laboratorio" => "PdfLaboratorioView",
+                "imagen" => "PdfImagenView",
                 _ => "PdfRecetaView"
             };
+
 
             return new ViewAsPdf(viewName, pdfViewModel);
         }

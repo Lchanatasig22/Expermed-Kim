@@ -4,17 +4,328 @@
     Layout = "~/Views/Shared/_pdf.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Consulta Médica</title>
-    <link rel="stylesheet" href="styles.css" />
-</head>
 
-<body>
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 98%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.page {
+    margin-bottom: 20px;
+}
+
+.consulta-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px; /* Aumentar el espaciado entre las tablas */
+    table-layout: fixed;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+    .consulta-table th,
+    .consulta-table td {
+        border: 1px solid gray; /* Borde de 1px color gris */
+        padding: 2px;
+        text-align: left;
+        word-wrap: break-word;
+        font-size: 9px;
+    }
+
+/* Estilos específicos para cada tabla */
+#table-establecimiento th {
+    background-color: #ccffcc;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid gray; /* Borde de 1px color gris */
+    width: 5%;
+    height: 1%;
+    font-size: 9px;
+}
+
+#table-motivo th {
+    background-color: #ccccff;
+    color: #333;
+    font-weight: bold;
+    text-align: left;
+    font-size: 12px;
+}
+
+td#CIE {
+    font-size: 8px;
+}
+
+#table-antecedentes .table-header-multi {
+    background-color: #ccccff;
+    color: #333;
+    border: transparent;
+    font-weight: bold;
+    text-align: left;
+    font-size: 12px;
+}
+
+#table-antecedentes .table-header-multi-right {
+    background-color: #ccccff;
+    color: #333;
+    border: transparent;
+    font-weight: bold;
+    text-align: right;
+    font-size: 5px;
+}
+
+/* Estilos para la nueva tabla */
+#table-antecedentes-familiares th {
+    background-color: #d9e1f2;
+    color: #333;
+    font-weight: bold;
+    text-align: left;
+    font-size: 12px;
+}
+
+th#organosSistemas {
+    border: transparent;
+    background-color: #99ccff;
+    font-size: 5px;
+}
+
+td#organosSentidosv {
+    background-color: #ffff99;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+#table-antecedentes-familiares .highlight {
+    background-color: #ffff99;
+}
+
+#table-antecedentes-familiares td {
+    background-color: #fff;
+}
+
+#table-antecedentes-familiares tbody tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+#table-antecedentes-familiares tbody tr:nth-child(odd) td {
+    background-color: #fff;
+}
+
+th#establecimiento,
+th#nombre,
+th#apellido,
+th#edad,
+th#sexo,
+th#numeroH,
+td#establecimiento-value,
+td#nombre-value,
+td#apellido-value,
+td#edad-value,
+td#sexo-value,
+td#numeroH-value {
+    font-size: 8px;
+    text-align: center;
+    width: 3%;
+    height: 2%;
+    border: 1px solid gray; /* Borde de 1px color gris */
+    padding: 2px;
+}
+
+/* Ejemplo de estilos individuales */
+th#cardiopatia,
+#cardiopatia-value,
+th#diabetes,
+#diabetes-value,
+th#enf-vascular,
+#enf-vascular-value,
+th#hipertension,
+#hipertension-value,
+th#cancer,
+#cancer-value,
+th#tuberculosis,
+#tuberculosis-value,
+th#enf-mental,
+#enf-mental-value,
+th#enf-infecciosa,
+#enf-infecciosa-value,
+th#malformacion,
+#malformacion-value,
+th#otro,
+#otro-value {
+    background-color: #ccffcc;
+    font-size: 6px;
+    text-align: center;
+    height: 4%;
+    border: 1px solid gray; /* Borde de 1px color gris */
+    padding: 2px;
+}
+
+#table-organos-sentidos .table-header-multi,
+#table-organos-sentidos .table-header-multi-right {
+    background-color: #ccccff;
+    color: #333;
+    font-weight: bold;
+    font-size: 12px;
+    border: transparent;
+    padding: 2px;
+}
+
+td#comentarios {
+    border: 1px solid gray; /* Borde de 1px color gris */
+    padding: 2px;
+}
+
+#organoSentidos {
+    background-color: #ccffcc;
+    width: 26%;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+.header {
+    font-size: 10px;
+    background-color: #ccffcc;
+}
+
+.header-note {
+    font-size: 7px;
+    text-align: center;
+    background-color: #ccccff;
+    margin: 0;
+    padding-right: 10px;
+}
+
+td#signosVitales {
+    background-color: #ccffcc;
+    font-size: 8px;
+    text-align: left;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+.consulta-table td {
+    background-color: #fff;
+}
+
+.consulta-table tbody tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+.consulta-table tbody tr:nth-child(odd) td {
+    background-color: #fff;
+}
+
+#comentarios2 {
+    position: relative;
+    padding: 5px;
+    border: 1px solid gray; /* Borde de 1px color gris */
+    border-left: none;
+}
+
+#comentarios3 {
+    border: 1px solid gray; /* Borde de 1px color gris */
+    border-right: none;
+}
+
+td#diagnostico {
+    background-color: #ccffcc;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+#comentarios2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background-color: gray;
+    transform: skewX(-20deg);
+    margin-left: 5px;
+    transform-origin: top right;
+}
+
+th#cieDef.table-header-multi {
+    font-size: 7px;
+}
+
+.highlight {
+    background-color: #ffff99;
+    border: 1px solid gray; /* Borde de 1px color gris */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header {
+    text-align: right;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.small-text {
+    font-size: 10px;
+}
+
+.container2 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.section2 {
+    width: 48%;
+}
+
+.consulta-table2 {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5px;
+}
+
+.header {
+    font-size: 14px;
+}
+
+.section-header {
+    background-color: #dcd9f7;
+    padding: 5px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .section-header span {
+        font-size: 10px;
+    }
+
+.notes-header {
+    background-color: #fffdba;
+    font-size: 7px;
+}
+
+th.header {
+    font-size: 7px;
+}
+/* Estilos de impresión */
+
+}
+
+    </style>
     <div class="container">
         <div class="page">
             <table id="table-establecimiento" class="consulta-table">
@@ -146,21 +457,70 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                     
-                        @if (Model.Cardiopatia == "true")
-                        {
+
+
+                    @if (Model.Cardiopatia == "true")
+                    {
+                        <tr>
                             <td colspan="20" id="comentarios">@Model.ObserCardiopatia</td>
-                        }
-                        @if (Model.Diabetes == "true")
-                        {
-                            <td colspan="20" id="comentarios">@Model.ObserDiabetes</td>
-                        }
-                        @if (Model.EnfCardiovascular == "true")
-                        {
+                        </tr>
+
+                    }
+                    @if (Model.Diabetes == "true")
+                    {
+                        <tr>     <td colspan="20" id="comentarios">@Model.ObserDiabetes</td></tr>
+                    }
+                    @if (Model.EnfCardiovascular == "true")
+                    {
+                        <tr>
                             <td class="highlight" id="enfCardiovascular-value">@Model.ObserEnfCardiovascular</td>
-                        }
-                    </tr>
+                        </tr>
+                    }
+                    @if (Model.Hipertension == "true")
+                    {
+                        <tr>
+                            <td class="highlight" id="enfCardiovascular-value">@Model.ObserEnfCardiovascular</td>
+                        </tr>
+                    }
+                    @if (Model.Cancer == "true")
+                    {
+                        <tr>
+                            <td class="highlight" id="enfCardiovascular-value">@Model.ObserCancer</td>
+                        </tr>
+                    }
+                    @if (Model.Tuberculosis == "true")
+                    {
+                        <tr>
+                            <td class="highlight" id="enfCardiovascular-value">@Model.ObserTuberculosis</td>
+                        </tr>
+                    }
+                    @if (Model.EnfMental == "true")
+                    {
+                        <tr>
+                            <td class="highlight" id="enfCardiovascular-value">@Model.ObserEnfMental</td>
+                        </tr>
+                    }
+                    @if (Model.EnfInfecciosa == "true")
+                    {
+                        <tr>
+                            <td class="highlight" id="enfCardiovascular-value">@Model.ObserEnfInfecciosa</td>
+                        </tr>
+                    }
+                    @if (Model.MalFormacion == "true")
+                    {
+                        <tr>
+                            <td class="highlight" id="enfCardiovascular-value">@Model.ObserMalFormacion</td>
+                        </tr>
+                    }
+                    @if (Model.Otro == "true")
+                    {
+                        <tr>
+                            <td class="highlight" id="enfCardiovascular-value">@Model.ObserOtro</td>
+                        </tr>
+                    }
+
+
+
                 </tbody>
             </table>
             <!-- Resto del contenido del PDF -->
@@ -175,23 +535,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="20" id="comentarios"> </td>
+                        <td colspan="20" id="comentarios"> @Model.EnfermedadConsulta </td>
                     </tr>
-                    <tr>
-                        <td colspan="20" id="comentarios">Fiebre alta, ya se trató anteriormente</td>
-                    </tr>
-                    <tr>
-                        <td colspan="20" id="comentarios">Fiebre alta, ya se trató anteriormente</td>
-                    </tr>
-                    <tr>
-                        <td colspan="20" id="comentarios"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="20" id="comentarios"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="20" id="comentarios"></td>
-                    </tr>
+
                 </tbody>
             </table>
             <!--Tabla revision actual de organos y sistemas-->
@@ -237,43 +583,101 @@
 
 
                         <td id="organoSentidos" colspan="6">1 ÓRGANO DE LOS SENTIDOS</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.OrgSentidos == "true" ? "X" : " ")
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.OrgSentidos == "true" ? "X" : " ")
+
+                        </td>
                         <td id="organoSentidos" colspan="5">3 CARDIO VASCULAR</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.CardioVascular == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.CardioVascular == "true" ? "X" : " ")
+
+                        </td>
                         <td id="organoSentidos" colspan="5">5 GENITAL</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Genital == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Genital == "true" ? "X" : " ")
+
+                        </td>
                         <td id="organoSentidos" colspan="5">
                             7 MÚSCULO
                             ESQUELÉTICO
                         </td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.MEsqueletico == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.MEsqueletico == "true" ? "X" : " ")
+
+                        </td>
                         <td id="organoSentidos" colspan="5">9 HEMO LINFÁTICO</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Linfatico == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Linfatico == "true" ? "X" : " ")
+
+                        </td>
 
                     </tr>
                     <tr>
 
                         <td colspan="6" id="organoSentidos">2 RESPIRATORIO</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Respiratorio == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Respiratorio == "true" ? "X" : " ")
+
+                        </td>
                         <td colspan="5" id="organoSentidos">4 DIGESTIVO</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Digestivo == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Digestivo == "true" ? "X" : " ")
+
+                        </td>
                         <td colspan="5" id="organoSentidos">6 URINARIO</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Urinario == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Urinario == "true" ? "X" : " ")
+
+                        </td>
 
                         <td id="organoSentidos" colspan="5">8 ENDOCRINO</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Endocrino == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Endocrino == "true" ? "X" : " ")
+                        </td>
                         <td id="organoSentidos" colspan="5">10 NERVIOSO</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Nervioso == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Nervioso == "true" ? "X" : " ")
+
+                        </td>
                     </tr>
                     <tr>
 
@@ -299,28 +703,28 @@
                 <tbody>
                     <tr>
                         <td id="signosVitales" colspan="4"> FECHA DE MEDICIÓN</td>
-                        <td colspan="4" id="comentarios"></td>
+                        <td colspan="4" id="comentarios">@Model.FechacreacionConsulta</td>
                         <td colspan="4" id="comentarios"></td>
                         <td colspan="4" id="comentarios"></td>
                         <td colspan="4" id="comentarios"></td>
                     </tr>
                     <tr>
                         <td id="signosVitales" colspan="4">TEMPERATURA °C</td>
-                        <td colspan="4" id="comentarios"></td>
+                        <td colspan="4" id="comentarios"> @Model.TemperaturaConsulta</td>
                         <td colspan="4" id="comentarios"></td>
                         <td colspan="4" id="comentarios"></td>
                         <td colspan="4" id="comentarios"></td>
                     </tr>
                     <tr>
                         <td id="signosVitales" colspan="4">PRESIÓN ARTERIAL</td>
-                        <td class="highlight" id="comentarios3" colspan="2">120</td>
-                        <td class="highlight" id="comentarios2" colspan="2">2</td>
-                        <td class="highlight" id="comentarios3" colspan="2">120</td>
-                        <td class="highlight" id="comentarios2" colspan="2">2</td>
-                        <td class="highlight" id="comentarios3" colspan="2">120</td>
-                        <td class="highlight" id="comentarios2" colspan="2">2</td>
-                        <td class="highlight" id="comentarios3" colspan="2">120</td>
-                        <td class="highlight" id="comentarios2" colspan="2">2</td>
+                        <td class="highlight" id="comentarios3" colspan="2">@Model.PresionarterialdiastolicaConsulta</td>
+                        <td class="highlight" id="comentarios2" colspan="2">@Model.PresionarterialsistolicaConsulta</td>
+                        <td class="highlight" id="comentarios3" colspan="2"></td>
+                        <td class="highlight" id="comentarios2" colspan="2"></td>
+                        <td class="highlight" id="comentarios3" colspan="2"></td>
+                        <td class="highlight" id="comentarios2" colspan="2"></td>
+                        <td class="highlight" id="comentarios3" colspan="2"></td>
+                        <td class="highlight" id="comentarios2" colspan="2"></td>
                     </tr>
                     <tr>
                         <td id="signosVitales" colspan="4">
@@ -330,7 +734,7 @@
 
 
 
-                        <td class="highlight" id="comentarios" colspan="2"></td>
+                        <td class="highlight" id="comentarios" colspan="2">@Model.FrecuenciarespiratoriaConsulta</td>
                         <td class="highlight" id="comentarios" colspan="2"></td>
                         <td class="highlight" id="comentarios" colspan="2"></td>
                         <td class="highlight" id="comentarios" colspan="2"></td>
@@ -345,7 +749,7 @@
                             <span class="pulso">PESO /kg <span style="font-size: 16px;">/</span></span>
                             <span class="frecuencia">TALLA / cm</span>
                         </td>
-                        <td class="highlight" id="comentarios" colspan="2"></td>
+                        <td class="highlight" id="comentarios" colspan="2">@Model.TallaConsulta</td>
                         <td class="highlight" id="comentarios" colspan="2"></td>
                         <td class="highlight" id="comentarios" colspan="2"></td>
                         <td class="highlight" id="comentarios" colspan="2"></td>
@@ -406,23 +810,50 @@
 
 
                         <td id="organoSentidos" colspan="6">1 CABEZA</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Cabeza == "true" ? "X" : " ")
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Cabeza == "true" ? "X" : " ")
+                        </td>
                         <td id="organoSentidos" colspan="5">2 CUELLO</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Cuello == "true" ? "X" : " ")
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Cuello == "true" ? "X" : " ")
+                        </td>
                         <td id="organoSentidos" colspan="5">3 TORAX</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Torax == "true" ? "X" : " ")
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Torax == "true" ? "X" : " ")
+                        </td>
                         <td id="organoSentidos" colspan="5">4 ABDOMEN</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Abdomen == "true" ? "X" : " ")
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Abdomen == "true" ? "X" : " ")
+                        </td>
                         <td id="organoSentidos" colspan="5">5 PELVIS</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Pelvis == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Pelvis == "true" ? "X" : " ")
+                        </td>
                         <td id="organoSentidos" colspan="5">6 EXTREMIDADES</td>
-                        <td class="highlight" id="organosSentidosv"></td>
-                        <td class="highlight" id="organosSentidosv"></td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Extremidades == "true" ? "X" : " ")
+
+                        </td>
+                        <td class="highlight" id="organosSentidosv">
+                            @(Model.Extremidades == "true" ? "X" : " ")
+
+                        </td>
 
                     </tr>
 
@@ -481,10 +912,17 @@
                     <tr>
 
                         <td id="diagnostico">1</td>
-                        <td id="comentarios" colspan="13px"></td>
-                        <td id="comentarios" colspan="1.8"></td>
-                        <td class="highlight" id="organosSentidosv" colspan="1"></td>
-                        <td id="organosSentidosv" colspan="1"></td>
+                        <td id="comentarios" colspan="13px">@Model.DiagnosticoDescripcion</td>
+                        <td id="comentarios" colspan="1.8">
+                        @Model.DiagnosticoDescripcion
+                        </td>
+                        <td class="highlight" id="organosSentidosv" colspan="1">
+                            @(Model.TipoDiagnostico == "true" ? "X" : " ")
+                        </td>
+                        <td id="organosSentidosv" colspan="1">
+                        @(Model.TipoDiagnosticod == "true" ? "X" : " ")
+
+                        </td>
 
                         <td id="diagnostico">2</td>
                         <td id="comentarios" colspan="17px"></td>
@@ -509,7 +947,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="6" id="comentarios">Fiebre alta, ya se trató anteriormente</td>
+                        <td colspan="6" id="comentarios">
+                            @Model.PlantratamientoConsulta
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="6" id="comentarios"></td>
@@ -594,7 +1034,4 @@
     </div>
 
 
-    <script src="script.js"></script>
-</body>
-
-</html>
+    

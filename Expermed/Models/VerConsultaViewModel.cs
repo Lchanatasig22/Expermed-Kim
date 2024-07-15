@@ -140,6 +140,8 @@
 
         public int LaboratorioCantidad { get;set; }
 
+        public string ProfesionalNombre { get; set; }
+
     }
 
 }

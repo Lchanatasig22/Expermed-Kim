@@ -21,10 +21,10 @@
         <span asp-validation-for="HoradelacitaCitas" class="text-danger"></span>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6" hidden>
         <label asp-for="MedicoCitasU" class="form-label">Médico</label>
-        <select asp-for="MedicoCitasU" id="medicoId" class="form-control" required>
-            <option value="">Seleccione un médico</option>
+        <select asp-for="MedicoCitasU" id="medicoId" class="form-control" required >
+            <option value="" >Seleccione un médico</option>
             @foreach (var medico in ViewBag.TiposMedico as List<SelectListItem>)
             {
                 <option value="@medico.Value">@medico.Text</option>

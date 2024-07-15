@@ -1,17 +1,12 @@
 ﻿@model VerConsultaViewModel
 
-@{
-  
-    Layout = "~/Views/Shared/_pdf.cshtml";
-}
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Receta Médica</title>
+    <title>Laboratorio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -107,7 +102,6 @@
             font-size: 11px;
         }
 
-    
         .dispensada-table {
             border: 1px solid #000000;
             font-size: 8px;
@@ -116,16 +110,11 @@
         }
 
         .address {
-            margin-left: 10%;
-            font-size: 12px;
+            margin-left: 9%;
+            font-size: 9px;
         }
 
-        @media print {
-            .container {
-                width: 21cm;
-                height: 14.8cm;
-                page-break-inside: avoid;
-            }
+        
         }
     </style>
 </head>
@@ -136,63 +125,47 @@
             <div class="left">
                 <div>
                     <div class="header">
-                        <p>Dr. Kim Morales</p>
+                        <p>Dr. @Model.MedicoConsulta</p>
                         <p>Especialista en Medicina general</p>
                         <p>e-mail: helpdesk@asersoat.com</p>
-                        <p>Teléfonos:</p>
+                        <p>Teléfonos: @Model.TelefonoCePa</p>
                     </div>
                     <hr />
                     <table class="info-table">
                         <tr>
                             <th>Fecha:</th>
-                            <td>2024-07-10</td>
+                            <td>@Model.FechacreacionConsulta</td>
                             <th>Receta No.</th>
-                            <td>9</td>
+                            <td>@Model.SecuencialConsulta</td>
                         </tr>
                         <tr>
                             <th>Apellidos:</th>
-                            <td>VASQUEZ</td>
+                            <td>@Model.PacienteApellido @Model.PacienteSegundoApellido</td>
                             <th>CC:</th>
-                            <td>1725906414</td>
+                            <td>@Model.NumeroDocumento</td>
                         </tr>
                         <tr>
                             <th>Nombres:</th>
-                            <td>KIM</td>
+                            <td>@Model.PacienteNombre @Model.PacienteSegundoNombre</td>
                         </tr>
                         <tr>
                             <th>Edad:</th>
-                            <td>28</td>
+                            <td>@Model.EdadPaciente</td>
                         </tr>
-                        <tr>
-                            <th>Alergias:</th>
-                            <td></td>
-                        </tr>
+                   
                         <tr>
                             <th>Diagnóstico:</th>
-                            <td>INFECCION POSTRAUMATICA DE HERIDA, NO CLASIFICADA EN OTRA PARTE</td>
+                            <td> @Model.DiagnosticoDescripcion</td>
                         </tr>
                     </table>
-                    <p class="section-title">PRESCRIPCIÓN:</p>
+                    <p class="section-title">ESTUDIO:</p>
                     <ul class="prescription-list">
-                        <li>AMOXICILINA POLVO PARA SUSP. 250 MG/5ML &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x4</li>
+                        <li>@Model.ImagenObservacion
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x4</li>
                     </ul>
                 </div>
                 <div>
-                    <table class="dispensada-table">
-                        <tr>
-                            <td colspan="5" style="font-weight: bold">Dispensada</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">Completamente .........</td>
-                            <td colspan="5">Parcialmente .........</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" style="font-weight: bold">Proxima Cita</td>
-                        </tr>
-                        <tr>
-                            <td>..............................................</td>
-                        </tr>
-                    </table>
+               
                     <hr />
                     <div class="address">
                         Dirección: Av de la Prensa N49-180 y Juan Holguin Edificio Amankay sexto piso, Chordeleg - Ecuador
@@ -203,7 +176,7 @@
             <div class="right">
                 <div>
                     <div class="header">
-                        <p>Dr. Kim Morales</p>
+                        <p>Dr. @Model.MedicoConsulta</p>
                         <p>Especialista en Medicina general</p>
                         <p>e-mail: helpdesk@asersoat.com</p>
                         <p>Teléfonos:</p>
@@ -212,52 +185,34 @@
                     <table class="info-table">
                         <tr>
                             <th>Fecha:</th>
-                            <td>2024-07-10</td>
+                            <td>@Model.FechacreacionConsulta</td>
                             <th>Receta No.</th>
-                            <td>9</td>
+                            <td>@Model.SecuencialConsulta</td>
                         </tr>
                         <tr>
                             <th>Apellidos:</th>
-                            <td>VASQUEZ</td>
+                            <td>@Model.PacienteApellido @Model.PacienteSegundoApellido</td>
                             <th>CC:</th>
-                            <td>1725906414</td>
+                            <td>@Model.NumeroDocumento</td>
                         </tr>
                         <tr>
                             <th>Nombres:</th>
-                            <td>KIM</td>
+                            <td>@Model.PacienteNombre @Model.PacienteSegundoNombre</td>
                         </tr>
                         <tr>
                             <th>Edad:</th>
-                            <td>28</td>
+                            <td>@Model.EdadPaciente</td>
                         </tr>
-                        <tr>
-                            <th>Signos alarmas:</th>
-                            <td>sn</td>
-                        </tr>
+                       
                     </table>
-                    <p class="section-title">INDICACIONES:</p>
-                    <p style="font-size: 11px">(AMOXICILINA POLVO PARA SUSP. 250 MG/5ML) cada 12 horas</p>
-                    <p class="section-title">RECOMENDACIONES NO FARMACOLÓGICAS:</p>
-                    <ul class="recommendations-list">
-                        <li>sn</li>
-                    </ul>
+                    <p class="section-title">OBSERVACIONES:</p>
+                    <p style="font-size: 11px"> @Model.ImagenObservacion
+                    </p>
+                  
+                  
                 </div>
                 <div>
-                    <table class="dispensada-table">
-                        <tr>
-                            <td colspan="5" style="font-weight: bold">Dispensada</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">Completamente .........</td>
-                            <td colspan="5">Parcialmente .........</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" style="font-weight: bold">Proxima Cita</td>
-                        </tr>
-                        <tr>
-                            <td>..............................................</td>
-                        </tr>
-                    </table>
+              
                     <hr />
                     <div class="address">
                         Dirección: Av de la Prensa N49-180 y Juan Holguin Edificio Amankay sexto piso, Chordeleg - Ecuador
