@@ -77,7 +77,7 @@ namespace Expermed.Controllers
             catch (Exception ex)
             {
                 // Manejo de errores
-                ModelState.AddModelError("", "Error al cargar la página de creación de cita.");
+                ModelState.AddModelError("", "Error al cargar la página de creación de cita."+ex);
                 return RedirectToAction(nameof(Index)); // Redirige a una acción adecuada en caso de error
             }
         }
@@ -165,7 +165,7 @@ namespace Expermed.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Error al crear la cita.");
+                ModelState.AddModelError("", "Error al crear la cita." + ex);
                 return View(cita);
             }
         }

@@ -15,6 +15,7 @@ namespace Expermed.Models
             : base(options)
         {
         }
+        public DbSet<Documento> Documentos { get; set; }
 
         public virtual DbSet<CDetalle> CDetalles { get; set; } = null!;
         public virtual DbSet<CDiagnostico> CDiagnosticos { get; set; } = null!;

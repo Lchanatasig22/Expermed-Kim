@@ -1,59 +1,79 @@
 using DinkToPdf;
-using Expermed.Models; // Importa los modelos de datos del proyecto.
-using Expermed.Servicios; // Importa los servicios del proyecto.
-using Microsoft.EntityFrameworkCore; // Importa Entity Framework Core para trabajar con la base de datos.
-using Rotativa.AspNetCore; // Importa Rotativa para la generación de PDFs.
+using DinkToPdf.Contracts;
+using Expermed.Models;
+using Expermed.Servicios;
+using Microsoft.EntityFrameworkCore;
+using System.Runtime.Loader;
 
-var builder = WebApplication.CreateBuilder(args); // Crea una instancia del constructor de la aplicación web.
+var builder = WebApplication.CreateBuilder(args);
 
-// Agrega servicios al contenedor de dependencias.
-builder.Services.AddControllersWithViews(); // Agrega soporte para controladores con vistas (MVC).
+// Ruta específica a la biblioteca wkhtmltopdf
+var wkHtmlToPdfPath = @"C:\Users\SAFERISK\source\repos\ExpermedGit\Expermed\libs\libwkhtmltox.dll";
+
+// Agregar la ruta de la DLL al PATH del sistema
+var envPath = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
+var newPath = $"{envPath};{Path.GetDirectoryName(wkHtmlToPdfPath)}";
+Environment.SetEnvironmentVariable("PATH", newPath, EnvironmentVariableTarget.Process);
+
+// Cargar la biblioteca no administrada
+var context = new CustomAssemblyLoadContext();
+context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+
+// Agregar servicios al contenedor de dependencias
+builder.Services.AddControllersWithViews();
 builder.Services.AddSession(options =>
 {
-    // Configura las opciones de la sesión.
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Establece el tiempo de espera de la sesión en 30 minutos.
-    options.Cookie.HttpOnly = true; // Configura la cookie de sesión como HttpOnly.
-    options.Cookie.IsEssential = true; // Marca la cookie de sesión como esencial.
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
-builder.Services.AddSingleton(typeof(DinkToPdf.Contracts.IConverter), new SynchronizedConverter(new PdfTools()));
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation(); // Agrega soporte para Razor Pages con compilación en tiempo de ejecución.
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<Base_ExpermedContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CadenaSQL"))); // Configura el contexto de la base de datos utilizando SQL Server.
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CadenaSQL")));
 
-builder.Services.AddScoped<AutenticationService>(); // Registra el servicio de autenticación.
-builder.Services.AddScoped<UserService>(); // Registra el servicio de usuarios.
-builder.Services.AddScoped<PerfilesService>(); // Registra el servicio de perfiles.
-builder.Services.AddScoped<PacienteService>(); // Registra el servicio de pacientes.
-builder.Services.AddScoped<CatalogService>(); // Registra el servicio de catálogo.
-builder.Services.AddScoped<CitasService>(); // Registra el servicio de citas.
-builder.Services.AddScoped<ConsultaService>(); // Registra el servicio de consultas.
-builder.Services.AddScoped<FacturacionService>(); // Registra el servicio de facturación.
+builder.Services.AddScoped<AutenticationService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<PerfilesService>();
+builder.Services.AddScoped<PacienteService>();
+builder.Services.AddScoped<CatalogService>();
+builder.Services.AddScoped<CitasService>();
+builder.Services.AddScoped<ConsultaService>();
+builder.Services.AddScoped<FacturacionService>();
+builder.Services.AddScoped<PdfService>();
 
-//Registra IHttpContextAccessor para acceder al contexto HTTP.
 builder.Services.AddHttpContextAccessor();
 
-var app = builder.Build(); // Construye la aplicación.
+var app = builder.Build();
 
-// Configura el pipeline de manejo de solicitudes HTTP.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error"); // Configura el manejo de errores para ambientes de producción.
-    app.UseHsts(); // Habilita el uso de HSTS (HTTP Strict Transport Security).
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
-app.UseHttpsRedirection(); // Redirecciona las solicitudes HTTP a HTTPS.
-app.UseStaticFiles(); // Habilita el servicio de archivos estáticos.
-app.UseSession(); // Habilita el uso de sesiones.
-app.UseRouting(); // Habilita el enrutamiento de solicitudes.
-app.UseAuthorization(); // Habilita la autorización de solicitudes.
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseSession();
+app.UseRouting();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Access}/{action=Login}/{id?}"); // Configura la ruta predeterminada para los controladores.
+    pattern: "{controller=Access}/{action=Login}/{id?}");
 
-// Configura Rotativa para la generación de PDFs
-IWebHostEnvironment env = app.Environment;
-Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa");
+app.Run();
 
-app.Run(); // Ejecuta la aplicación.
+public class CustomAssemblyLoadContext : AssemblyLoadContext
+{
+    public IntPtr LoadUnmanagedLibrary(string absolutePath)
+    {
+        return LoadUnmanagedDll(absolutePath);
+    }
+
+    protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+    {
+        return LoadUnmanagedDllFromPath(unmanagedDllName);
+    }
+}

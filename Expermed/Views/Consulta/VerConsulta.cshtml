@@ -299,6 +299,9 @@
             <div class="text-end mt-3">
                 <a asp-action="Listar" asp-controller="Consulta" class="btn btn-outline-secondary"><i class="fa fa-close"></i> Salir</a>
                 <button class="btn btn-primary nextBtn btn-lg ms-3" type="button" onclick="goToNextStep(2)">Siguiente <i class="fa fa-arrow-right"></i></button>
+                <button type="button" class="btn btn-outline-primary" onclick="showModal()">
+                    <i class="fa-regular fa-file-pdf"></i> Generar Documento
+                </button>
             </div>
         </div>
         <!--Final primer formulario-->
@@ -628,6 +631,9 @@
             <div class="text-end mt-3">
                 <button class="btn btn-primary previousBtn btn-lg" type="button" onclick="goToPreviousStep(1)"><i class="fa fa-arrow-left"></i> Regresar</button>
                 <button class="btn btn-primary nextBtn btn-lg ms-3" type="button" onclick="goToNextStep(3)">Siguiente <i class="fa fa-arrow-right"></i></button>
+                <button type="button" class="btn btn-outline-primary" onclick="showModal()">
+                    <i class="fa-regular fa-file-pdf"></i> Generar Documento
+                </button>
             </div>
         </div>
         <!--Fin segundo formulario-->
@@ -1038,6 +1044,9 @@
             <div class="text-end mt-3">
                 <button class="btn btn-primary previousBtn btn-lg" type="button"><i class="fa fa-arrow-left"></i> Regresar</button>
                 <button class="btn btn-primary nextBtn btn-lg ms-3" type="button">Siguiente <i class="fa fa-arrow-right"></i></button>
+                <button type="button" class="btn btn-outline-primary" onclick="showModal()">
+                    <i class="fa-regular fa-file-pdf"></i> Generar Documento
+                </button>
             </div>
         </div>
         <!--Final tercer formulario-->
@@ -1375,7 +1384,6 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                       
                                     </tr>
                                 </tfoot>
                             </table>
@@ -1411,9 +1419,7 @@
 
 
             <div class="form-group mt-3">
-                <button type="button" class="btn btn-outline-primary" onclick="showModal()">
-                    <i class="fa-regular fa-file-pdf"></i> Generar Documento
-                </button>
+
                 <button type="button" class="btn btn-danger" onclick="finalizarConsulta()">
                     <i class="fa fa-check"></i> Finalizar
                 </button>
@@ -1421,6 +1427,7 @@
 
             </div>
             <!--Final cuarto formulario-->
+
         </div>
 
     </form>
@@ -1596,13 +1603,4 @@
         // Cerrar el modal después de generar el PDF
         $('#pdfModal').modal('hide');
     }
-
-
-
-
-
-
-
-
-
 </script>

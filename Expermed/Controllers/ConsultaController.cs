@@ -2,6 +2,8 @@
 using Expermed.Servicios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -13,17 +15,22 @@ namespace Expermed.Controllers
 
     public class ConsultaController : Controller
     {
+        private readonly PacienteService _pacienteService;
         private readonly CatalogService _catalogoService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly PacienteService _pacienteService;
         private readonly ConsultaService _consultaService;
+        private readonly PdfService _pdfService;
+        private readonly ICompositeViewEngine _viewEngine;
 
-        public ConsultaController(PacienteService pacienteService, CatalogService catalogService, IHttpContextAccessor httpContextAccessor, ConsultaService consultaService)
+
+        public ConsultaController(PacienteService pacienteService, CatalogService catalogService, IHttpContextAccessor httpContextAccessor, ConsultaService consultaService, PdfService pdfService, ICompositeViewEngine viewEngine)
         {
             _pacienteService = pacienteService;
             _catalogoService = catalogService;
             _httpContextAccessor = httpContextAccessor;
             _consultaService = consultaService;
+            _pdfService = pdfService;
+            _viewEngine = viewEngine;
         }
 
         // GET: api/consultas
@@ -630,9 +637,11 @@ namespace Expermed.Controllers
                 LaboratorioCantidad = consulta.LaboratorioConsultaLaNavigation?.CantidadLaboratorio ?? 0,
                 LaboratorioObservacion = consulta.LaboratorioConsultaLaNavigation?.ObservacionLaboratorio ?? "No asignado",
                 ProfesionalNombre = consulta.PacienteConsultaPNavigation?.UsuariocreacionPacientes ?? "No asignado"
+                
 
 
             };
+            // Determinar la vista a usar basado en el tipo de documento
             string viewName = tipoDocumento switch
             {
                 "receta" => "PdfRecetaView",
@@ -643,11 +652,41 @@ namespace Expermed.Controllers
                 _ => "PdfRecetaView"
             };
 
+            // Renderizar la vista como HTML
+            var htmlContent = RenderViewToString(viewName, pdfViewModel);
 
-            return new ViewAsPdf(viewName, pdfViewModel);
+            // Generar el PDF usando PdfService
+            var pdfBytes = _pdfService.GeneratePdf(htmlContent);
+
+            // Devolver el PDF como archivo descargable
+            return File(pdfBytes, "application/pdf", $"{tipoDocumento}.pdf");
         }
 
+        private string RenderViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = _viewEngine.FindView(ControllerContext, viewName, false);
 
+                if (viewResult.View == null)
+                {
+                    throw new ArgumentNullException($"{viewName} does not match any available view");
+                }
+
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    ViewData,
+                    TempData,
+                    sw,
+                    new HtmlHelperOptions()
+                );
+
+                viewResult.View.RenderAsync(viewContext).Wait();
+                return sw.GetStringBuilder().ToString();
+            }
+        }
 
         [HttpGet]
         public async Task<IActionResult> CrearConsultaDoc(int? id)

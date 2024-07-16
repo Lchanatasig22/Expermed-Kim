@@ -14,5 +14,8 @@ namespace Expermed.Models
         public string? DireccionEstablecimiento { get; set; }
         public string? CiudadEstablecimiento { get; set; }
         public string? ProvinciaEstablecimiento { get; set; }
+
+        public string? PuntoEmision { get; set; }
+        public string? Codigo { get; set; }
     }
 }

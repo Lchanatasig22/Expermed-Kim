@@ -85,7 +85,7 @@ namespace Expermed.Servicios
         public async Task<List<Catalogo>> ObtenerBancosAsync()
         {
             // Supongamos que tienes una tabla 'Catalogo' con los tipos de documentos
-            return await _context.Catalogos.Where(c => c.CategoriaCatalogo == "BANCO").ToListAsync();
+            return await _context.Catalogos.Where(c => c.CategoriaCatalogo == "TIPO BANCO").ToListAsync();
         }   
         public async Task<List<Diagnostico>> ObtenerDiagnosticoAsync()
         {

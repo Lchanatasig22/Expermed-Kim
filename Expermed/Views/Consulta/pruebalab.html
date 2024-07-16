@@ -1,0 +1,225 @@
+﻿@model VerConsultaViewModel
+@{
+    ViewData["Title"] = "PdfLaboratorioView";
+    Layout = "~/Views/Shared/_pdf.cshtml";
+}
+
+<h2>PdfLaboratorioView</h2>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laboratorio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 21cm;
+            height: 14.8cm;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+            .header p {
+                margin: 2px 0;
+            }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            height: 100%;
+        }
+
+        .left,
+        .right {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .vertical-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background-color: #000;
+            margin-top: 20px;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+            .info-table th,
+            .info-table td {
+                border: none;
+                padding: 5px;
+                text-align: left;
+                font-size: 11px;
+            }
+
+            .info-table th {
+                font-weight: bold;
+            }
+
+            .info-table td {
+                font-weight: normal;
+            }
+
+        .section-title {
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 11px;
+        }
+
+        .prescription-list,
+        .recommendations-list {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            font-size: 11px;
+        }
+
+            .prescription-list li,
+            .recommendations-list li {
+                font-size: 11px;
+            }
+
+        .dispensada-table {
+            border: 1px solid #000000;
+            font-size: 8px;
+            width: 50%;
+            margin-left: 170px;
+        }
+
+        .address {
+            margin-left: 10%;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="left">
+                <div>
+                    <div class="header">
+                        <p>Dr. Kim Morales</p>
+                        <p>Especialista en: @Model.ProfesionalNombre</p>
+                        <p>e-mail: helpdesk@asersoat.com</p>
+                        <p>Teléfonos: </p>
+                    </div>
+                    <hr />
+                    <table class="info-table">
+                        <tr>
+                            <th>Fecha:</th>
+                            <td>@Model.FechacreacionConsulta</td>
+                            <th>Receta No.</th>
+                            <td>@Model.SecuencialConsulta</td>
+                        </tr>
+                        <tr>
+                            <th>Apellidos:</th>
+                            <td>@Model.PacienteApellido</td>
+                            <th>CC:</th>
+                            <td>@Model.NumeroDocumento</td>
+                        </tr>
+                        <tr>
+                            <th>Nombres:</th>
+                            <td>@Model.PacienteNombre</td>
+                        </tr>
+                        <tr>
+                            <th>Edad:</th>
+                            <td>@Model.EdadPaciente</td>
+                        </tr>
+
+                        <tr>
+                            <th>Diagnóstico:</th>
+                            <td>@Model.DiagnosticoConsulta</td>
+                        </tr>
+                    </table>
+                    <p class="section-title">LABORATORIO:</p>
+                    <ul class="prescription-list">
+                        <li>
+                            @Model.LaboratorioObservacion @Model.LaboratorioCantidad revisar
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x4
+                        </li>
+                    </ul>
+                </div>
+                <div>
+
+                    <hr />
+                    <div class="address">
+                        Dirección: Av de la Prensa N49-180 y Juan Holguin Edificio Amankay sexto piso, Chordeleg - Ecuador
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-line"></div>
+            <div class="right">
+                <div>
+                    <div class="header">
+                        <p>Dr. Kim Morales</p>
+                        <p>Especialista en Medicina general</p>
+                        <p>e-mail: helpdesk@asersoat.com</p>
+                        <p>Teléfonos: @Model.TelefonoConsulta</p>
+                    </div>
+                    <hr />
+                    <table class="info-table">
+                        <tr>
+                            <th>Fecha:</th>
+                            <td>@Model.FechacreacionConsulta</td>
+                            <th>Receta No.</th>
+                            <td>@Model.SecuencialConsulta</td>
+                        </tr>
+                        <tr>
+                            <th>Apellidos:</th>
+                            <td>@Model.PacienteApellido</td>
+                            <th>CC:</th>
+                            <td>@Model.NumeroDocumento</td>
+                        </tr>
+                        <tr>
+                            <th>Nombres:</th>
+                            <td>@Model.PacienteNombre</td>
+                        </tr>
+                        <tr>
+                            <th>Edad:</th>
+                            <td>@Model.EdadPaciente</td>
+                        </tr>
+
+                    </table>
+                    <p class="section-title">OBSERVACIONES:</p>
+                    <p style="font-size: 11px">@Model.LaboratorioObservacion revisar </p>
+
+
+                </div>
+                <div>
+
+                    <hr />
+                    <div class="address">
+                        Dirección: Av de la Prensa N49-180 y Juan Holguin Edificio Amankay sexto piso, Chordeleg - Ecuador
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
